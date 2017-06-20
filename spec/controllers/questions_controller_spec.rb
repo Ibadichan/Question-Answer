@@ -32,7 +32,7 @@ describe QuestionsController do
   describe 'POST #create' do
     context 'with valid attributes' do
       it 'saves the new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change { Question.count }.by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
@@ -43,7 +43,7 @@ describe QuestionsController do
 
     context 'with invalid attributes' do
       it 'does not save question in database' do
-        expect { post :create, params: { question: attributes_for(:invalid_question) } }.to_not change(Question.count)
+        expect {post :create, params: {question: attributes_for(:invalid_question)}}.to_not change(Question, :count)
       end
 
       it 'renders new view' do
