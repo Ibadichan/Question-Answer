@@ -3,9 +3,11 @@
 FactoryGirl.define do
   factory :answer do
     body  'MyText'
+    user
     question
     factory :invalid_answer do
       body  nil
+      user
       question
     end
   end

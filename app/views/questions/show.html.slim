@@ -1,0 +1,27 @@
+h1 = "#{@question.title}"
+div
+  = "#{@question.body}"
+  - if current_user == @question.user
+    p = link_to 'Удалить вопрос', question_path(@question), method: :delete
+
+br
+
+table
+  - @question.answers.each_with_index do |answer, i|
+    tbody
+      td = "Ответ№ #{i+1}"
+      td = answer.body
+      td = "Создатель ответа: #{answer.user.email}"
+      td
+        - if current_user == answer.user
+          = link_to 'Удалить ответ', answer_path(answer), method: :delete
+br
+
+= form_for [@question, @answer] do |f|
+  = f.label :body
+  = f.text_area :body
+  br
+  = f.submit 'ответить'
+
+p = "Создатель вопроса:  #{@question.user.email}"
+p = link_to 'Назад', questions_path
