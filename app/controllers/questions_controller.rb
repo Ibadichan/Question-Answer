@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[destroy show]
@@ -17,15 +19,19 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
-      redirect_to @question, alert: 'Вопрос успешно создан'
+      redirect_to @question, notice: 'Вопрос успешно создан'
     else
       render :new
     end
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, alert: 'Вопрос удален'
+    if current_user.author_of?(@question)
+      @question.destroy
+      redirect_to questions_path, notice: 'Вопрос удален'
+    else
+      render :show
+    end
   end
 
   private

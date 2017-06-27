@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'User deletes answer', %q{
@@ -6,18 +8,13 @@ feature 'User deletes answer', %q{
   I want to delete  the answer
 } do
 
-  given(:user1) {create(:user)}
-  given(:user2) {create(:user)}
-  given(:question) {create(:question)}
-  given(:answer) {create(:answer, user: user1, question: question)}
-
-  before do
-    question
-    answer
-  end
+  given(:author) { create(:user) }
+  given(:non_author) { create(:user) }
+  given(:question) { create(:question) }
+  given!(:answer) { create(:answer, user: author, question: question) }
 
   scenario 'Author tries to delete own answer' do
-    sign_in(user1)
+    sign_in(author)
 
     visit question_path(question)
     click_on 'Удалить ответ'
@@ -27,7 +24,7 @@ feature 'User deletes answer', %q{
   end
 
   scenario 'Authenticated user tries to delete another answer' do
-    sign_in(user2)
+    sign_in(non_author)
 
     visit question_path(question)
 
@@ -37,6 +34,6 @@ feature 'User deletes answer', %q{
   scenario 'Not-authenticated user tries to delete answer' do
     visit question_path(question)
 
-    expect(page).to have_no_content 'Удалить ответ'
+    expect(page).to have_no_link 'Удалить ответ'
   end
 end

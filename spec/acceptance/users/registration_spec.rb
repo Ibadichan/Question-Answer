@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User registers', %q{
+feature 'User registers', '
   In order to be able to  use the system
   As a guest
   I want to register
-} do
+' do
 
   scenario 'Guest tries to register' do
     visit new_user_registration_path

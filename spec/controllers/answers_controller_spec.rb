@@ -11,12 +11,18 @@ describe Questions::AnswersController do
     context 'with valid attributes' do
       it 'saves the answer in the database' do
         expect do
-          post :create, params: {question_id: question, answer: attributes_for(:answer)}
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }
         end.to change(question.answers, :count).by(1)
       end
 
+      it 'connects the user to the answer' do
+        expect do
+          post :create, params: { question_id: question, answer: attributes_for(:answer) }
+        end.to change(@user.answers, :count).by(1)
+      end
+
       it 'redirects to question view' do
-        post :create, params: {question_id: question,  answer: attributes_for(:answer)}
+        post :create, params: { question_id: question, answer: attributes_for(:answer) }
         expect(response).to redirect_to question_path(question)
       end
     end
@@ -24,29 +30,43 @@ describe Questions::AnswersController do
     context 'with invalid attributes' do
       it 'does not save answer in the database' do
         expect do
-          post :create, params: {answer: attributes_for(:invalid_answer), question_id: question}
+          post :create, params: { answer: attributes_for(:invalid_answer), question_id: question }
         end.to_not change(Answer, :count)
       end
 
       it 'redirects to question view' do
         post :create, params: { answer: attributes_for(:invalid_answer), question_id: question }
-        expect(response).to redirect_to question_path(question)
+        expect(response).to render_template 'questions/show'
       end
     end
   end
 
   describe 'DELETE #destroy' do
     sign_in_user
+    let(:answer_of_user) {create(:answer, user: @user)}
 
-    before {answer}
+    context 'Author tries to delete his answer' do
+      it 'deletes the @answer' do
+        answer_of_user
+        expect { delete :destroy, params: {id: answer_of_user} }.to change(Answer, :count).by(-1)
+      end
 
-    it 'deletes the @answer' do
-      expect{delete :destroy, params: {id: answer}}.to change(Answer, :count).by(-1)
+      it 'redirects to question of answer' do
+        delete :destroy, params: { id: answer_of_user }
+        expect(response).to redirect_to question_path(assigns(:question))
+      end
     end
 
-    it 'redirects to question of answer' do
-      delete :destroy, params: {id: answer}
-      expect(response).to redirect_to question_path(assigns(:question))
+    context 'Not-author tries to delete  answer' do
+      it 'does not delete the @answer' do
+        answer
+        expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
+      end
+
+      it 'render question of answer view' do
+        delete :destroy, params: { id: answer }
+        expect(response).to render_template 'questions/show'
+      end
     end
   end
 end
