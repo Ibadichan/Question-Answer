@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Questions::AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %i[create]
@@ -6,16 +8,23 @@ class Questions::AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
     if @answer.save
-      redirect_to @question, alert: 'Ответ успешно создан'
+      redirect_to @question, notice: 'Ответ успешно создан'
     else
-      redirect_to @question, alert: 'Ваш ответ не создан'
+      @question.reload
+      flash[:alert] = 'Ваш ответ не создан'
+      render 'questions/show'
     end
   end
 
   def destroy
     @question = @answer.question
-    @answer.destroy
-    redirect_to question_path(@question), alert: 'Ваш ответ удален'
+
+    if current_user.author_of?(@answer)
+      @answer.destroy
+      redirect_to @question, notice: 'Ваш ответ удален'
+    else
+      render 'questions/show'
+    end
   end
 
   private

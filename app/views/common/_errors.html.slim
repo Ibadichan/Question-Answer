@@ -1,0 +1,5 @@
+- if resource.errors.any?
+  #error_explanation
+    p  В поле находятся ошибки
+    - resource.errors.full_messages.each do |msg|
+      p.alert.alert-danger  * #{msg}

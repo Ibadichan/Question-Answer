@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User log in', %q{
+feature 'User log in', '
   In order to be able to ask question
   As an user
   I want to be able log in
-} do
+' do
 
-  given(:user) {create(:user)}
+  given(:user) { create(:user) }
 
   scenario 'Registered user tries to log in' do
     sign_in(user)

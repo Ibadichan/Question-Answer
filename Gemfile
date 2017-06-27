@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
@@ -33,9 +34,9 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
+  gem 'selenium-webdriver'
 end
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -49,10 +50,10 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 group :test do
-  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
   gem 'launchy'
+  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
-gem 'rails-controller-testing'
-gem 'slim-rails'
 gem 'devise'
 gem 'devise-i18n'
+gem 'rails-controller-testing'
+gem 'slim-rails'

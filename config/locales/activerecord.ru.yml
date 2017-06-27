@@ -1,0 +1,14 @@
+ru:
+  activerecord:
+    errors:
+      models:
+        question:
+          attributes:
+            title:
+              blank: 'Заголовок вопроса не может быть пустым'
+            body:
+              blank: 'Тело вопроса не может быть пустым'
+        answer:
+          attributes:
+            body:
+              blank: 'Тело ответа не может быть пустым'

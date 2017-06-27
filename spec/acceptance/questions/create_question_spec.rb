@@ -1,18 +1,19 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'Create question', %q{
+feature 'Create question', '
   In order to get answer from community
   As an authenticated user
   I want to be able to ask questions
-} do
+' do
 
-  given(:user) {create(:user)}
+  given(:user) { create(:user) }
 
   scenario 'Authenticated user tries to ask question' do
     sign_in(user)
 
     visit questions_path
-
     click_on 'Задать вопрос'
     fill_in 'Title', with: 'my title'
     fill_in 'Body', with: 'my body'
@@ -22,6 +23,20 @@ feature 'Create question', %q{
     expect(current_path).to eq question_path(Question.last)
     expect(page).to have_content 'my body'
     expect(page).to have_content 'my title'
+  end
+
+  scenario 'Authenticated user tries to ask  invalid question' do
+    sign_in(user)
+
+    visit questions_path
+    click_on 'Задать вопрос'
+    fill_in 'Title', with: ''
+    fill_in 'Body', with: ''
+    click_on 'Создать'
+
+    expect(current_path).to eq questions_path
+    expect(page).to have_content 'Заголовок вопроса не может быть пустым'
+    expect(page).to have_content 'Тело вопроса не может быть пустым'
   end
 
   scenario 'Not-authenticated user tries to ask question' do
