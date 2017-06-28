@@ -7,11 +7,4 @@ module AcceptanceHelpers
     fill_in 'Пароль', with: user.password
     click_on 'Log in'
   end
-
-  def show_question(question)
-    visit question_path(question)
-
-    expect(page).to have_content question.title
-    expect(page).to have_content question.body
-  end
 end

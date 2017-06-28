@@ -8,14 +8,12 @@ feature 'User deletes question', '
   I want to delete question
 ' do
 
-  given(:user1) { create(:user) }
-  given(:user2) { create(:user) }
-  given(:question) { create(:question, user: user1) }
-
-  before { question }
+  given(:author) { create(:user) }
+  given(:non_author) { create(:user) }
+  given(:question) { create(:question, user: author) }
 
   scenario 'Authenticated user tries to delete own question' do
-    sign_in(user1)
+    sign_in(author)
 
     visit question_path(question)
     click_on 'Удалить вопрос'
@@ -26,7 +24,7 @@ feature 'User deletes question', '
   end
 
   scenario 'Authenticated user tries to delete another question' do
-    sign_in(user2)
+    sign_in(non_author)
 
     visit question_path(question)
 

@@ -1,24 +1,32 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can see the question', %q{
+feature 'User can see the question', '
   In order to create the answer
   As a guest or authenticated user
   I want to see question
-} do
+' do
 
-  given(:author) {create(:user)}
-  given!(:question) {create(:question, user: author)}
+  given(:author) { create(:user) }
+  given!(:question) { create(:question, user: author) }
+  given!(:answers) { create_list(:answer, 2, question: question) }
 
   scenario 'Author tries to see question' do
     sign_in(author)
-    show_question(question)
+
+    visit question_path(question)
+
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+    answers.each { |answer| expect(page).to have_content answer.body }
   end
 
   scenario 'Non-authenticated user tries to see question' do
-    show_question(question)
-  end
+    visit question_path(question)
 
-  scenario 'Non-author of the question tries to see question' do
-    show_question(question)
+    expect(page).to have_content question.title
+    expect(page).to have_content question.body
+    answers.each { |answer| expect(page).to have_content answer.body }
   end
 end

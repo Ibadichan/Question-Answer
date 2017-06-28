@@ -1,0 +1,19 @@
+ru:
+  common:
+    back: 'Назад'
+  layouts:
+    application:
+      exit: 'Выйти'
+      entrance: 'Войти'
+  questions:
+    new:
+      title: 'Заголовок'
+      body: 'Тело'
+      action: '%{action}'
+    index:
+      ask_question: 'Задать вопрос'
+    show:
+      delete_question: 'Удалить вопрос'
+      delete_answer: 'Удалить ответ'
+      body_of_answer: 'Тело'
+      create_answer: 'ответить'

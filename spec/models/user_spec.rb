@@ -11,21 +11,18 @@ RSpec.describe User, type: :model do
 
   describe '#author_of?(object)' do
     let(:author)     { create(:user) }
+    let(:user)       { create(:user) }
     let(:question)   { create(:question, user: author) }
-    let(:answer)     { create(:answer, user: author) }
-    let(:user)       { create(:user)}
 
     context 'user is author' do
       it 'returns true if user is author' do
-        expect(author.author_of?(question)).to be true
-        expect(author.author_of?(answer)).to be true
+        expect(author).to be_author_of(question)
       end
     end
 
     context 'user not is author' do
       it 'returns false if user not is author' do
-        expect(user.author_of?(question)).to be_falsey
-        expect(user.author_of?(answer)).to be_falsey
+        expect(user).to_not be_author_of(question)
       end
     end
   end

@@ -1,8 +1,8 @@
 h1 = "#{@question.title}"
 div
   = "#{@question.body}"
-  - if current_user == @question.user
-    p = link_to 'Удалить вопрос', question_path(@question), method: :delete
+  - if user_signed_in? && current_user.author_of?(@question)
+      p = link_to t('questions.show.delete_question'), question_path(@question), method: :delete
 
 br
 
@@ -13,18 +13,17 @@ table
       td = answer.body
       td = "Создатель ответа: #{answer.user.email}"
       td
-        - if user_signed_in?
-          - if current_user.author_of?(answer)
-            = link_to 'Удалить ответ', answer_path(answer), method: :delete
+        - if user_signed_in? && current_user.author_of?(answer)
+            = link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete
 br
 
 = render 'common/errors', resource: @answer
 
 = form_for [@question, @answer] do |f|
-  = f.label :body
+  = f.label :body, t('questions.show.body_of_answer')
   = f.text_area :body
   br
-  = f.submit 'ответить'
+  = f.submit t('questions.show.create_answer')
 
 p = "Создатель вопроса:  #{@question.user.email}"
-p = link_to 'Назад', questions_path
+p = link_to t('common.back'), questions_path

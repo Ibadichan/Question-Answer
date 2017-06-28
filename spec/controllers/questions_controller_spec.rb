@@ -53,10 +53,6 @@ describe QuestionsController do
     sign_in_user
 
     context 'with valid attributes' do
-      it 'saves the new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
-      end
-
       it 'connects the user to the question' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
       end
@@ -81,16 +77,15 @@ describe QuestionsController do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    let(:question_of_user) {create(:question, user: @user)}
+    let!(:question_of_user) { create(:question, user: @user) }
 
     context 'author tries to delete his question' do
       it 'destroys the @question' do
-        question_of_user
         expect { delete :destroy, params: { id: question_of_user } }.to change(Question, :count).by(-1)
       end
 
       it 'redirects to questions' do
-        delete :destroy, params: { id: question_of_user  }
+        delete :destroy, params: { id: question_of_user }
         expect(response).to redirect_to questions_path
       end
     end
@@ -102,7 +97,7 @@ describe QuestionsController do
       end
 
       it 'renders show view' do
-        delete :destroy, params: {id: question}
+        delete :destroy, params: { id: question }
         expect(response).to render_template :show
       end
     end
