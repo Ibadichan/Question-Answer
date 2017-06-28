@@ -1,12 +1,12 @@
 = render 'common/errors', resource: @question
 
 = form_for @question do |f|
-  = f.label :title
+  = f.label :title, t('questions.new.title')
   = f.text_field :title
   br
-  = f.label :body
+  = f.label :body, t('questions.new.body')
   = f.text_area :body
   br
-  = f.submit 'Создать'
+  = f.submit t('questions.new.action', action: @question.new_record? ? 'Создать' : 'Изменить')
 br
-p = link_to 'Назад', questions_path
+p = link_to t('common.back'), questions_path

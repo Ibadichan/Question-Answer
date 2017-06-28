@@ -14,9 +14,9 @@
     <%= yield %>
 
     <%- if user_signed_in?  %>
-      <%= link_to 'Выйти', destroy_user_session_path, method: :delete %><br />
+      <%= link_to t('layouts.application.exit'), destroy_user_session_path, method: :delete %><br />
     <%- else  %>
-      <%= link_to 'Войти', new_user_session_path %><br />
+      <%= link_to t('layouts.application.entrance'), new_user_session_path %><br />
     <% end -%>
   </body>
 </html>

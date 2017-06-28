@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Questions::AnswersController do
+describe AnswersController do
   let(:question) { create(:question) }
   let(:answer) { create(:answer) }
 
@@ -43,12 +43,12 @@ describe Questions::AnswersController do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    let(:answer_of_user) {create(:answer, user: @user)}
+    let(:answer_of_user) { create(:answer, user: @user) }
 
     context 'Author tries to delete his answer' do
       it 'deletes the @answer' do
         answer_of_user
-        expect { delete :destroy, params: {id: answer_of_user} }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer_of_user } }.to change(Answer, :count).by(-1)
       end
 
       it 'redirects to question of answer' do

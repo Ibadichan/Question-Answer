@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Questions::AnswersController < ApplicationController
+class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %i[create]
   before_action :set_answer, only: %i[destroy]
@@ -11,6 +11,8 @@ class Questions::AnswersController < ApplicationController
       redirect_to @question, notice: 'Ответ успешно создан'
     else
       @question.reload
+      # reload , так кака когда я делаю render 'questions/show' у меня у вопроса создается пустой ответ, а мне это
+      # не надо, если есть другое решение подскажите пожалуйста.
       flash[:alert] = 'Ваш ответ не создан'
       render 'questions/show'
     end

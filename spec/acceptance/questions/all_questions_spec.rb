@@ -8,22 +8,21 @@ feature 'user can see all questions', '
   I want to see all questions
 ' do
 
-  given(:user) {create(:user)}
-  given!(:question) { create(:question) }
+  given(:user) { create(:user) }
+  given!(:questions) { create_list(:question, 2) }
 
   scenario 'Authenticated user tries to see all questions' do
     sign_in(user)
 
-    visit questions_path
-
     expect(page).to have_content('Все вопросы')
-    expect(page).to have_link(question.title)
+
+    questions.each { |question| expect(page).to have_link(question.title) }
   end
 
   scenario 'Guest tries to see all questions' do
     visit questions_path
 
     expect(page).to have_content('Все вопросы')
-    expect(page).to have_link(question.title)
+    questions.each { |question| expect(page).to have_link(question.title) }
   end
 end

@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-feature 'User deletes answer', %q{
+feature 'User deletes answer', '
   In order to destroy answer
   As an author of answer
   I want to delete  the answer
-} do
+' do
 
   given(:author) { create(:user) }
   given(:non_author) { create(:user) }
@@ -21,6 +21,7 @@ feature 'User deletes answer', %q{
 
     expect(current_path).to eq question_path(question)
     expect(page).to have_content 'Ваш ответ удален'
+    expect(page).to have_no_content answer.body
   end
 
   scenario 'Authenticated user tries to delete another answer' do
@@ -28,7 +29,7 @@ feature 'User deletes answer', %q{
 
     visit question_path(question)
 
-    expect(page).to have_no_content 'Удалить ответ'
+    expect(page).to have_no_link 'Удалить ответ'
   end
 
   scenario 'Not-authenticated user tries to delete answer' do
