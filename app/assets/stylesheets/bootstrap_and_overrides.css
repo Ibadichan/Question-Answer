@@ -4,3 +4,17 @@
   Static version of css will use Glyphicons sprites by default
   =require twitter-bootstrap-static/sprites
 */
+
+.position-middle {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+}
+
+.margin-right {
+    margin-right: 20px;
+}
+
+.blue {
+    color: rgba(99,99,99,0.57);
+}

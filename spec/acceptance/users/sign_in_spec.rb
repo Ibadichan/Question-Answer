@@ -22,7 +22,7 @@ feature 'User log in', '
 
     fill_in 'Email', with: 'wrong@mail.ru'
     fill_in 'Пароль', with: '123456'
-    click_on 'Log in'
+    click_on 'Войти'
 
     expect(page).to have_content 'Неверный адрес эл. почты или пароль.'
     expect(current_path).to eq new_user_session_path

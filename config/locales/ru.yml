@@ -4,14 +4,13 @@ ru:
   layouts:
     application:
       exit: 'Выйти'
-      entrance: 'Войти'
+      entrance: 'Вход'
+      ask_question: 'Задать вопрос'
   questions:
     new:
       title: 'Заголовок'
       body: 'Тело'
       action: '%{action}'
-    index:
-      ask_question: 'Задать вопрос'
     show:
       delete_question: 'Удалить вопрос'
       delete_answer: 'Удалить ответ'

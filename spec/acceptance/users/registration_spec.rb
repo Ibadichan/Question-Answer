@@ -14,7 +14,7 @@ feature 'User registers', '
     fill_in 'Email', with: 'test@mail.ru'
     fill_in 'Пароль', with: '123456'
     fill_in 'Подтверждение пароля', with: '123456'
-    click_on 'Sign up'
+    click_on 'Зарегистрироваться'
 
     expect(current_path).to eq root_path
     expect(page).to have_content 'Добро пожаловать! Вы успешно зарегистрировались.'

@@ -1,14 +1,12 @@
-h1 = "#{@question.title}"
-div
-  = "#{@question.body}"
-  - if current_user&.author_of?(@question)
-      p = link_to t('.delete_question'), question_path(@question), method: :delete
+h2 id="blue" = @question.title
+= @question.body
 
 br
 = render 'questions/answers'
 br
-= render 'common/errors', resource: @answer
 = render 'questions/form_answer'
+br
 
 p = "Создатель вопроса:  #{@question.user.email}"
-p = link_to t('common.back'), questions_path
+- if current_user&.author_of?(@question)
+  p = link_to t('.delete_question'), question_path(@question), method: :delete

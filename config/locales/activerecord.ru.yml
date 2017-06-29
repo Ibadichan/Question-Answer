@@ -8,14 +8,22 @@ ru:
         body: 'Тело'
     errors:
       models:
+        user:
+          attributes:
+            email:
+              taken: 'Пользователь с таким email уже существует'
+              blank: 'Заполните поле email'
+            password:
+              blank: 'Заполните поле пороля'
+            password_confirmation:
+              confirmation: 'Пароли не совпадают'
         question:
           attributes:
             title:
-              blank: 'Заголовок вопроса не может быть пустым'
+              blank: 'вопроса не может быть пустым'
             body:
-              blank: 'Тело вопроса не может быть пустым'
+              blank: 'вопроса не может быть пустым'
         answer:
           attributes:
             body:
-              blank: 'Тело ответа не может быть пустым'
-
+              blank: 'ответа не может быть пустым'

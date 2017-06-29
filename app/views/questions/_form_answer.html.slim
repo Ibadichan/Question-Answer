@@ -1,5 +1,7 @@
+= render 'common/errors', resource: @answer
+
 = form_for [@question, @answer] do |f|
   = f.label :body
-  = f.text_area :body
+  = f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
   br
-  = f.submit t('.create_answer')
+  = f.submit t('.create_answer'), class: 'btn btn-default'
