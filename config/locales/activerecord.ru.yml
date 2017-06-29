@@ -1,5 +1,11 @@
 ru:
   activerecord:
+    attributes:
+      answer:
+        body: 'Тело'
+      question:
+        title: 'Заголовок'
+        body: 'Тело'
     errors:
       models:
         question:

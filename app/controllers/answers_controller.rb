@@ -10,9 +10,6 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Ответ успешно создан'
     else
-      @question.reload
-      # reload , так кака когда я делаю render 'questions/show' у меня у вопроса создается пустой ответ, а мне это
-      # не надо, если есть другое решение подскажите пожалуйста.
       flash[:alert] = 'Ваш ответ не создан'
       render 'questions/show'
     end
