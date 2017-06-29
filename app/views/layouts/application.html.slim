@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta content=("text/html; charset=UTF-8") http-equiv="Content-Type" /
+    title Qna
+    = csrf_meta_tags
+    = stylesheet_link_tag    'application', media: 'all', "data-turbolinks-track" => true
+    = javascript_include_tag 'application',  "data-turbolinks-track" => true
+  body
+    nav.navbar.navbar-default.navbar-static-top
+      .container
+        .container-fluid
+          .navbar-header
+          a = link_to 'Question-Answer', questions_path, class: 'navbar-brand'
+          - if user_signed_in?
+              = button_to t('.exit'), destroy_user_session_path, method: :delete, class: 'btn btn-default navbar-btn pull-right'
+          - else
+              = button_to t('.entrance'), new_user_session_path, class: 'btn btn-default navbar-btn pull-right'
+    p.notice= notice
+    p.alert= alert
+    = yield

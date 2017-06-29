@@ -55,5 +55,8 @@ group :test do
 end
 gem 'devise'
 gem 'devise-i18n'
+gem 'jquery-rails'
 gem 'rails-controller-testing'
 gem 'slim-rails'
+gem 'therubyracer'
+gem 'twitter-bootstrap-rails'
