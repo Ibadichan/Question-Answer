@@ -11,18 +11,19 @@ feature 'user creates answer', '
   given!(:user) { create(:user) }
   given!(:question) { create(:question) }
 
-  scenario 'Authenticated user tries to create answer' do
+  scenario 'Authenticated user tries to create answer', js: true do
     sign_in(user)
 
     visit question_path(question)
     fill_in 'Тело', with: 'text text'
     click_on 'ответить'
 
-    expect(page).to have_content 'Ответ успешно создан'
-    expect(page).to have_content 'text text'
+    within '.answers' do
+      expect(page).to have_content 'text text'
+    end
   end
 
-  scenario 'Authenticated user tries to create invalid answer' do
+  scenario 'Authenticated user tries to create invalid answer', js: true do
     sign_in(user)
 
     visit question_path(question)

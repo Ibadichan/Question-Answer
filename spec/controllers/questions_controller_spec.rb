@@ -54,7 +54,8 @@ describe QuestionsController do
 
     context 'with valid attributes' do
       it 'connects the user to the question' do
-        expect { post :create, params: { question: attributes_for(:question) } }.to change(@user.questions, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }
+          .to change(@user.questions, :count).by(1)
       end
 
       it 'redirects to show view' do

@@ -1,0 +1,4 @@
+$('.answers').append('<%= j render @answer %>');
+if ($('#answer_body').val() === '') {$('.notice').html('Тело ответа не может быть пустым');}
+// простите за убогий код (((....
+$('#answer_body').val('');
