@@ -6,13 +6,7 @@ class AnswersController < ApplicationController
   before_action :set_answer, only: %i[destroy]
 
   def create
-    @answer = @question.answers.new(answer_params.merge(user: current_user))
-    if @answer.save
-      redirect_to @question, notice: 'Ответ успешно создан'
-    else
-      flash[:alert] = 'Ваш ответ не создан'
-      render 'questions/show'
-    end
+    @answer = @question.answers.create(answer_params.merge(user: current_user))
   end
 
   def destroy
