@@ -1,10 +1,2 @@
 .answers
-  - @question.answers.each.with_index(1) do |answer, i|
-    - if answer.persisted?
-        .answer-wrapper
-          = answer.body
-          br
-          = "Создатель: #{answer.user.email}"
-          div
-              - if current_user&.author_of?(answer)
-                  = link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete
+   = render @question.answers
