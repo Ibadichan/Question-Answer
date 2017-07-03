@@ -4,9 +4,4 @@
     = "Создатель: #{answer.user.email}"
     div
       - if current_user&.author_of?(answer)
-        .btn-group
-          button.glyphicon.glyphicon-option-horizontal.btn.btn-default.dropdown-toggle data-toggle="dropdown" type="button"
-          ul.dropdown-menu
-            li
-              = link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete
-            li
+        = link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete

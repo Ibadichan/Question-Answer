@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[destroy show]
+  before_action :set_question, only: %i[destroy show edit update]
 
   def index
     @questions = Question.all
@@ -14,6 +14,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+  end
+
+  def edit
   end
 
   def create
@@ -31,6 +34,14 @@ class QuestionsController < ApplicationController
       redirect_to questions_path, notice: 'Вопрос удален'
     else
       render :show
+    end
+  end
+
+  def update
+    if current_user.author_of?(@question) && @question.update(question_params)
+      redirect_to @question, notice: 'Ваш вопрос отредактирован'
+    else
+      render :edit
     end
   end
 
