@@ -48,12 +48,12 @@ describe AnswersController do
     context 'Author tries to delete his answer' do
       it 'deletes the @answer' do
         answer_of_user
-        expect { delete :destroy, params: { id: answer_of_user } }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer_of_user, format: :js } }.to change(Answer, :count).by(-1)
       end
 
-      it 'redirects to question of answer' do
-        delete :destroy, params: { id: answer_of_user }
-        expect(response).to redirect_to question_path(assigns(:question))
+      it 'render template  delete' do
+        delete :destroy, params: { id: answer_of_user, format: :js }
+        expect(response).to render_template :delete
       end
     end
 
@@ -61,11 +61,6 @@ describe AnswersController do
       it 'does not delete the @answer' do
         answer
         expect { delete :destroy, params: { id: answer } }.to_not change(Answer, :count)
-      end
-
-      it 'render question of answer view' do
-        delete :destroy, params: { id: answer }
-        expect(response).to render_template 'questions/show'
       end
     end
   end
