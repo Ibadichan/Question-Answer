@@ -7,12 +7,14 @@ ru:
       entrance: 'Вход'
       ask_question: 'Задать вопрос'
   questions:
+    form:
+      action: '%{action}'
     new:
       title: 'Заголовок'
       body: 'Тело'
-      action: '%{action}'
     show:
       delete_question: 'Удалить вопрос'
+      edit_question: 'Редактировать вопрос'
       delete_answer: 'Удалить ответ'
       body_of_answer: 'Тело'
     form_answer:

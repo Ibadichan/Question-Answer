@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'user creates answer', '
   In order to answer the question
@@ -15,7 +15,7 @@ feature 'user creates answer', '
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Тело', with: 'text text'
+    fill_in 'Ответ', with: 'text text'
     click_on 'ответить'
 
     within '.answers' do
@@ -27,14 +27,14 @@ feature 'user creates answer', '
     sign_in(user)
 
     visit question_path(question)
-    fill_in 'Тело', with: ''
+    fill_in 'Ответ', with: ''
     click_on 'ответить'
     expect(page).to have_content 'Тело ответа не может быть пустым'
   end
 
   scenario 'Not authenticated user tries to create answer' do
     visit question_path(question)
-    fill_in 'Тело', with: 'text text'
+    fill_in 'Ответ', with: 'text text'
     click_on 'ответить'
 
     expect(page).to have_content 'Вам необходимо войти в систему или зарегистрироваться.'

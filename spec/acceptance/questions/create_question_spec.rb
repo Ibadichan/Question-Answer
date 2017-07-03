@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'Create question', '
   In order to get answer from community
@@ -16,7 +16,7 @@ feature 'Create question', '
     visit questions_path
     click_on 'Задать вопрос'
     fill_in 'Заголовок', with: 'my title'
-    fill_in 'Тело', with: 'my body'
+    fill_in 'Вопрос', with: 'my body'
     click_on 'Создать'
 
     expect(page).to have_content 'Вопрос успешно создан'
@@ -31,7 +31,7 @@ feature 'Create question', '
     visit questions_path
     click_on 'Задать вопрос'
     fill_in 'Заголовок', with: ''
-    fill_in 'Тело', with: ''
+    fill_in 'Вопрос', with: ''
     click_on 'Создать'
 
     expect(current_path).to eq questions_path

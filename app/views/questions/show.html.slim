@@ -1,4 +1,4 @@
-h2 id="blue" = @question.title
+h2 = @question.title
 = @question.body
 
 br
@@ -9,4 +9,6 @@ br
 
 p = "Создатель вопроса:  #{@question.user.email}"
 - if current_user&.author_of?(@question)
-  p = link_to t('.delete_question'), question_path(@question), method: :delete
+   = link_to t('.delete_question'), question_path(@question), method: :delete
+   br
+   = link_to t('.edit_question'), edit_question_path(@question)

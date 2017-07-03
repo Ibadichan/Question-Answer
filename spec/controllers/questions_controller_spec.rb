@@ -103,4 +103,72 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'GET #edit' do
+    sign_in_user
+    before { get :edit, params: {id: question} }
+
+    it 'assigns requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders edit view' do
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'PATCH #update' do
+    sign_in_user
+    let(:question_of_author) {create(:question, user: @user)}
+
+    context 'Author tries to update question' do
+      context 'with valid attributes' do
+        it 'assigns requested question to @question ' do
+          patch :update, params: {id: question_of_author, question: attributes_for(:question)}
+          expect(assigns(:question)).to eq question_of_author
+        end
+
+        it 'changes question attributes' do
+          patch :update, params: {id: question_of_author, question: {title: 'new title', body: 'new body'}}
+          question_of_author.reload
+          expect(question_of_author.body).to eq 'new body'
+          expect(question_of_author.title).to eq 'new title'
+        end
+
+        it 'redirects to @question' do
+          patch :update, params: {id: question_of_author, question: attributes_for(:question)}
+          expect(response).to redirect_to question_path(question_of_author)
+        end
+
+      end
+
+      context 'with invalid attributes' do
+        before {patch :update, params: {id: question, question: {title: 'new title', body: nil}}}
+
+        it 'does not change question attributes' do
+          question.reload
+          expect(question.body).not_to eq 'new title'
+          expect(question.title).not_to eq nil
+        end
+
+        it 'renders edit view' do
+          expect(response).to render_template :edit
+        end
+      end
+    end
+
+    context 'Non-author tries to update question' do
+      before { patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}}}
+
+      it 'does not change question attributes' do
+        question.reload
+        expect(question.body).not_to eq 'new body'
+        expect(question.title).not_to eq 'new title'
+      end
+
+      it 'renders edit view' do
+        expect(response).to render_template :edit
+      end
+    end
+  end
 end
