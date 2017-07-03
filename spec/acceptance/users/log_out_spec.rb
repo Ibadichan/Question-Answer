@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'User log out', '
   In order to be able finish the session
