@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'acceptance/acceptance_helper'
 
 feature 'user creates answer', '
   In order to answer the question
