@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :answer do
-    sequence(:body) { |n| "MyText #{n}" }
+    sequence(:body) { |n| "MyAnswerText #{n}" }
     user
     question
     factory :invalid_answer do
