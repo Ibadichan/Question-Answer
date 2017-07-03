@@ -1,7 +1,8 @@
 = render 'common/errors', resource: @answer
-
+.answer-errors
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body
   = f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
   br
   = f.submit t('.create_answer'), class: 'btn btn-default'
+
