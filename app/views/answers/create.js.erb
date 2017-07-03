@@ -1,6 +1,10 @@
-<%- if @answer.persisted? %>
+<% if @answer.persisted? %>
   $('.answers').append('<%= j render @answer %>');
   $('#answer_body').val('');
-<%- else %>
-  <%= render 'questions/answers' %>
-<%- end %>
+  $('div.answer-errors').removeClass('alert alert-danger')
+<% else %>
+  <% @answer.errors.each do |attr, message| %>
+     $('.answer-errors').html('<%= j message %>');
+  <% end %>
+  $('div.answer-errors').addClass('alert alert-danger')
+<% end %>

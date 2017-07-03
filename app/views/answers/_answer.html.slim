@@ -1,5 +1,4 @@
-- if answer.persisted?
-  .answer-wrapper
+.answer-wrapper
     = answer.body
     br
     = "Создатель: #{answer.user.email}"
@@ -11,5 +10,3 @@
             li
               = link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete
             li
-              /= link_to t('questions.show.delete_answer'), answer_path(answer), method: :delete
-              /редактирование сделаю потом
