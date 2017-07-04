@@ -2,10 +2,10 @@ ru:
   activerecord:
     attributes:
       answer:
-        body: 'Тело'
+        body: 'Ваш ответ'
       question:
         title: 'Заголовок'
-        body: 'Тело'
+        body: 'Ваш вопрос'
     errors:
       models:
         user:

@@ -11,10 +11,10 @@ ru:
   questions:
     new:
       title: 'Заголовок'
-      body: 'Тело'
+      body: 'Ваш вопрос'
       action: '%{action}'
     show:
       delete_question: 'Удалить вопрос'
-      body_of_answer: 'Тело'
+      body_of_answer: 'Ваш ответ'
     form_answer:
       create_answer: 'ответить'
