@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question, only: %i[create]
-  before_action :set_answer, only: %i[destroy]
+  before_action :set_answer, only: %i[destroy update]
 
   def create
     @answer = @question.answers.create(answer_params.merge(user: current_user))
@@ -14,6 +14,11 @@ class AnswersController < ApplicationController
       @answer.destroy
       render :delete
     end
+  end
+
+  def update
+    @question = @answer.question
+    @answer.update(answer_params) if current_user.author_of?(@answer)
   end
 
   private

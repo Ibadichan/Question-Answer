@@ -21,8 +21,11 @@ feature 'Create question', '
 
     expect(page).to have_content 'Вопрос успешно создан'
     expect(current_path).to eq question_path(Question.last)
-    expect(page).to have_content 'my body'
-    expect(page).to have_content 'my title'
+
+    within '.question-show' do
+      expect(page).to have_content 'my body'
+      expect(page).to have_content 'my title'
+    end
   end
 
   scenario 'Authenticated user tries to ask  invalid question' do

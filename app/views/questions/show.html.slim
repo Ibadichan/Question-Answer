@@ -1,12 +1,8 @@
-h2 id="blue" = @question.title
-= @question.body
-
+.question-wrapper
+  = render 'question'
+  = render 'edit'
 br
-= render 'questions/answers'
+= render 'answers'
 br
-= render 'questions/form_answer'
+= render 'form_answer'
 br
-
-p = "Создатель вопроса:  #{@question.user.email}"
-- if current_user&.author_of?(@question)
-  p = link_to t('.delete_question'), question_path(@question), method: :delete

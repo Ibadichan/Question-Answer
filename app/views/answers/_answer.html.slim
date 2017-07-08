@@ -4,8 +4,13 @@
     br
     = "Создатель: #{answer.user.email}"
     br
-    - if current_user&.author_of?(answer)
-      = link_to t('answers.delete_answer'),
+    .edit-answer
+      - if current_user&.author_of?(answer)
+        = link_to t('answers.delete_answer'),
                 answer_path(answer),
                 method: :delete,
                 remote: true
+        br
+        = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
+        = form_for answer, remote: true do |f|
+          = render 'answers/form_fields', f: f

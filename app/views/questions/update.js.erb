@@ -1,0 +1,10 @@
+$('.question-errors').html('');
+
+<% if @question.errors.present? %>
+  <%	@question.errors.each do |attr, message| %>
+    $('.question-errors').append('<p class="alert alert-danger"><%= j message %></p>');
+  <% end %>
+<% else %>
+  $('.question-wrapper').html('<%= j render @question %> <%= j render 'edit'%>');
+//  о да! я узнал как делать 2 рендера !!!
+<% end %>

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'capybara/poltergeist'
 
 RSpec.configure do |config|
-  config.include WaitForAjax, type: :feature
+  Capybara.javascript_driver = :webkit
 
-  Capybara.javascript_driver = :poltergeist
+  config.include WaitForAjax, type: :feature
 
   config.include AcceptanceHelpers, type: :feature
 

@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :set_question, only: %i[destroy show]
+  before_action :set_question, only: %i[destroy show update]
 
   def index
     @questions = Question.all
@@ -32,6 +32,10 @@ class QuestionsController < ApplicationController
     else
       render :show
     end
+  end
+
+  def update
+    @question.update(question_params) if current_user.author_of?(@question)
   end
 
   private

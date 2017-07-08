@@ -17,16 +17,22 @@ feature 'User can see the question', '
 
     visit question_path(question)
 
-    expect(page).to have_content question.title
-    expect(page).to have_content question.body
+    within '.question-show' do
+      expect(page).to have_content question.title
+      expect(page).to have_content question.body
+    end
+
     answers.each { |answer| expect(page).to have_content answer.body }
   end
 
   scenario 'Non-authenticated user tries to see question' do
     visit question_path(question)
 
-    expect(page).to have_content question.title
-    expect(page).to have_content question.body
+    within '.question-show' do
+      expect(page).to have_content question.title
+      expect(page).to have_content question.body
+    end
+
     answers.each { |answer| expect(page).to have_content answer.body }
   end
 end
