@@ -8,13 +8,18 @@ ru:
       ask_question: 'Задать вопрос'
   answers:
     delete_answer: 'Удалить ответ'
+    edit_answer: 'Редактировать'
+    answer: 'ответить'
+    body_of_answer: 'Ваш ответ'
   questions:
+    form_fields:
+      action: '%{action}'
     new:
       title: 'Заголовок'
       body: 'Ваш вопрос'
-      action: '%{action}'
-    show:
+    edit:
       delete_question: 'Удалить вопрос'
+      edit_question: 'Редактировать'
       body_of_answer: 'Ваш ответ'
     form_answer:
-      create_answer: 'ответить'
+      answer: 'ответить'

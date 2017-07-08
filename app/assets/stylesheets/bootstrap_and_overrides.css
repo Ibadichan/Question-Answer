@@ -14,12 +14,3 @@
 .margin-right {
     margin-right: 20px;
 }
-
-.blue {
-    color: rgba(99,99,99,0.57);
-}
-
-.answer-wrapper {
-    margin-top: 30px;
-    border-top: 3px solid lightgray;
-}

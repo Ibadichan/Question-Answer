@@ -1,7 +1,8 @@
+$('.answer-errors').html('');
+
 <%- if @answer.persisted? %>
   $('.answers').append('<%= j render @answer %>');
-  $('#answer_body').val('');
-  $('.answer-errors').html('');
+  $('#answer_body.form-control').val('');
 <%- else %>
   <% @answer.errors.each do |attr, message| %>
     $('.answer-errors').html('<p class="alert alert-danger"><%= j message %></p>');

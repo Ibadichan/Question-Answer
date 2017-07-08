@@ -1,0 +1,8 @@
+.answer-wrapper {
+    margin-top: 30px;
+    border-top: 3px solid lightgray;
+}
+
+.edit_answer {
+    display: none;
+}
