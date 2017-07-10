@@ -10,10 +10,9 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.author_of?(@answer)
-      @answer.destroy
-      render :delete
-    end
+    return unless current_user.author_of?(@answer)
+    @answer.destroy
+    render :delete
   end
 
   def update
@@ -24,11 +23,10 @@ class AnswersController < ApplicationController
   def best
     @question = @answer.question
 
-    if current_user.author_of?(@question)
-      @question.answers.update_all(best: false)
-      @answer.best = true
-      @answer.save
-    end
+    return unless current_user.author_of?(@question)
+    @question.answers.update_all(best: false)
+    @answer.best = true
+    @answer.save
   end
 
   private
