@@ -9,6 +9,7 @@ ru:
   answers:
     delete_answer: 'Удалить ответ'
     edit_answer: 'Редактировать'
+    best_answer: 'Лучший ответ'
     answer: 'ответить'
     body_of_answer: 'Ваш ответ'
   questions:

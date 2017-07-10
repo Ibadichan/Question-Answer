@@ -5,10 +5,12 @@ FactoryGirl.define do
     sequence(:body) { |n| "MyAnswerText #{n}" }
     user
     question
+    best false
     factory :invalid_answer do
       body  nil
       user nil
       question nil
+      best false
     end
   end
 end

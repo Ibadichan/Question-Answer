@@ -107,4 +107,37 @@ describe AnswersController do
       end
     end
   end
+
+  describe 'PATCH #best' do
+    let(:question_of_user) { create(:question, user: @user) }
+    let(:answer_of_question) { create(:answer, question: question_of_user) }
+
+    context 'Author tries to select best answer' do
+      before { patch :best, params: { id: answer_of_question, format: :js } }
+
+      it 'assigns requested answer to @answer' do
+        expect(assigns(:answer)).to eq answer_of_question
+      end
+
+      it 'assigns question of answer to @question' do
+        expect(assigns(:question)).to eq question_of_user
+      end
+
+      it "changes value of field 'best' to true" do
+        answer_of_question.reload
+        expect(answer_of_question.best).to eq true
+      end
+
+      it 'render best view' do
+        expect(response).to render_template 'best'
+      end
+    end
+
+    context 'Non-author tries to select best answer' do
+      it "does not change value of field 'best' to true" do
+        patch :best, params: { id: answer, format: :js }
+        expect(answer.best).to eq false
+      end
+    end
+  end
 end
