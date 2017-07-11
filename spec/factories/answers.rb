@@ -10,7 +10,13 @@ FactoryGirl.define do
       body  nil
       user nil
       question nil
-      best false
+      best nil
+    end
+    factory :best_answer do
+      sequence(:body) { |n| "MyAnswerText #{n}" }
+      user
+      question
+      best true
     end
   end
 end

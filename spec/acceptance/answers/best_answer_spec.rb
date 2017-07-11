@@ -12,34 +12,37 @@ feature 'User can select the best answer of question', '
   given(:non_author) { create(:user) }
   given(:question) { create(:question, user: author) }
   given!(:answers) { create_list(:answer, 2, question: question) }
+  given(:best_answer) { create(:best_answer, question: question) }
 
   describe 'Author of question tries to select best answer' do
     background do
       sign_in(author)
 
       visit question_path(question)
-
-      within all('div[data-answer-id]').last do
-        click_on 'Лучший ответ'
-        wait_for_ajax
-      end
-
-      within all('div[data-answer-id]').first do
-        expect(page).to have_content answers.last.body
-      end
     end
 
     scenario 'author tries to select best answer', js: true do
-    end
-
-    scenario 'author tries to re-select best answer', js: true do
       within all('div[data-answer-id]').last do
         click_on 'Лучший ответ'
         wait_for_ajax
       end
 
       within all('div[data-answer-id]').first do
-        expect(page).to have_content answers.first.body
+        expect(page).to have_content 'Это лучший ответ!'
+        expect(page).to have_content all('div[data-answer-id]').last
+      end
+    end
+
+    scenario 'author tries to re-select best answer', js: true do
+      best_answer
+
+      within all('div[data-answer-id]').last do
+        click_on 'Лучший ответ'
+        wait_for_ajax
+      end
+
+      within all('div[data-answer-id]').first do
+        expect(page).to have_no_content best_answer.body
       end
     end
   end
