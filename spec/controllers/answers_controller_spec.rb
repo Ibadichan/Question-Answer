@@ -125,7 +125,7 @@ describe AnswersController do
 
       it "changes value of field 'best' to true" do
         answer_of_question.reload
-        expect(answer_of_question.best).to eq true
+        expect(answer_of_question).to be_best
       end
 
       it 'render best view' do
@@ -135,8 +135,7 @@ describe AnswersController do
 
     context 'Non-author tries to select best answer' do
       it "does not change value of field 'best' to true" do
-        patch :best, params: { id: answer, format: :js }
-        expect(answer.best).to eq false
+        expect { patch :best, params: { id: answer, format: :js } }.to_not change { answer.reload.best }
       end
     end
   end

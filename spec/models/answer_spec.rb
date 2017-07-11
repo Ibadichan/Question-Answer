@@ -9,12 +9,20 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of :body }
 
   describe '.by_best' do
-    let(:answers) { create_list(:answer, 2) }
-    let(:best_answer) { create(:answer, best: true) }
+    let!(:answers) { create_list(:answer, 2) }
+    let!(:best_answer) { answers << create(:answer, best: true) }
 
     it 'sorts the answers by best flag' do
-      answers << best_answer
       expect(Answer.by_best.first.best).to eq true
+    end
+  end
+
+  describe '#select_best' do
+    let(:answer) { create(:answer) }
+
+    it 'changes field best of answer' do
+      answer.select_as_best
+      expect(answer.best).to eq true
     end
   end
 end

@@ -1,7 +1,7 @@
 ready = ->
   $('body').on 'click', '.edit-answer-link', (e) ->
-    answer_id =  $(this).parents('.answer-wrapper').data('answerId');
-    $('form#edit_answer_'+ answer_id).show();
+    answerId =  $(this).parents('.answer-wrapper').data('answerId');
+    $('form#edit_answer_'+ answerId).show();
     e.preventDefault();
     $(this).hide();
 

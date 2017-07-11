@@ -1,11 +1,12 @@
+var answer = $('div[data-answer-id=<%= @answer.id%>]');
+
 <% if @answer.errors.present? %>
-  var answer = $('div[data-answer-id=<%= @answer.id%>]');
   var answerErrors = answer.find('.answer-errors');
 
   <% @answer.errors.each do |attr, message| %>
     $(answerErrors).append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
-
 <% else %>
-  $('.answers').html('<%= j render @question.answers %>');
+  answer.remove();
+  $('.answers').append('<%= j render @answer %>');
 <% end %>

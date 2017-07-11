@@ -5,6 +5,9 @@ $('.question-errors').html('');
     $('.question-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  $('.question-wrapper').html('<%= j render @question %> <%= j render 'edit'%>');
-//  о да! я узнал как делать 2 рендера !!!
+  $('.question-wrapper div.question-show').remove();
+//   делаю так, потому что при изменении html() у меня просто будет вложеный див question-show в question-show
+  $('.question-wrapper').prepend('<%= j render @question %>');
+  $('.question-edit').hide();
+  $('.edit-question-link').show();
 <% end %>
