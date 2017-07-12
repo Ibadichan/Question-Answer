@@ -3,7 +3,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :set_question, only: %i[destroy show update]
-  before_action :authorship, only: %i[destroy update]
+  before_action :check_authorship, only: %i[destroy update]
 
   def index
     @questions = Question.all
@@ -37,8 +37,8 @@ class QuestionsController < ApplicationController
 
   private
 
-  def authorship
-    return head :forbidden unless current_user.author_of?(@question)
+  def check_authorship
+    head :forbidden unless current_user.author_of?(@question)
   end
 
   def set_question

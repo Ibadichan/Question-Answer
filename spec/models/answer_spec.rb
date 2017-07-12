@@ -10,19 +10,28 @@ RSpec.describe Answer, type: :model do
 
   describe '.by_best' do
     let!(:answers) { create_list(:answer, 2) }
-    let!(:best_answer) { answers << create(:answer, best: true) }
+    let!(:best_answer) { create(:answer, best: true) }
 
     it 'sorts the answers by best flag' do
-      expect(Answer.by_best.first.best).to eq true
+      expect(Answer.by_best.first).to eq best_answer
+      expect(Answer.by_best.first).to be_best
     end
   end
 
   describe '#select_best' do
-    let(:answer) { create(:answer) }
+    let!(:question) { create(:question) }
+    let!(:old_best_answer) { create(:answer, question: question, best: true) }
+    let!(:new_answer) { create(:answer, question: question) }
 
     it 'changes field best of answer' do
-      answer.select_as_best
-      expect(answer.best).to eq true
+      new_answer.select_as_best
+      expect(new_answer).to be_best
+    end
+
+    it 'set false to all others answers' do
+      new_answer.select_as_best
+      old_best_answer.reload
+      expect(old_best_answer).to_not be_best
     end
   end
 end

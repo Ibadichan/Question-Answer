@@ -22,27 +22,25 @@ feature 'User can select the best answer of question', '
     end
 
     scenario 'author tries to select best answer', js: true do
-      within all('div[data-answer-id]').last do
+      within :xpath, "//div[@data-answer-id='#{answers.last.id}']" do
         click_on 'Лучший ответ'
         wait_for_ajax
-      end
-
-      within all('div[data-answer-id]').first do
         expect(page).to have_content 'Это лучший ответ!'
-        expect(page).to have_content all('div[data-answer-id]').last
       end
     end
 
     scenario 'author tries to re-select best answer', js: true do
       best_answer
 
-      within all('div[data-answer-id]').last do
+      within :xpath, "//div[@data-answer-id='#{answers.last.id}']" do
         click_on 'Лучший ответ'
         wait_for_ajax
+        expect(page).to have_content 'Это лучший ответ!'
       end
 
-      within all('div[data-answer-id]').first do
-        expect(page).to have_no_content best_answer.body
+      within :xpath, "//div[@data-answer-id='#{best_answer.id}']" do
+        expect(page).to have_no_content 'Это лучший ответ!'
+        expect(page).to have_link 'Лучший ответ'
       end
     end
   end
