@@ -59,7 +59,7 @@ describe AnswersController do
 
       it 'render template  delete' do
         delete :destroy, params: { id: answer_of_user, format: :js }
-        expect(response).to render_template :delete
+        expect(response).to render_template :destroy
       end
     end
 

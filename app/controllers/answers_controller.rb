@@ -3,7 +3,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_answer, only: %i[destroy update best]
-  before_action :authorship, only: %i[destroy update]
+  before_action :check_authorship, only: %i[destroy update]
 
   def create
     @question = Question.find(params[:question_id])
@@ -12,7 +12,6 @@ class AnswersController < ApplicationController
 
   def destroy
     @answer.destroy
-    render :delete
   end
 
   def update
@@ -23,14 +22,13 @@ class AnswersController < ApplicationController
   def best
     @question = @answer.question
     return head :forbidden unless current_user.author_of?(@question)
-    # здесь не вынес в before так как здесь я проверяю вопрос а не ответ
     @answer.select_as_best
   end
 
   private
 
-  def authorship
-    return head :forbidden unless current_user.author_of?(@answer)
+  def check_authorship
+    head :forbidden unless current_user.author_of?(@answer)
   end
 
   def set_answer

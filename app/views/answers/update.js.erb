@@ -7,6 +7,5 @@ var answer = $('div[data-answer-id=<%= @answer.id%>]');
     $(answerErrors).append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  answer.remove();
-  $('.answers').append('<%= j render @answer %>');
+  answer.replaceWith('<%= j render @answer %>');
 <% end %>

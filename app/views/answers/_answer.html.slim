@@ -10,8 +10,8 @@
                 remote: true,
                 method: :patch
     - else
-      span id="this-is-best" Это лучший ответ!
-    br id="br-best-answer"
+      span Это лучший ответ!
+    br
     - if current_user&.author_of?(answer)
       = link_to t('answers.delete_answer'),
               answer_path(answer),
