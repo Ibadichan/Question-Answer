@@ -13,6 +13,7 @@ feature 'User can select the best answer of question', '
   given(:question) { create(:question, user: author) }
   given!(:answers) { create_list(:answer, 2, question: question) }
   given(:best_answer) { create(:best_answer, question: question) }
+  given!(:last_answer) { ".answers div[data-answer-id='#{answers.last.id}']" }
 
   describe 'Author of question tries to select best answer' do
     background do
@@ -22,26 +23,29 @@ feature 'User can select the best answer of question', '
     end
 
     scenario 'author tries to select best answer', js: true do
-      within :xpath, "//div[@data-answer-id='#{answers.last.id}']" do
+      within last_answer do
         click_on 'Лучший ответ'
         wait_for_ajax
         expect(page).to have_content 'Это лучший ответ!'
       end
+
+      expect(first('.answers div')).to eq find(last_answer)
     end
 
     scenario 'author tries to re-select best answer', js: true do
       best_answer
 
-      within :xpath, "//div[@data-answer-id='#{answers.last.id}']" do
+      within last_answer do
         click_on 'Лучший ответ'
         wait_for_ajax
-        expect(page).to have_content 'Это лучший ответ!'
       end
 
-      within :xpath, "//div[@data-answer-id='#{best_answer.id}']" do
+      within "[data-answer-id='#{best_answer.id}']" do
         expect(page).to have_no_content 'Это лучший ответ!'
         expect(page).to have_link 'Лучший ответ'
       end
+
+      expect(first('.answers div')).to eq find(last_answer)
     end
   end
 
