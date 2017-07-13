@@ -6,7 +6,7 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
-  scope :by_best, -> { order(best: :desc) }
+  scope :by_best, (-> { order(best: :desc) })
 
   def select_as_best
     Answer.transaction do

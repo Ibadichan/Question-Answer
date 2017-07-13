@@ -105,13 +105,15 @@ describe QuestionsController do
 
     context 'Author tries to update question' do
       it 'assigns question to @question' do
-        patch :update, params: { id: question_of_user, question: attributes_for(:question), format: :js }
+        patch :update, params: { id: question_of_user, question: attributes_for(:question),
+                                 format: :js }
         expect(assigns(:question)).to eq question_of_user
       end
 
       it 'changes the attributes of question' do
         patch :update, params: { id: question_of_user,
-                                 question: { title: 'new title', body: 'new body' }, format: :js }
+                                 question: { title: 'new title', body: 'new body' },
+                                 format: :js }
         question_of_user.reload
         expect(question_of_user.title).to eq 'new title'
         expect(question_of_user.body).to eq 'new body'
@@ -119,7 +121,8 @@ describe QuestionsController do
 
       it 'render update view' do
         patch :update, params: { id: question_of_user,
-                                 question: attributes_for(:question), format: :js }
+                                 question: attributes_for(:question),
+                                 format: :js }
         expect(response).to render_template :update
       end
     end
@@ -127,7 +130,8 @@ describe QuestionsController do
     context 'Non author tries to update question' do
       it 'does not changes the attributes' do
         patch :update, params: { id: question,
-                                 question: { title: 'new title', body: 'new body' }, format: :js }
+                                 question: { title: 'new title', body: 'new body' },
+                                 format: :js }
         question.reload
         expect(question.body).to_not eq 'new body'
         expect(question.title).to_not eq 'new title'

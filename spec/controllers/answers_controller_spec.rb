@@ -135,7 +135,9 @@ describe AnswersController do
 
     context 'Non-author tries to select best answer' do
       it "does not change value of field 'best' to true" do
-        expect { patch :best, params: { id: answer, format: :js } }.to_not change { answer.reload.best }
+        expect do
+          patch :best, params: { id: answer, format: :js }
+        end.to_not change { answer.reload.best }
       end
     end
   end
