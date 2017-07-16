@@ -9,7 +9,7 @@ feature 'Add files to question', '
 ' do
   given(:author) { create(:user) }
 
-  scenario 'Author tries to add file to own question' do
+  scenario 'Author tries to add file when asks the  question' do
     sign_in author
     visit new_question_path
 
@@ -18,6 +18,7 @@ feature 'Add files to question', '
     attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Создать'
 
-    expect(page).to have_content 'spec_helper.rb'
+    expect(page).to have_link 'spec_helper.rb',
+                              href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end
