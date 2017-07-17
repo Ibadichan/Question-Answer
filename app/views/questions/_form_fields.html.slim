@@ -5,4 +5,12 @@ br
 = f.label :body
 = f.text_area :body, rows: 5, class: 'form-control', style: 'width:50%;'
 br
+
+p Прикрепления:
+= f.fields_for :attachments do |a|
+  = a.label :file
+  = a.file_field :file
+  br
+
+br
 = f.submit t('.action', action: @question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'

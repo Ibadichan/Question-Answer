@@ -1,1 +1,1 @@
-$('.answers').html('<%= render @question.answers.by_best %>');
+$('.answers').replaceWith('<%= render 'questions/answers', question: @question %>');
