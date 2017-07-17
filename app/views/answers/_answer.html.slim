@@ -21,3 +21,8 @@
         = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
         = form_for answer, remote: true do |f|
           = render 'answers/form_fields', f: f
+    | Прикрепления:
+    ul
+      - answer.attachments.each do |attachment|
+        li =link_to attachment.file.identifier, attachment.file.url
+

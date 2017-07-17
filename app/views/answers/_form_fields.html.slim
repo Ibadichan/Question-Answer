@@ -2,4 +2,12 @@
 = f.label :body
 = f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
 br
+
+p Прикрепления:
+= f.fields_for :attachments do |a|
+  = a.label :file
+  = a.file_field :file
+  br
+
+br
 = f.submit t('answers.answer'), class: 'btn btn-default'

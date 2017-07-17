@@ -54,6 +54,7 @@ group :test do
   gem 'launchy'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end
+gem 'remotipart'
 gem 'carrierwave'
 gem 'devise'
 gem 'devise-i18n'
