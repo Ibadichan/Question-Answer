@@ -2,6 +2,6 @@
 
 class AddQuestionIdToAttachments < ActiveRecord::Migration[5.1]
   def change
-    add_column :attachments, :question_id, :integer, foreign_key: true
+    add_belongs_to :attachments, :question, foreign_key: true
   end
 end

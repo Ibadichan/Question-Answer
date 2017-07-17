@@ -4,13 +4,13 @@ require 'acceptance/acceptance_helper'
 
 feature 'Add files to question', '
   In order to illustrate question
-  As an author
+  As an authenticated user
   I want to add files to question
 ' do
-  given(:author) { create(:user) }
+  given(:user) { create(:user) }
 
   scenario 'Author tries to add file when asks the  question' do
-    sign_in author
+    sign_in user
     visit new_question_path
 
     fill_in 'Заголовок', with: 'title'
