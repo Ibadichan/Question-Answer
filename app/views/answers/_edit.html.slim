@@ -1,0 +1,4 @@
+.edit-answer
+  = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
+  = form_for answer, remote: true do |f|
+    = render 'answers/form_fields', f: f
