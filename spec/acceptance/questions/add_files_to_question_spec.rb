@@ -28,13 +28,11 @@ feature 'Add files to question', '
     fill_in 'Заголовок', with: 'title'
     fill_in 'Ваш вопрос', with: 'body'
 
-    within first('.nested-fields') do
-      attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
-    end
+    attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
 
     click_on 'Еще один'
 
-    within all('.nested-fields').last do
+    within all('form#new_question .nested-fields').last do
       attach_file 'Файл', "#{Rails.root}/spec/rails_helper.rb"
     end
 

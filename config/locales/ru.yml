@@ -1,4 +1,8 @@
 ru:
+  cocoon:
+    defaults:
+      add: 'Еще один'
+      remove: 'Удалить'
   common:
     back: 'Назад'
   layouts:

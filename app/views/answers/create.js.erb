@@ -2,6 +2,12 @@ $('.answer-errors').html('');
 
 <%- if @answer.persisted? %>
   $('.answers').append('<%= j render @answer %>');
+
+  $('.nested-fields').hide();
+  $('.nested-fields').last().show();
+  $('.answer-wrapper input[value="ответить"]').remove();
+  $('.answer-wrapper .links').remove();
+
   $('#answer_body.form-control').val('');
 <%- else %>
   <% @answer.errors.each do |attr, message| %>

@@ -7,7 +7,7 @@ p Прикрепления:
 = f.fields_for :attachments do |a|
   = render 'attachment_fields', f: a
 .links
-  = link_to_add_association 'Еще один', f, :attachments
+  = link_to_add_association  f, :attachments
 
 br
 = f.submit t('.action', action: @question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'
