@@ -9,10 +9,12 @@ feature 'Add files to question', '
 ' do
   given(:user) { create(:user) }
 
-  scenario 'Author tries to add file when asks the  question' do
+  background do
     sign_in user
     visit new_question_path
+  end
 
+  scenario 'User tries to add one file when asks the  question' do
     fill_in 'Заголовок', with: 'title'
     fill_in 'Ваш вопрос', with: 'body'
     attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
@@ -20,5 +22,27 @@ feature 'Add files to question', '
 
     expect(page).to have_link 'spec_helper.rb',
                               href: '/uploads/attachment/file/1/spec_helper.rb'
+  end
+
+  scenario 'User adds a few files when asks the  question', js: true do
+    fill_in 'Заголовок', with: 'title'
+    fill_in 'Ваш вопрос', with: 'body'
+
+    within first('.nested-fields') do
+      attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
+    end
+
+    click_on 'Еще один'
+
+    within all('.nested-fields').last do
+      attach_file 'Файл', "#{Rails.root}/spec/rails_helper.rb"
+    end
+
+    click_on 'Создать'
+
+    expect(page).to have_link 'spec_helper.rb',
+                              href: '/uploads/attachment/file/2/spec_helper.rb'
+    expect(page).to have_link 'rails_helper.rb',
+                              href: '/uploads/attachment/file/3/rails_helper.rb'
   end
 end

@@ -56,10 +56,12 @@ group :test do
 end
 
 gem 'carrierwave'
+gem 'cocoon'
 gem 'devise'
 gem 'devise-i18n'
 gem 'jquery-rails'
 gem 'rails-controller-testing'
 gem 'remotipart'
 gem 'slim-rails'
+gem 'thor', '0.19.4'
 gem 'twitter-bootstrap-rails'

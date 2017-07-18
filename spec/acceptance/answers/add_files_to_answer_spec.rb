@@ -11,7 +11,7 @@ feature 'Add files to answer', '
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'Author tries to add file to answer', js: true do
+  scenario 'Author tries to add one file to answer', js: true do
     sign_in user
 
     visit question_path(question)
