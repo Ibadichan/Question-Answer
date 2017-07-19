@@ -1,0 +1,6 @@
+- if answer.attachments.present?
+  .attachments-of-answer
+    span Прикрепления:
+    ul
+      - answer.attachments.each do |attachment|
+        li =link_to attachment.file.identifier, attachment.file.url

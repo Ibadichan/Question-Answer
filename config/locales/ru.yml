@@ -1,4 +1,8 @@
 ru:
+  cocoon:
+    defaults:
+      add: 'Добавить файл'
+      remove: 'Удалить'
   common:
     back: 'Назад'
   layouts:
@@ -7,19 +11,20 @@ ru:
       entrance: 'Вход'
       ask_question: 'Задать вопрос'
   answers:
+    action: '%{action}'
     delete_answer: 'Удалить ответ'
     edit_answer: 'Редактировать'
     best_answer: 'Лучший ответ'
     answer: 'ответить'
     body_of_answer: 'Ваш ответ'
   questions:
-    form_fields:
-      action: '%{action}'
+    link_to_destroy:
+      delete_question: 'Удалить вопрос'
+    action: '%{action}'
     new:
       title: 'Заголовок'
       body: 'Ваш вопрос'
     edit:
-      delete_question: 'Удалить вопрос'
       edit_question: 'Редактировать'
       body_of_answer: 'Ваш ответ'
     form_answer:

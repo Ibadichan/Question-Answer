@@ -3,6 +3,7 @@ $('.answer-errors').html('');
 <%- if @answer.persisted? %>
   $('.answers').append('<%= j render @answer %>');
   $('#answer_body.form-control').val('');
+  $('.nested-fields').remove();
 <%- else %>
   <% @answer.errors.each do |attr, message| %>
     $('.answer-errors').html('<p class="alert alert-danger"><%= j message %></p>');

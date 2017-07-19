@@ -1,4 +1,5 @@
 $('.question-errors').html('');
+$('.nested-fields').remove();
 
 <% if @question.errors.present? %>
   <%	@question.errors.each do |attr, message| %>
@@ -6,6 +7,7 @@ $('.question-errors').html('');
   <% end %>
 <% else %>
   $('.question-show').replaceWith('<%= j render @question %>');
-  $('.question-edit').hide();
+  $('.attachments-of-question').replaceWith('<%= j render 'attachments', question: @question %>')
+  $('.edit_question').hide();
   $('.edit-question-link').show();
 <% end %>
