@@ -2,7 +2,7 @@ ready = ->
   $('.edit-question-link').click (e) ->
     e.preventDefault();
     $(this).hide();
-    $('.question-edit').show();
+    $('.edit_question').show();
 
 
 $(document).on("turbolinks:load", ready);

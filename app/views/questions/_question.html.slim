@@ -1,5 +1,5 @@
 .question-show
   h2 = question.title
-  = question.body
+  p = question.body
   br
-  p = "Создатель вопроса:  #{question.user.email}"
+  span = "Создатель вопроса:  #{question.user.email}"
