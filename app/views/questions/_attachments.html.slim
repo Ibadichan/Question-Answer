@@ -1,0 +1,5 @@
+.attachments-of-question
+  span Прикрепления:
+  ul
+    - question.attachments.each do |attachment|
+      li = link_to attachment.file.identifier, attachment.file.url

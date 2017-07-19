@@ -1,6 +1,8 @@
 ru:
   activerecord:
     attributes:
+      attachment:
+        file: 'Файл'
       answer:
         body: 'Ваш ответ'
       question:
