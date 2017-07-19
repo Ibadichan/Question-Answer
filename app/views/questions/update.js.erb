@@ -6,6 +6,6 @@ $('.question-errors').html('');
   <% end %>
 <% else %>
   $('.question-show').replaceWith('<%= j render @question %>');
-  $('.question-edit').hide();
+  $('.edit_question').hide();
   $('.edit-question-link').show();
 <% end %>

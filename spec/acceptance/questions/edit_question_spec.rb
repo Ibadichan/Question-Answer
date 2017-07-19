@@ -19,7 +19,7 @@ feature 'User can to edit question', '
 
     click_on 'Редактировать'
 
-    within '.question-edit' do
+    within '.edit_question' do
       fill_in 'Заголовок', with: 'Новый заголовок'
       fill_in 'Ваш вопрос', with: 'Новое тело'
       click_on 'Изменить'
@@ -41,7 +41,7 @@ feature 'User can to edit question', '
 
     click_on 'Редактировать'
 
-    within '.question-edit' do
+    within '.edit_question' do
       fill_in 'Заголовок', with: ''
       fill_in 'Ваш вопрос', with: ''
       click_on 'Изменить'
