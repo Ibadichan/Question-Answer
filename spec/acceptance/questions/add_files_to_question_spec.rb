@@ -10,7 +10,7 @@ feature 'User can add files to question', '
 
   given(:user) { create(:user) }
 
-  scenario 'User tries to add files to question' do
+  scenario 'User tries to add one file to question' do
     sign_in user
     visit new_question_path
 
