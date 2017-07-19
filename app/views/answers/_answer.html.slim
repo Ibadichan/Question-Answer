@@ -5,13 +5,15 @@
     span = "Создатель: #{answer.user.email}"
     br
     - if current_user&.author_of?(answer.question) && !answer.best?
-      = render 'answers/link_best_answer', answer: answer
+      = link_to t('answers.best_answer'), best_answer_path(answer), method: :patch, remote: true
     - else
       span Это лучший ответ!
     br
     - if current_user&.author_of?(answer)
-      = render 'answers/link_delete_answer', answer: answer
-      = render 'answers/edit', answer: answer
+      = link_to t('answers.delete_answer'), answer_path(answer), method: :delete, remote: true
+      br
+      = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
+      = form_for answer, remote: true do |f|
+        = render 'answers/form_fields', f: f, answer: answer
 
-    - if answer.attachments.present?
-      = render 'answers/attachments', answer: answer
+    = render 'answers/attachments', answer: answer

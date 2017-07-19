@@ -3,6 +3,6 @@
     border-top: 3px solid lightgray;
 }
 
-.edit_answer, .hidden {
+.edit_answer {
     display: none;
 }

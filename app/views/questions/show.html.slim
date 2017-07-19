@@ -2,9 +2,8 @@
   = render 'question', question: @question
   = render 'edit', question: @question
   br
+  = render 'link_to_destroy', question: @question
   = render 'attachments', question: @question
-br
 = render 'answers', question: @question
 br
-= render 'form_answer', question: @question, answer: @answer
-br
+= render 'answers/new', question: @question, answer: @answer

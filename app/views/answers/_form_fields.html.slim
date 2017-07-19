@@ -1,9 +1,10 @@
 .answer-errors
 = f.label :body
 = f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
-= f.fields_for :attachments do |a|
-  = render 'attachment_fields', f: a
+
+= f.fields_for :attachments do |attachment|
+  = render 'answers/attachment_fields', f: attachment
 .links
   = link_to_add_association  f, :attachments
-  br
-= f.submit t('answers.answer'), class: 'btn btn-default'
+br
+= f.submit t('answers.action', action: answer.new_record? ? 'ответить' : 'редактировать'), class: 'btn btn-default'

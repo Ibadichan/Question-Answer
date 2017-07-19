@@ -1,13 +1,13 @@
 .question-errors
 = f.label :title
 = f.text_field :title, class: 'form-control', style: 'width:50%;'
+br
 = f.label :body
 = f.text_area :body, rows: 5, class: 'form-control', style: 'width:50%;'
-p Прикрепления:
-= f.fields_for :attachments do |a|
-  = render 'attachment_fields', f: a
-.links
-  = link_to_add_association  f, :attachments
-
 br
-= f.submit t('.action', action: @question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'
+= f.fields_for :attachments do |attachment|
+  = render 'attachment_fields', f: attachment
+.links
+  = link_to_add_association f, :attachments
+br
+= f.submit t('questions.action', action: @question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'

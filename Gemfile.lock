@@ -282,7 +282,6 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   therubyracer
-  thor (= 0.19.4)
   turbolinks (~> 5)
   twitter-bootstrap-rails
   tzinfo-data
@@ -290,4 +289,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.15.1
+   1.15.2
