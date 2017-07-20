@@ -7,6 +7,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'carrierwave'
+gem 'cocoon'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
@@ -34,7 +35,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'capybara', '~> 2.13'
   gem 'capybara-webkit'
-  gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
 end
@@ -47,6 +47,7 @@ group :development do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'launchy'
   gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
 end

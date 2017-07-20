@@ -1,5 +1,4 @@
-= form_for question, remote: true do |f|
-  = render 'questions/form_fields', f: f
+= render 'form', question: question, ajax: true
 
 - if current_user&.author_of?(question)
   = link_to t('.delete_question'), question_path(question), method: :delete
