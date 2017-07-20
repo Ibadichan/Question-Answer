@@ -18,7 +18,6 @@ feature 'User can select the best answer of question', '
   describe 'Author of question tries to select best answer' do
     background do
       sign_in(author)
-
       visit question_path(question)
     end
 
