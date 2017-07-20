@@ -1,4 +1,8 @@
 ru:
+  cocoon:
+    defaults:
+      add: "Добавить файл"
+      remove: "Удалить файл"
   common:
     back: 'Назад'
     remove_file: 'Удалить файл'
@@ -14,7 +18,7 @@ ru:
     answer: 'ответить'
     body_of_answer: 'Ваш ответ'
   questions:
-    form_fields:
+    form:
       action: '%{action}'
     new:
       title: 'Заголовок'

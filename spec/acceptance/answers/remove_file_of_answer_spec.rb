@@ -28,14 +28,14 @@ feature 'Author tries to remove file of answer', '
   scenario 'Non-author of answer tries to remove file' do
     sign_in non_author
 
-    visit  question_path(question)
+    visit question_path(question)
 
-    within ('.answers') { expect(page).to have_no_link 'Удалить файл' }
+    within('.answers') { expect(page).to have_no_link 'Удалить файл' }
   end
 
   scenario 'Guest tries to remove file of answer' do
     visit  question_path(question)
 
-    within ('.answers') { expect(page).to have_no_link 'Удалить файл' }
+    within('.answers') { expect(page).to have_no_link 'Удалить файл' }
   end
 end

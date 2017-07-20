@@ -6,7 +6,7 @@
     br
     - if current_user&.author_of?(answer.question) && !answer.best?
       = link_to t('answers.best_answer'), best_answer_path(answer), method: :patch, remote: true
-    - else
+    - elsif current_user&.author_of?(answer.question)
       span Это лучший ответ!
     br
     - if current_user&.author_of?(answer)
