@@ -1,3 +1,4 @@
 = render 'common/errors', resource: @question
 
-= render 'form', question: @question, ajax: false
+= form_for @question do |f|
+  = render 'questions/form_fields', f: f
