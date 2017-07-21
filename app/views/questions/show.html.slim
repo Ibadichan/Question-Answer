@@ -1,8 +1,8 @@
 .question-wrapper
   = render 'question', question: @question
   = render 'edit', question: @question
-  = render 'attachments', question: @question
 br
 = render 'answers', question: @question
 br
-= render 'answers/new', question: @question, answer: @answer
+= render 'form_answer', question: @question, answer: @answer
+br

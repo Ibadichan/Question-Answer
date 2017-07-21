@@ -1,6 +1,7 @@
-= render 'form', question: question, ajax: true
+.question-edit style=('display: none;')
+  = form_for question, remote: true do |f|
+    = render 'form_fields', f: f
 
 - if current_user&.author_of?(question)
-  = link_to t('.delete_question'), question_path(question), method: :delete
-  br
-  = link_to t('.edit_question'), '', class: 'edit-question-link'
+  p = link_to t('.delete_question'), question_path(question), method: :delete
+  p = link_to t('.edit_question'), '', class: 'edit-question-link'

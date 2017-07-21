@@ -137,7 +137,7 @@ describe AnswersController do
       it "does not change value of field 'best' to true" do
         expect do
           patch :best, params: { id: answer, format: :js }
-        end.to_not change(answer.reload, :best)
+        end.to_not change { answer.reload.best }
       end
     end
   end

@@ -7,37 +7,42 @@ feature 'User tries to edit answer', '
   As an author of answer
   I want to edit answer
 ' do
-
   given(:author) { create(:user) }
   given(:non_author) { create(:user) }
   given(:question) { create(:question) }
   given!(:answer) { create(:answer, user: author, question: question) }
 
-  describe 'Author tries to edit answer' do
-    background do
-      sign_in(author)
-      visit question_path(question)
+  scenario 'Author tries to edit answer', js: true do
+    sign_in(author)
+
+    visit question_path(question)
+
+    within '.answer-wrapper' do
+      click_on 'Редактировать'
+      fill_in 'Ваш ответ', with: 'new answer'
+      click_on 'ответить'
+      expect(page).to_not have_selector 'textarea'
     end
 
-    scenario 'with valid attributes', js: true do
-      within '.answer-wrapper' do
-        click_on 'Редактировать'
-        fill_in 'Ваш ответ', with: 'new answer'
-        click_on 'ответить'
-        expect(page).to_not have_selector 'textarea'
-      end
+    within '.answers' do
+      expect(page).to have_content 'new answer'
+    end
+  end
 
-      within('.answers') { expect(page).to have_content 'new answer' }
+  scenario 'Author tries to edit answer with invalid attributes', js: true do
+    sign_in(author)
+
+    visit question_path(question)
+
+    within '.answer-wrapper' do
+      click_on 'Редактировать'
+      fill_in 'Ваш ответ', with: ''
+      click_on 'ответить'
+      wait_for_ajax
     end
 
-    scenario 'with invalid attributes', js: true do
-      within '.answer-wrapper' do
-        click_on 'Редактировать'
-        fill_in 'Ваш ответ', with: ''
-        click_on 'ответить'
-        wait_for_ajax
-        expect(page).to have_content 'Тело ответа не может быть пустым'
-      end
+    within '.answer-wrapper' do
+      expect(page).to have_content 'Тело ответа не может быть пустым'
     end
   end
 
@@ -46,12 +51,16 @@ feature 'User tries to edit answer', '
 
     visit question_path(question)
 
-    within('.answer-wrapper') { expect(page).to have_no_link 'Редактировать' }
+    within '.answer-wrapper' do
+      expect(page).to have_no_link 'Редактировать'
+    end
   end
 
   scenario 'Guest tries to edit answer' do
     visit question_path(question)
 
-    within('.answer-wrapper') { expect(page).to have_no_link 'Редактировать' }
+    within '.answer-wrapper' do
+      expect(page).to have_no_link 'Редактировать'
+    end
   end
 end

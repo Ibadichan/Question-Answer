@@ -1,11 +1,6 @@
 ru:
-  cocoon:
-    defaults:
-      add: "Добавить файл"
-      remove: "Удалить файл"
   common:
     back: 'Назад'
-    remove_file: 'Удалить файл'
   layouts:
     application:
       exit: 'Выйти'
@@ -18,7 +13,7 @@ ru:
     answer: 'ответить'
     body_of_answer: 'Ваш ответ'
   questions:
-    form:
+    form_fields:
       action: '%{action}'
     new:
       title: 'Заголовок'

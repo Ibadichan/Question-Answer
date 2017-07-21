@@ -15,7 +15,6 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
-    @answer.attachments.build
   end
 
   def create
@@ -47,6 +46,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:body, :title, attachments_attributes: %i[file id _destroy])
+    params.require(:question).permit(:body, :title)
   end
 end
