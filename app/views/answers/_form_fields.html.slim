@@ -1,9 +1,0 @@
-.answer-errors
-= f.label :body
-= f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
-br
-= f.fields_for :attachments do |attachment|
-  = attachment.label :file
-  = attachment.file_field :file
-br
-= f.submit t('answers.answer'), class: 'btn btn-default'
