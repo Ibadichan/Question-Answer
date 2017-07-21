@@ -33,10 +33,6 @@ describe QuestionsController do
     it 'renders show view' do
       expect(response).to render_template :show
     end
-
-    it 'builds new attachment for answer' do
-      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
-    end
   end
 
   describe 'GET #new' do
@@ -70,7 +66,9 @@ describe QuestionsController do
 
     context 'with invalid attributes' do
       it 'does not save question in database' do
-        expect { post :create, params: { question: attributes_for(:invalid_question) } }.to_not change(Question, :count)
+        expect do
+          post :create, params: { question: attributes_for(:invalid_question) }
+        end.to_not change(Question, :count)
       end
 
       it 'renders new view' do
@@ -86,7 +84,9 @@ describe QuestionsController do
 
     context 'author tries to delete his question' do
       it 'destroys the @question' do
-        expect { delete :destroy, params: { id: question_of_user } }.to change(Question, :count).by(-1)
+        expect do
+          delete :destroy, params: { id: question_of_user }
+        end.to change(Question, :count).by(-1)
       end
 
       it 'redirects to questions' do
@@ -98,7 +98,9 @@ describe QuestionsController do
     context 'Not-author tries to delete answer' do
       it 'does not delete the @question' do
         question
-        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+        expect do
+          delete :destroy, params: { id: question }
+        end.to_not change(Question, :count)
       end
     end
   end
@@ -109,7 +111,8 @@ describe QuestionsController do
 
     context 'Author tries to update question' do
       it 'assigns question to @question' do
-        patch :update, params: { id: question_of_user, question: attributes_for(:question),
+        patch :update, params: { id: question_of_user,
+                                 question: attributes_for(:question),
                                  format: :js }
         expect(assigns(:question)).to eq question_of_user
       end

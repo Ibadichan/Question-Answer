@@ -5,4 +5,5 @@
 br
 = render 'answers', question: @question
 br
-= render 'answers/new', question: @question, answer: @answer
+.new_answer
+  = render 'answers/form', question: @question, answer: @answer

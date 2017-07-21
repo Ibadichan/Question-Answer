@@ -23,7 +23,7 @@ feature 'User tries to edit answer', '
       within '.answer-wrapper' do
         click_on 'Редактировать'
         fill_in 'Ваш ответ', with: 'new answer'
-        click_on 'ответить'
+        click_on 'редактировать'
         expect(page).to_not have_selector 'textarea'
       end
 
@@ -34,7 +34,7 @@ feature 'User tries to edit answer', '
       within '.answer-wrapper' do
         click_on 'Редактировать'
         fill_in 'Ваш ответ', with: ''
-        click_on 'ответить'
+        click_on 'редактировать'
         wait_for_ajax
         expect(page).to have_content 'Тело ответа не может быть пустым'
       end

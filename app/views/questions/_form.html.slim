@@ -12,4 +12,4 @@
     .links
       = link_to_add_association  f, :attachments
   br
-  = f.submit t('.action', action: question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'
+  = f.submit t('questions.action', action: question.new_record? ? 'Создать' : 'Изменить'), class: 'btn btn-default'

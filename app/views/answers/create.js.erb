@@ -1,8 +1,13 @@
 $('.answer-errors').html('');
 
 <%- if @answer.persisted? %>
-  $('.answers').append('<%= j render @answer %>');
-  $('#answer_body.form-control').val('');
+  <% if remotipart_submitted? %>
+    $('.answers').append("<%= j "#{render @answer }" %>");
+    $('.new_answer').html("<%= j "#{render 'form', question: @answer.question, answer: Answer.new}" %>");
+  <% else %>
+    $('.answers').append('<%= j render @answer %>');
+    $('.new_answer').html('<%= j render 'form', question: @answer.question, answer: Answer.new %>');
+  <% end %>
 <%- else %>
   <% @answer.errors.each do |attr, message| %>
     $('.answer-errors').html('<p class="alert alert-danger"><%= j message %></p>');

@@ -11,17 +11,50 @@ feature 'User can add files to answer', '
   given(:user) { create(:user) }
   given(:question) { create(:question) }
 
-  scenario 'User tries to add one file to answer', js: true do
+  background do
     sign_in user
     visit question_path(question)
+  end
 
+  scenario 'User tries to add one file to answer', js: true do
     fill_in 'Ваш ответ', with: 'text'
-    attach_file 'Файл', "#{Rails.root}/spec/rails_helper.rb"
+
+    click_on 'Добавить файл'
+
+    within('.new_answer .nested-fields') do
+      find('input[type="file"]').set("#{Rails.root}/.rspec")
+    end
+
     click_on 'ответить'
 
     within '.answers' do
-      expect(page).to have_link 'rails_helper.rb',
-                                href: '/uploads/attachment/file/1/rails_helper.rb'
+      expect(page).to have_link '.rspec',
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/1/.rspec"
+    end
+  end
+
+  scenario 'User tries to add a few files to answer', js: true do
+    fill_in 'Ваш ответ', with: 'text text'
+
+    click_on 'Добавить файл'
+
+    within all('.new_answer .nested-fields').first do
+      find('input[type="file"]').set("#{Rails.root}/Gemfile")
+    end
+
+    click_on 'Добавить файл'
+
+    within all('.new_answer .nested-fields').last do
+      find('input[type="file"]').set("#{Rails.root}/.rspec")
+    end
+
+    click_on 'ответить'
+
+    within '.answers' do
+      expect(page).to have_link 'Gemfile',
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/1/Gemfile"
+      expect(page).to have_link '.rspec',
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/2/.rspec"
     end
   end
 end

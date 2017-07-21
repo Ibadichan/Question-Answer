@@ -21,13 +21,13 @@ feature 'User can add files to question', '
 
     click_on 'Добавить файл'
 
-    within('.nested-fields') { find('input[type="file"]').set("#{Rails.root}/.gitignore") }
+    within('.nested-fields') { find('input[type="file"]').set("#{Rails.root}/Rakefile") }
 
     click_on 'Создать'
 
     within '.attachments-of-question' do
-      expect(page).to have_link '.gitignore',
-                                href: '/uploads/attachment/file/3/.gitignore'
+      expect(page).to have_link 'Rakefile',
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/3/Rakefile"
     end
   end
 
@@ -38,7 +38,7 @@ feature 'User can add files to question', '
     click_on 'Добавить файл'
 
     within all('.nested-fields').first do
-      find('input[type="file"]').set("#{Rails.root}/rails_helper.rb")
+      find('input[type="file"]').set("#{Rails.root}/Gemfile")
     end
 
     click_on 'Добавить файл'
@@ -50,10 +50,10 @@ feature 'User can add files to question', '
     click_on 'Создать'
 
     within '.attachments-of-question' do
-      expect(page).to have_link 'rails_helper.rb',
-                                href: '/uploads/attachment/file/1/rails_helper.rb'
+      expect(page).to have_link 'Gemfile',
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/1/Gemfile"
       expect(page).to have_link 'config.ru',
-                                href: '/uploads/attachment/file/2/config.ru'
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/2/config.ru"
     end
   end
 end
