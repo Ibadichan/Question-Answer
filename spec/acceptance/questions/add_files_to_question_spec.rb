@@ -16,10 +16,10 @@ feature 'User can add files to question', '
 
     fill_in 'Заголовок', with: 'title'
     fill_in 'Ваш вопрос', with: 'body'
-    attach_file 'Файл', "#{Rails.root}/.gitignore"
+    attach_file 'Файл', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Создать'
 
-    expect(page).to have_link '.gitignore',
-                              href: '/uploads/attachment/file/3/.gitignore'
+    expect(page).to have_link 'spec_helper.rb',
+                              href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end

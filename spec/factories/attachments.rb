@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :attachment do
-    file File.open("#{Rails.root}/Gemfile")
+    file File.open("#{Rails.root}/spec/spec_helper.rb")
     association :attachable
   end
 end

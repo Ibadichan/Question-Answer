@@ -1,7 +1,6 @@
 ru:
   common:
     back: 'Назад'
-    remove_file: 'Удалить файл'
   layouts:
     application:
       exit: 'Выйти'
