@@ -1,3 +1,5 @@
 h1 Все вопросы
-- @questions.each do |question|
-  h2 = link_to "#{question.title}", question_path(question)
+div
+  - @questions.each do |question|
+    h2 = link_to "#{question.title}", question_path(question)
+br
