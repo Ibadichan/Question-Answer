@@ -6,7 +6,6 @@ $('.question-errors').html('');
   <% end %>
 <% else %>
   $('.question-show').replaceWith('<%= j render @question %>');
-  $('.attachments-of-question').replaceWith('<%= j render 'attachments', question: @question %>');
   $('.edit_question').hide();
   $('.edit-question-link').show();
 <% end %>

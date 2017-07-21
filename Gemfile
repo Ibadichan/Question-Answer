@@ -16,7 +16,6 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.1'
 gem 'rails-controller-testing'
-gem 'remotipart'
 gem 'sass-rails', '~> 5.0'
 gem 'slim-rails'
 gem 'therubyracer', platforms: :ruby
