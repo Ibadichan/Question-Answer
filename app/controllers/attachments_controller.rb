@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class AttachmentsController < ApplicationController
-  before_action :authenticate_user!
-
   def destroy
     @attachment = Attachment.find(params[:id])
     @attachable = @attachment.attachable
