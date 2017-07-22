@@ -1,18 +1,17 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
+  include Attachable
+
   belongs_to :question
   belongs_to :user
-  has_many :attachments, as: :attachable, dependent: :destroy, inverse_of: :attachable
 
   validates :body, presence: true
-
-  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   scope :by_best, (-> { order(best: :desc) })
 
   def select_as_best
-    Answer.transaction do
+    transaction do
       question.answers.update_all(best: false)
       update!(best: true)
     end
