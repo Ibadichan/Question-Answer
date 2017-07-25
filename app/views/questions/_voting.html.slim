@@ -1,0 +1,11 @@
+.voting-of-question
+  - if current_user && !current_user.author_of?(question)
+    h4 Голосование
+    = link_to t('questions.voting_for'), vote_for_question_path(question),
+                                         class: 'margin-right vote-for-question',
+                                         method: :post,
+                                         remote: true, data: {type: :json}
+    = link_to t('questions.voting_against'), vote_against_question_path(question),
+                                             class: 'vote-against-question',
+                                             method: :post,
+                                             remote: true, data: {type: :json}
