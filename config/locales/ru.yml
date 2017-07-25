@@ -18,6 +18,8 @@ ru:
     best_answer: 'Лучший ответ'
     body_of_answer: 'Ваш ответ'
   questions:
+    voting_for: 'За вопрос'
+    voting_against: 'Против вопроса'
     action: '%{action}'
     edit:
       delete_question: 'Удалить вопрос'
