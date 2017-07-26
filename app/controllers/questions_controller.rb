@@ -2,6 +2,7 @@
 
 class QuestionsController < ApplicationController
   include PublicIndexAndShow
+  include Voted
 
   before_action :set_question, only: %i[destroy show update]
   before_action :check_authorship, only: %i[destroy update]

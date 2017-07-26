@@ -1,4 +1,6 @@
 .question-wrapper
+  h2.question-rating style="font-family:courier;" = "Рейтинг вопроса #{@question.rating}"
+  br
   = render 'question', question: @question
   = render 'edit', question: @question
   = render 'attachments', question: @question

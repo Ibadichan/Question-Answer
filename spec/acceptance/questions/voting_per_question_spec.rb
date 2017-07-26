@@ -12,7 +12,7 @@ feature 'User can vote for question', '
   given(:question) { create(:question, user: author) }
   given(:non_author) { create(:user) }
 
-  describe 'Non-author tries to vote' do
+  describe 'Non-author tries to vote', js: true do
     background do
       sign_in non_author
       visit question_path(question)
@@ -27,14 +27,19 @@ feature 'User can vote for question', '
 
     scenario 'with against' do
       within '.question-wrapper' do
-        click_on 'Против вопроса'
-        expect(page).to have_content 'Рейтинг вопроса 0'
+        click_on 'За вопрос'
+        wait_for_ajax
+        expect(page).to have_content 'Рейтинг вопроса 2'
       end
     end
   end
 
   describe 'Non-author tries to vote 2 times' do
-    scenario 'with for'
+    scenario 'with for' do
+      sign_in non_author
+      visit question_path(question)
+      save_and_open_page
+    end
     scenario 'with against'
   end
 
