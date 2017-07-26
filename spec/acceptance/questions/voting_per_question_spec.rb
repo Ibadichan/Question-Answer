@@ -9,43 +9,49 @@ feature 'User can vote for question', '
 ' do
 
   given(:author) { create(:user) }
-  given(:question) { create(:question, user: author) }
   given(:non_author) { create(:user) }
+  given(:question) { create(:question, user: author) }
 
-  describe 'Non-author tries to vote', js: true do
+  describe 'Non-author tries to', js: true do
     background do
       sign_in non_author
       visit question_path(question)
     end
 
-    scenario 'with for' do
-      within '.question-wrapper' do
+    scenario 'vote with for' do
+      click_on 'За вопрос'
+      expect(page).to have_content 'Рейтинг вопроса 1'
+    end
+
+    scenario 'vote with against' do
+      click_on 'Против вопроса'
+      expect(page).to have_content 'Рейтинг вопроса 0'
+    end
+
+    describe 'vote 2 times' do
+      scenario 'with for' do
         click_on 'За вопрос'
-        expect(page).to have_content 'Рейтинг вопроса 1'
+        expect(page).to have_no_link 'За вопрос'
+        expect(page).to have_no_link 'Против вопроса'
+        page.reset! # если юзер перезагрузит page
+        expect(page).to have_no_link 'За вопрос'
+        expect(page).to have_no_link 'Против вопроса'
+      end
+
+      scenario 'with against' do
+        click_on 'Против вопроса'
+        expect(page).to have_no_link 'За вопрос'
+        expect(page).to have_no_link 'Против вопроса'
+        page.reset!
+        expect(page).to have_no_link 'За вопрос'
+        expect(page).to have_no_link 'Против вопроса'
       end
     end
 
-    scenario 'with against' do
-      within '.question-wrapper' do
-        click_on 'За вопрос'
-        wait_for_ajax
-        expect(page).to have_content 'Рейтинг вопроса 2'
-      end
+    describe 're-vote' do
+      scenario 'with for'
+      scenario 'with against'
     end
-  end
-
-  describe 'Non-author tries to vote 2 times' do
-    scenario 'with for' do
-      sign_in non_author
-      visit question_path(question)
-      save_and_open_page
-    end
-    scenario 'with against'
-  end
-
-  describe 'Non-author tries to re-vote' do
-    scenario 'with for'
-    scenario 'with against'
   end
 
   scenario 'Author tries to vote' do

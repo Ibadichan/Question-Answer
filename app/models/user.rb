@@ -12,4 +12,8 @@ class User < ApplicationRecord
   def author_of?(object)
     id == object.user_id
   end
+
+  def cannot_vote_for?(votable)
+    (votable.votes.where(user_id: id).size >= 1) || author_of?(votable)
+  end
 end

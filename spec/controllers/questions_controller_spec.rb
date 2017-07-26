@@ -165,6 +165,15 @@ RSpec.describe QuestionsController, type: :controller do
         end.to_not change(question_of_user.votes, :count)
       end
     end
+
+    context 'Non-author tries to vote 2 times' do
+      it 'does not create a new vote' do
+        post :vote_for, params: { id: question, format: :json }
+        expect do
+          post :vote_for, params: { id: question, format: :json }
+        end.to_not change(question.votes, :count)
+      end
+    end
   end
 
   describe 'POST #vote_against' do
@@ -190,6 +199,14 @@ RSpec.describe QuestionsController, type: :controller do
         expect do
           post :vote_against, params: { id: question_of_user, format: :json }
         end.to_not change(question_of_user.votes, :count)
+      end
+    end
+    context 'Non-author tries to vote 2 times' do
+      it 'does not create a new vote' do
+        post :vote_for, params: { id: question, format: :json }
+        expect do
+          post :vote_for, params: { id: question, format: :json }
+        end.to_not change(question.votes, :count)
       end
     end
   end

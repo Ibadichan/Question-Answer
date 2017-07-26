@@ -21,7 +21,7 @@ module Voted
   private
 
   def check_voter
-    head :forbidden if current_user.author_of?(@votable)
+    head :forbidden if current_user.cannot_vote_for?(@votable)
   end
 
   def model_klass
