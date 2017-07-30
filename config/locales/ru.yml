@@ -6,6 +6,7 @@ ru:
   common:
     back: 'Назад'
     remove_file: 'Удалить файл'
+    re-vote: 'Переголосовать'
   layouts:
     application:
       exit: 'Выйти'
@@ -21,6 +22,5 @@ ru:
     voting_for: 'За вопрос'
     voting_against: 'Против вопроса'
     action: '%{action}'
-    edit:
-      delete_question: 'Удалить вопрос'
-      edit_question: 'Редактировать'
+    delete_question: 'Удалить вопрос'
+    edit_question: 'Редактировать'

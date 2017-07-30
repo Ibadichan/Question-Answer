@@ -1,6 +1,6 @@
 = render 'form', question: question, ajax: true
 
 - if current_user&.author_of?(question)
-  = link_to t('.delete_question'), question_path(question), method: :delete
+  = link_to t('questions.delete_question'), question_path(question), method: :delete
   br
-  = link_to t('.edit_question'), '', class: 'edit-question-link'
+  = link_to t('questions.edit_question'), '', class: 'edit-question-link'

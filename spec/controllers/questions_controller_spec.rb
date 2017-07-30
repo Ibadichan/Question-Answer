@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  sign_in_user
   let(:question) { create(:question) }
   let(:question_of_user) { create(:question, user: @user) }
 
@@ -38,6 +37,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before { get :new }
 
     it 'assigns a new Question to @question' do
@@ -50,6 +50,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attributes' do
       it 'connects the user to the question' do
         expect { post :create, params: { question: attributes_for(:question) } }
@@ -77,6 +78,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
+    sign_in_user
     context 'author tries to delete his question' do
       it 'destroys the @question' do
         question_of_user
@@ -102,6 +104,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'PATCH #update' do
+    sign_in_user
     context 'Author tries to update question' do
       it 'assigns question to @question' do
         patch :update, params: { id: question_of_user,
@@ -140,6 +143,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #vote_for' do
+    sign_in_user
     context 'Non-author tries to vote' do
       it 'assigns the requested votable to @votable' do
         post :vote_for, params: { id: question, format: :json }
@@ -177,6 +181,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'POST #vote_against' do
+    sign_in_user
     context 'non-author tries to vote' do
       it 'assigns the requested votable to @votable' do
         post :vote_against, params: { id: question, format: :json }
@@ -206,6 +211,35 @@ RSpec.describe QuestionsController, type: :controller do
         post :vote_for, params: { id: question, format: :json }
         expect do
           post :vote_for, params: { id: question, format: :json }
+        end.to_not change(question.votes, :count)
+      end
+    end
+  end
+
+  describe 'DELETE #re_vote' do
+    sign_in_user
+    let(:vote_of_author) { create(:vote, votable: question, user: @user) }
+    let(:vote)           { create(:vote, votable: question) }
+
+    context 'author of vote tries to re-vote' do
+      it 'assigns the requested votable to @votable' do
+        delete :re_vote, params: { id: question, format: :json }
+        expect(assigns(:votable)).to eq question
+      end
+
+      it 'destroys the vote of author' do
+        vote_of_author
+        expect do
+          delete :re_vote, params: { id: question, format: :json }
+        end.to change(question.votes, :count).by(-1)
+      end
+    end
+
+    context 'Non-author of vote tries to re-vote' do
+      it 'does not destroy the vote' do
+        vote
+        expect do
+          delete :re_vote, params: { id: question, format: :json }
         end.to_not change(question.votes, :count)
       end
     end
