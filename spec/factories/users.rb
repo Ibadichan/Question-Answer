@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
 FactoryGirl.define do
-  sequence :email do |n|
-    "user#{n}@test.com"
-  end
-
   factory :user do
     sequence(:name) { |n| "user_name_#{n}" }
-    email
+    sequence(:email) { |n| "user#{n}@mail.com" }
     password '123456'
     password_confirmation '123456'
   end

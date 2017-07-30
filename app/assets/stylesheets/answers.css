@@ -6,3 +6,13 @@
 .edit_answer {
     display: none;
 }
+
+.position-middle {
+    margin: auto;
+    width: 50%;
+    padding: 20px;
+}
+
+.margin-right {
+    margin-right: 20px;
+}

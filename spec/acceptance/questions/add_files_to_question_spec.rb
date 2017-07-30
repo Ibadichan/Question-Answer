@@ -37,15 +37,11 @@ feature 'User can add files to question', '
 
     click_on 'Добавить файл'
 
-    within all('.nested-fields').first do
-      find('input[type="file"]').set("#{Rails.root}/Gemfile")
-    end
+    within first('.nested-fields') { find('input[type="file"]').set("#{Rails.root}/Gemfile") }
 
     click_on 'Добавить файл'
 
-    within all('.nested-fields').last do
-      find('input[type="file"]').set("#{Rails.root}/config.ru")
-    end
+    within(all('.nested-fields').last) { find('input[type="file"]').set("#{Rails.root}/config.ru") }
 
     click_on 'Создать'
 

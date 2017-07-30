@@ -1,9 +1,7 @@
-h4 Голосование
 .voting-of-answer
   - if current_user.blank? || current_user.author_of?(answer)
-    h4 Вы не можете голосовать
+    span Вы не можете голосовать
   - elsif current_user.cannot_vote_for?(answer)
-    p Вы можете переголосовать
     = link_to t('common.re-vote'), '', class: 're-vote-for-answer',
               data: { type: :json, id: answer.id, question_id: answer.question.id }
   - else

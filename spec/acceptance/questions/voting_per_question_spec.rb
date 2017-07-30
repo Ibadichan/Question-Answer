@@ -8,9 +8,9 @@ feature 'User can vote for question', '
   I want to vote
 ' do
 
-  given(:author) { create(:user) }
+  given(:author)     { create(:user) }
   given(:non_author) { create(:user) }
-  given(:question) { create(:question, user: author) }
+  given(:question)   { create(:question, user: author) }
 
   describe 'Non-author tries to', js: true do
     background do
@@ -25,7 +25,7 @@ feature 'User can vote for question', '
 
     scenario 'vote with against' do
       click_on 'Против вопроса'
-      expect(page).to have_content 'Рейтинг вопроса 0'
+      expect(page).to have_content 'Рейтинг вопроса -1'
     end
 
     describe 'vote 2 times' do
@@ -53,7 +53,6 @@ feature 'User can vote for question', '
         click_on 'За вопрос'
         click_on 'Переголосовать'
         expect(page).to have_content 'Рейтинг вопроса 0'
-        expect(page).to have_link 'За вопрос'
         expect(page).to have_link 'Против вопроса'
         click_on 'За вопрос'
         expect(page).to have_content 'Рейтинг вопроса 1'
@@ -64,7 +63,6 @@ feature 'User can vote for question', '
         click_on 'Переголосовать'
         expect(page).to have_content 'Рейтинг вопроса 0'
         expect(page).to have_link 'За вопрос'
-        expect(page).to have_link 'Против вопроса'
         click_on 'Против вопроса'
         expect(page).to have_content 'Рейтинг вопроса -1'
       end

@@ -4,9 +4,9 @@ require 'rails_helper'
 
 describe AnswersController do
   sign_in_user
-  let(:question) { create(:question) }
-  let(:answer) { create(:answer) }
-  let(:answer_of_user) { create(:answer, user: @user, question: question) }
+  let(:question)        { create(:question) }
+  let(:answer)          { create(:answer) }
+  let(:answer_of_user)  { create(:answer, user: @user, question: question) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -132,7 +132,7 @@ describe AnswersController do
   end
 
   describe 'PATCH #best' do
-    let(:question_of_user) { create(:question, user: @user) }
+    let(:question_of_user)   { create(:question, user: @user) }
     let(:answer_of_question) { create(:answer, question: question_of_user) }
 
     context 'Author tries to select best answer' do
@@ -244,6 +244,7 @@ describe AnswersController do
         expect(assigns(:vote).value).to eq(-1)
       end
     end
+
     context 'author tries to vote' do
       it 'does not create a new vote' do
         expect do
@@ -253,6 +254,7 @@ describe AnswersController do
         end.to_not change(answer_of_user.votes, :count)
       end
     end
+
     context 'Non-author tries to vote 2 times' do
       it 'does not create a new vote' do
         post :vote_for, params: { id: answer,

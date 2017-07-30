@@ -8,10 +8,10 @@ feature 'Author tries to remove file of answer', '
   I want to remove file
 ' do
 
-  given(:author) { create(:user) }
-  given(:question) { create(:question) }
-  given(:non_author) { create(:user) }
-  given!(:answer) { create(:answer, user: author, question: question) }
+  given(:author)      { create(:user) }
+  given(:question)    { create(:question) }
+  given(:non_author)  { create(:user) }
+  given!(:answer)     { create(:answer, user: author, question: question) }
   given!(:attachment) { create(:attachment, attachable: answer) }
 
   scenario 'Author tries to remove file of answer', js: true do

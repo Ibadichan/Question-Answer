@@ -1,12 +1,13 @@
 - if answer.persisted?
   .answer-wrapper { data-answer-id = answer.id }
-    h2.answer-rating style="font-family:courier;" = "Рейтинг ответа #{answer.rating}"
+    h4.answer-rating = "Рейтинг ответа #{answer.rating}"
     p = answer.body
     br
     span = "Создатель: #{answer.user.email}"
     br
     - if current_user&.author_of?(answer.question) && !answer.best?
-      = link_to t('answers.best_answer'), best_question_answer_path(answer.question, answer), method: :patch, remote: true
+      = link_to t('answers.best_answer'), best_question_answer_path(answer.question, answer),
+              method: :patch, remote: true
     - elsif current_user&.author_of?(answer.question)
       span Это лучший ответ!
     br

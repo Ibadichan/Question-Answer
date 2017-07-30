@@ -8,9 +8,9 @@ feature 'Author can remove file of question', '
   I want to remove file
 ' do
 
-  given(:author) { create(:user) }
-  given(:non_author) { create(:user) }
-  given(:question) { create(:question, user: author) }
+  given(:author)      { create(:user) }
+  given(:non_author)  { create(:user) }
+  given(:question)    { create(:question, user: author) }
   given!(:attachment) { create(:attachment, attachable: question) }
 
   scenario 'Non-author tries to remove file of question' do

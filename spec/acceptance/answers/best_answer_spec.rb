@@ -8,11 +8,11 @@ feature 'User can select the best answer of question', '
   I want to select best answer
 ' do
 
-  given(:author) { create(:user) }
-  given(:non_author) { create(:user) }
-  given(:question) { create(:question, user: author) }
-  given!(:answers) { create_list(:answer, 2, question: question) }
-  given(:best_answer) { create(:best_answer, question: question) }
+  given(:author)       { create(:user) }
+  given(:non_author)   { create(:user) }
+  given(:question)     { create(:question, user: author) }
+  given!(:answers)     { create_list(:answer, 2, question: question) }
+  given(:best_answer)  { create(:best_answer, question: question) }
   given!(:last_answer) { ".answers div[data-answer-id='#{answers.last.id}']" }
 
   describe 'Author of question tries to select best answer' do

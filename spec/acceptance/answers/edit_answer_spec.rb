@@ -8,10 +8,10 @@ feature 'User tries to edit answer', '
   I want to edit answer
 ' do
 
-  given(:author) { create(:user) }
+  given(:author)     { create(:user) }
   given(:non_author) { create(:user) }
-  given(:question) { create(:question) }
-  given!(:answer) { create(:answer, user: author, question: question) }
+  given(:question)   { create(:question) }
+  given!(:answer)    { create(:answer, user: author, question: question) }
 
   describe 'Author tries to edit answer' do
     background do

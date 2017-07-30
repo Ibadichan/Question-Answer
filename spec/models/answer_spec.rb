@@ -7,13 +7,14 @@ require_relative 'concerns/votable'
 RSpec.describe Answer, type: :model do
   it { should belong_to :question }
   it { should belong_to :user }
+
   it_behaves_like 'attachable'
   it_behaves_like 'votable'
 
   it { should validate_presence_of :body }
 
   describe '.by_best' do
-    let!(:answers) { create_list(:answer, 2) }
+    let!(:answers)     { create_list(:answer, 2) }
     let!(:best_answer) { create(:answer, best: true) }
 
     it 'sorts the answers by best flag' do
@@ -23,9 +24,9 @@ RSpec.describe Answer, type: :model do
   end
 
   describe '#select_best' do
-    let!(:question) { create(:question) }
+    let!(:question)        { create(:question) }
     let!(:old_best_answer) { create(:answer, question: question, best: true) }
-    let!(:new_answer) { create(:answer, question: question) }
+    let!(:new_answer)      { create(:answer, question: question) }
 
     before { new_answer.select_as_best }
 
