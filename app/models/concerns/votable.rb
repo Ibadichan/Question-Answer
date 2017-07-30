@@ -9,4 +9,8 @@ module Votable
   def rating
     votes.likes_count - votes.dislikes_count
   end
+
+  def destroy_vote_of(user)
+    votes.where(user_id: user.id).first.destroy
+  end
 end

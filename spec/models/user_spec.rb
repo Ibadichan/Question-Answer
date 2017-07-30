@@ -29,27 +29,20 @@ RSpec.describe User, type: :model do
   end
 
   describe '#cannot_vote_for?' do
-    let(:author)     { create(:user) }
-    let(:non_author) { create(:user) }
-    let(:question)   { create(:question, user: author) }
-    let(:vote)       { create(:vote, user: non_author, votable: question) }
-
-    context 'user is author of votable' do
-      it 'returns true' do
-        expect(author.cannot_vote_for?(question)).to eq true
-      end
-    end
+    let(:user)       { create(:user) }
+    let(:question)   { create(:question) }
+    let(:vote)       { create(:vote, user: user, votable: question) }
 
     context 'user tries to vote first time' do
       it 'returns false' do
-        expect(non_author.cannot_vote_for?(question)).to eq false
+        expect(user.cannot_vote_for?(question)).to eq false
       end
     end
 
     context 'user tries to vote second time' do
       it 'returns true' do
         vote
-        expect(non_author.cannot_vote_for?(question)).to eq true
+        expect(user.cannot_vote_for?(question)).to eq true
       end
     end
   end

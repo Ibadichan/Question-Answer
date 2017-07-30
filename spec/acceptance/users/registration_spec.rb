@@ -11,7 +11,7 @@ feature 'User registers', '
   scenario 'Guest tries to register' do
     visit new_user_registration_path
 
-    fill_in 'Email', with: 'test@mail.ru'
+    fill_in 'Email', with: 'test.hbs@mail.ru'
     fill_in 'Пароль', with: '123456'
     fill_in 'Подтверждение пароля', with: '123456'
     click_on 'Зарегистрироваться'

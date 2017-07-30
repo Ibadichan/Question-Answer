@@ -1,11 +1,10 @@
+h4 Голосование
 .voting-of-question
-  - if current_user && !current_user.author_of?(question)
-    h4 Голосование
-    = link_to t('questions.voting_for'), vote_for_question_path(question),
-                                         class: 'margin-right vote-for-question',
-                                         method: :post,
-                                         remote: true, data: {type: :json}
-    = link_to t('questions.voting_against'), vote_against_question_path(question),
-                                             class: 'vote-against-question',
-                                             method: :post,
-                                             remote: true, data: {type: :json}
+  - if current_user.blank? || current_user.author_of?(question)
+    h4 Вы не можете голосовать
+  - elsif current_user.cannot_vote_for?(question)
+    p Вы можете переголосовать
+    = link_to t('common.re-vote'), '', class: 're-vote-for-question', data: {type: :json, id: question.id }
+  - else
+    = link_to t('questions.voting_for'), '', class: 'margin-right vote-for-question', data: {type: :json, id: question.id}
+    = link_to t('questions.voting_against'), '', class: 'vote-against-question', data: {type: :json, id: question.id}

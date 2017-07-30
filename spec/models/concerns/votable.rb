@@ -13,4 +13,16 @@ shared_examples_for 'votable' do
       expect(question.rating).to eq(-1)
     end
   end
+
+  describe '#destroy_vote_of' do
+    let(:question) { create(:question) }
+    let(:user)     { create(:user) }
+    let!(:vote) { create(:vote, user: user, votable: question) }
+
+    it 'should destroy vote of requested user' do
+      expect do
+        question.destroy_vote_of(user)
+      end.to change(question.votes, :count).by(-1)
+    end
+  end
 end

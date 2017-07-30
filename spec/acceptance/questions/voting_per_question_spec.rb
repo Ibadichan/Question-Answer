@@ -49,8 +49,25 @@ feature 'User can vote for question', '
     end
 
     describe 're-vote' do
-      scenario 'with for'
-      scenario 'with against'
+      scenario 'with for' do
+        click_on 'За вопрос'
+        click_on 'Переголосовать'
+        expect(page).to have_content 'Рейтинг вопроса 0'
+        expect(page).to have_link 'За вопрос'
+        expect(page).to have_link 'Против вопроса'
+        click_on 'За вопрос'
+        expect(page).to have_content 'Рейтинг вопроса 1'
+      end
+
+      scenario 'with against' do
+        click_on 'Против вопроса'
+        click_on 'Переголосовать'
+        expect(page).to have_content 'Рейтинг вопроса 0'
+        expect(page).to have_link 'За вопрос'
+        expect(page).to have_link 'Против вопроса'
+        click_on 'Против вопроса'
+        expect(page).to have_content 'Рейтинг вопроса -1'
+      end
     end
   end
 
