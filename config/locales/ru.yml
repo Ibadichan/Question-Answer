@@ -18,6 +18,8 @@ ru:
     edit_answer: 'Редактировать'
     best_answer: 'Лучший ответ'
     body_of_answer: 'Ваш ответ'
+    voting_for: 'За ответ'
+    voting_against: 'Против ответа'
   questions:
     voting_for: 'За вопрос'
     voting_against: 'Против вопроса'

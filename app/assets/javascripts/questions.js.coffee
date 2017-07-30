@@ -4,14 +4,14 @@ $ ->
     $(this).hide()
     $('.edit_question').show()
 
-  voteAgainstOrForQuestion = (event, klsassVotable, action) ->
+  voteAgainstOrForQuestion = (event, klassVotable, action) ->
     event.preventDefault()
-    id = $(klsassVotable).data('id')
+    id = $(klassVotable).data('id')
 
     $.post "/questions/#{id}/#{action}", (data) ->
       votable = data['votable']
       rating = data['rating']
-      html = JST['templates/re_vote']( {votable: {id: votable.id }} )
+      html = JST['templates/questions/re_vote']( {votable: {id: votable.id }} )
 
       $('.question-rating').text("Рейтинг вопроса " + rating)
       $('.voting-of-question').html(html)
@@ -32,7 +32,7 @@ $ ->
       success: (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/voting_per_question']( {votable: {id: votable.id }} )
+        html = JST['templates/questions/voting_per_question']( {votable: {id: votable.id }} )
 
         $('.question-rating').text("Рейтинг вопроса " + rating)
         $('.voting-of-question').html(html)

@@ -170,4 +170,135 @@ describe AnswersController do
       end
     end
   end
+
+  describe 'POST #vote_for' do
+    context 'Non-author tries to vote' do
+      it 'assigns the requested votable to @votable' do
+        post :vote_for, params: { id: answer,
+                                  question_id: answer.question,
+                                  format: :json }
+        expect(assigns(:votable)).to eq answer
+      end
+
+      it 'creates a new vote' do
+        expect do
+          post :vote_for, params: { id: answer,
+                                    question_id: answer.question,
+                                    format: :json }
+        end.to change(answer.votes, :count).by(1)
+      end
+
+      it 'checks that value of vote to equal 1' do
+        post :vote_for, params: { id: answer,
+                                  question_id: answer.question,
+                                  format: :json }
+        expect(assigns(:vote).value).to eq 1
+      end
+    end
+
+    context 'Author tries to vote' do
+      it 'does not create a new vote' do
+        expect do
+          post :vote_for, params: { id: answer_of_user,
+                                    question_id: question,
+                                    format: :json }
+        end.to_not change(answer_of_user.votes, :count)
+      end
+    end
+
+    context 'Non-author tries to vote 2 times' do
+      it 'does not create a new vote' do
+        post :vote_for, params: { id: answer,
+                                  question_id: answer.question,
+                                  format: :json }
+        expect do
+          post :vote_for, params: { id: answer,
+                                    question_id: answer.question,
+                                    format: :json }
+        end.to_not change(answer.votes, :count)
+      end
+    end
+  end
+
+  describe 'POST #vote_against' do
+    context 'non-author tries to vote' do
+      it 'assigns the requested votable to @votable' do
+        post :vote_against, params: { id: answer,
+                                      question_id: answer.question,
+                                      format: :json }
+        expect(assigns(:votable)).to eq answer
+      end
+
+      it 'creates a new vote' do
+        expect do
+          post :vote_against, params: { id: answer,
+                                        question_id: answer.question,
+                                        format: :json }
+        end.to change(answer.votes, :count).by(1)
+      end
+
+      it 'checks that value of vote to equal -1' do
+        post :vote_against, params: { id: answer,
+                                      question_id: answer.question,
+                                      format: :json }
+        expect(assigns(:vote).value).to eq(-1)
+      end
+    end
+    context 'author tries to vote' do
+      it 'does not create a new vote' do
+        expect do
+          post :vote_against, params: { id: answer_of_user,
+                                        question_id: question,
+                                        format: :json }
+        end.to_not change(answer_of_user.votes, :count)
+      end
+    end
+    context 'Non-author tries to vote 2 times' do
+      it 'does not create a new vote' do
+        post :vote_for, params: { id: answer,
+                                  question_id: answer.question,
+                                  format: :json }
+        expect do
+          post :vote_for, params: { id: answer,
+                                    question_id: answer.question,
+                                    format: :json }
+        end.to_not change(answer.votes, :count)
+      end
+    end
+  end
+
+  describe 'DELETE #re_vote' do
+    sign_in_user
+    let(:vote_of_author) { create(:vote, votable: answer, user: @user) }
+    let(:vote)           { create(:vote, votable: answer) }
+
+    context 'author of vote tries to re-vote' do
+      it 'assigns the requested votable to @votable' do
+        delete :re_vote, params: { id: answer,
+                                   question_id: answer.question,
+                                   format: :json }
+        expect(assigns(:votable)).to eq answer
+      end
+
+      it 'destroys the vote of author' do
+        vote_of_author
+        expect do
+          delete :re_vote, params: { id: answer,
+                                     question_id: answer.question,
+                                     format: :json }
+        end.to change(answer.votes, :count).by(-1)
+      end
+    end
+
+    context 'Non-author of vote tries to re-vote' do
+      it 'does not destroy the vote' do
+        vote
+        expect do
+          delete :re_vote, params: { id: answer,
+                                     question_id: answer.question,
+                                     format: :json }
+        end.to_not change(answer.votes, :count)
+      end
+    end
+  end
 end

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :set_answer, only: %i[destroy update best]
   before_action :check_authorship, only: %i[destroy update]
 

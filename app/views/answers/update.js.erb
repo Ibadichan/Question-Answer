@@ -7,5 +7,9 @@ var answer = $('div[data-answer-id=<%= @answer.id%>]');
     $(answerErrors).append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  answer.replaceWith('<%= j render @answer %>');
+  <% if remotipart_submitted? %>
+    answer.replaceWith("<%= j "#{render @answer }" %>");
+  <% else %>
+    answer.replaceWith('<%= j render @answer %>');
+  <% end %>
 <% end %>
