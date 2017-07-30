@@ -8,7 +8,7 @@ feature 'User can add files to answer', '
   I want add files to answer
 ' do
 
-  given(:user) { create(:user) }
+  given(:user)     { create(:user) }
   given(:question) { create(:question) }
 
   background do
@@ -21,9 +21,7 @@ feature 'User can add files to answer', '
 
     click_on 'Добавить файл'
 
-    within('.new_answer .nested-fields') do
-      find('input[type="file"]').set("#{Rails.root}/.rspec")
-    end
+    within('.new_answer .nested-fields') { find('input[type="file"]').set("#{Rails.root}/.rspec") }
 
     click_on 'ответить'
 

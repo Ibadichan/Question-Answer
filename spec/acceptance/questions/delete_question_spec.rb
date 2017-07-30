@@ -8,9 +8,9 @@ feature 'User deletes question', '
   I want to delete question
 ' do
 
-  given(:author) { create(:user) }
+  given(:author)     { create(:user) }
   given(:non_author) { create(:user) }
-  given(:question) { create(:question, user: author) }
+  given(:question)   { create(:question, user: author) }
 
   scenario 'Authenticated user tries to delete own question' do
     sign_in(author)

@@ -13,10 +13,11 @@ $ ->
       $.post "/questions/#{questionId}/answers/#{id}/#{action}", (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/answers/re_vote']( { votable: {id: votable.id, question: questionId } } )
+        html = JST['templates/answers/re_vote']({ votable: {id: votable.id, question: questionId }})
+        answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
 
-        $(".answer-wrapper[data-answer-id=#{votable.id}] > .answer-rating").text("Рейтинг ответа " + rating)
-        $(".answer-wrapper[data-answer-id=#{votable.id}] > .voting-of-answer").html(html)
+        $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)
+        $(answerWrapper + " > .voting-of-answer").html(html)
 
   $(document).on 'click', '.vote-for-answer', (e) ->
     voteAgainstOrForAnswer(e, '.vote-for-answer', 'vote_for' )
@@ -35,7 +36,8 @@ $ ->
       success: (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/answers/voting_per_answer']( {votable: {id: votable.id, question: questionId }} )
+        html = JST['templates/answers/voting_per_answer']({votable: {id: votable.id, question: questionId }})
+        answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
 
-        $(".answer-wrapper[data-answer-id=#{votable.id}] > .answer-rating").text("Рейтинг ответа " + rating)
-        $(".answer-wrapper[data-answer-id=#{votable.id}] > .voting-of-answer").html(html)
+        $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)
+        $(answerWrapper + "> .voting-of-answer").html(html)

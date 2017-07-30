@@ -8,10 +8,10 @@ feature 'User deletes answer', '
   I want to delete  the answer
 ' do
 
-  given(:author) { create(:user) }
+  given(:author)     { create(:user) }
   given(:non_author) { create(:user) }
-  given(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question, user: author) }
+  given(:question)   { create(:question) }
+  given!(:answer)    { create(:answer, question: question, user: author) }
 
   scenario 'Author tries to delete own answer', js: true do
     sign_in(author)
