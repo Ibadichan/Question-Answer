@@ -1,5 +1,6 @@
 - if answer.persisted?
   .answer-wrapper { data-answer-id = answer.id }
+    h2.answer-rating style="font-family:courier;" = "Рейтинг ответа #{answer.rating}"
     p = answer.body
     br
     span = "Создатель: #{answer.user.email}"
@@ -15,3 +16,4 @@
       = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
       = render 'answers/form', answer: answer, question: answer.question
     = render 'answers/attachments', answer: answer
+    = render 'answers/voting', answer: answer

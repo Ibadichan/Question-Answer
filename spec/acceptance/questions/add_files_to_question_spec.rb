@@ -27,7 +27,7 @@ feature 'User can add files to question', '
 
     within '.attachments-of-question' do
       expect(page).to have_link 'Rakefile',
-                                href: "#{Rails.root}/spec/support/uploads/attachment/file/3/Rakefile"
+                                href: "#{Rails.root}/spec/support/uploads/attachment/file/1/Rakefile"
     end
   end
 
