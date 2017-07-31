@@ -11,6 +11,6 @@ module Votable
   end
 
   def destroy_vote_of(user)
-    votes.where(user_id: user.id).first.destroy
+    votes.where(user_id: user.id).first.try(:destroy)
   end
 end

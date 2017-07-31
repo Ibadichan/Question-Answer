@@ -14,6 +14,6 @@ class User < ApplicationRecord
   end
 
   def cannot_vote_for?(votable)
-    votable.votes.where(user_id: id).size >= 1
+    votable.votes.where(user_id: id).exists?
   end
 end
