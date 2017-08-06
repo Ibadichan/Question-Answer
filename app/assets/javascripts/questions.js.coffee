@@ -43,3 +43,19 @@ $ ->
     received: (data) ->
       $('.questions-list').append(data)
   })
+
+  if $('.answers').length == 1
+    App.cable.subscriptions.create {
+      channel: 'QuestionsChannel', question_id: $('.question-wrapper').data('questionId')
+      },
+      connected: ->
+        @perform 'follow_for_question'
+      received: (data) ->
+        if data['user'] != gon.current_user
+          html = JST['templates/answers/answer']({
+            answer: data['answer'], question: data['question'],
+            rating: data['answer_rating'], user: gon.current_user,
+            attachments: data['attachments'], author: data['user']
+          })
+
+          $('.answers').append(html)

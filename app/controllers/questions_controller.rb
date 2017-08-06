@@ -18,6 +18,7 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = Answer.new
+    gon.current_user = current_user if current_user
   end
 
   def create
