@@ -22,7 +22,10 @@ gem 'rails-controller-testing'
 gem 'redis', '~> 3.0'
 gem 'remotipart'
 gem 'sass-rails', '~> 5.0'
+gem 'skim', git: 'https://github.com/jfirebaugh/skim'
 gem 'slim-rails'
+gem 'sprockets', '3.6.3'
+gem 'sprockets-rails', '2.3.3', require: 'sprockets/railtie'
 gem 'therubyracer', platforms: :ruby
 gem 'thor', '0.19.4'
 gem 'turbolinks', '~> 5'
@@ -32,7 +35,7 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'capybara', '~> 2.13'
+  gem 'capybara'
   gem 'capybara-webkit'
   gem 'factory_girl_rails'
   gem 'rspec-rails'
