@@ -1,0 +1,21 @@
+- if @answer
+  div.answer-wrapper data-answer-id="#{@answer.id}"
+    h4.answer-rating Рейтинг ответа #{@rating}
+    p #{@answer.body}
+    br
+    span Создатель: #{@author.email}
+    br
+    - if @user
+      - if @user.id == @question.user_id && !@answer.best
+        a href="/questions/#{@question.id}/answers/#{@answer.id}/best" data-remote="true" data-method="patch" Лучший ответ
+    - if @attachments.length > 0
+      div.attachments-of-answer
+        span Прикрепления:
+        ul
+          - for attachment in @attachments
+            - url = attachment.file.url
+            li
+              a href="#{url}" #{url.substring(url.lastIndexOf('/')+1)}
+    - if @user
+      a.margin-right.vote-for-answer data-type="json" data-id="#{@answer.id}" data-question-id="#{@question.id}" href="" За ответ
+      a.vote-against-answer data-type="json" data-id="#{@answer.id}" data-question-id="#{@question.id}" href="" Против ответа

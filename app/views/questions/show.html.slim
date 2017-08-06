@@ -1,4 +1,4 @@
-.question-wrapper
+.question-wrapper { data-question-id = @question.id }
   h4.question-rating = "Рейтинг вопроса #{@question.rating}"
   = render 'question_content', question: @question
   = render 'edit', question: @question

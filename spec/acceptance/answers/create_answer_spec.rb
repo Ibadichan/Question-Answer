@@ -8,18 +8,27 @@ feature 'user creates answer', '
   I want to create answer
 ' do
 
-  given!(:user)     { create(:user) }
-  given!(:question) { create(:question) }
+  given!(:user)    { create(:user) }
+  given(:question) { create(:question) }
 
   scenario 'Authenticated user tries to create answer', js: true do
-    sign_in(user)
+    Capybara.using_session('guest') { visit question_path(question) }
 
-    visit question_path(question)
-    fill_in 'Ваш ответ', with: 'text text'
-    click_on 'ответить'
+    Capybara.using_session('user') do
+      sign_in(user)
+      visit question_path(question)
 
-    within '.answers' do
-      expect(page).to have_content 'text text'
+      fill_in 'Ваш ответ', with: 'text text'
+      click_on 'ответить'
+      wait_for_ajax
+
+      within '.answers' do
+        expect(page).to have_content 'text text'
+      end
+    end
+
+    Capybara.using_session('guest') do
+      within('.answers') { expect(page).to have_content 'text text' }
     end
   end
 
