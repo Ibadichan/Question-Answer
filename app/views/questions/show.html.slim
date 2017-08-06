@@ -1,6 +1,6 @@
 .question-wrapper
   h4.question-rating = "Рейтинг вопроса #{@question.rating}"
-  = render 'question', question: @question
+  = render 'question_content', question: @question
   = render 'edit', question: @question
   = render 'attachments', question: @question
   = render 'voting', question: @question

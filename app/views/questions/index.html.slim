@@ -1,3 +1,4 @@
 h1 Все вопросы
-- @questions.each do |question|
-  h2 = link_to "#{question.title}", question_path(question), data: {turbolinks: false}
+.questions-list
+  - @questions.each do |question|
+    = render 'question', question: question
