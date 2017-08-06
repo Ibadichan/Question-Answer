@@ -11,7 +11,7 @@ $ ->
     $.post "/questions/#{id}/#{action}", (data) ->
       votable = data['votable']
       rating = data['rating']
-      html = JST['templates/questions/re_vote']( {votable: {id: votable.id }} )
+      html = JST['templates/questions/re_vote']( { votable: votable } )
 
       $('.question-rating').text("Рейтинг вопроса " + rating)
       $('.voting-of-question').html(html)
@@ -32,7 +32,7 @@ $ ->
       success: (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/questions/voting_per_question']( {votable: {id: votable.id }} )
+        html = JST['templates/questions/voting_per_question']( {votable: votable } )
 
         $('.question-rating').text("Рейтинг вопроса " + rating)
         $('.voting-of-question').html(html)

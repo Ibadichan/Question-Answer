@@ -13,7 +13,7 @@ $ ->
       $.post "/questions/#{questionId}/answers/#{id}/#{action}", (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/answers/re_vote']({ votable: {id: votable.id, question: questionId }})
+        html = JST['templates/answers/re_vote']({ votable:  votable, question_id: questionId })
         answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
 
         $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)
@@ -36,7 +36,7 @@ $ ->
       success: (data) ->
         votable = data['votable']
         rating = data['rating']
-        html = JST['templates/answers/voting_per_answer']({votable: {id: votable.id, question: questionId }})
+        html = JST['templates/answers/voting_per_answer']({ votable:  votable, question_id: questionId })
         answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
 
         $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)

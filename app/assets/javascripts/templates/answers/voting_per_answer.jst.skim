@@ -1,0 +1,2 @@
+a.margin-right.vote-for-answer data-type="json" data-id="#{@votable.id}" data-question-id="#{@question_id}" href="" За ответ
+a.vote-against-answer data-type="json" data-id="#{@votable.id}" data-question-id="#{@question_id}" href="" Против ответа
