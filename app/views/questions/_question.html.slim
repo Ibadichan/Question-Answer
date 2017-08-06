@@ -1,5 +1,1 @@
-.question-show
-  h2 = question.title
-  p = question.body
-  br
-  span = "Создатель вопроса:  #{question.user.email}"
+h2 = link_to "#{question.title}", question_path(question), data: {turbolinks: false}

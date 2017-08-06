@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
+  Capybara.server = :puma
+
   Capybara.javascript_driver = :webkit
 
   config.include WaitForAjax, type: :feature

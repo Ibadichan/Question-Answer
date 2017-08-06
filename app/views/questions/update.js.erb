@@ -5,7 +5,7 @@ $('.question-errors').html('');
     $('.question-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
-  $('.question-show').replaceWith('<%= j render @question %>');
+  $('.question-show').replaceWith('<%= j render 'question_content', question: @question %>');
   $('.attachments-of-question').replaceWith('<%= j render 'attachments', question: @question %>');
   $('.edit_question').hide();
   $('.edit-question-link').show();

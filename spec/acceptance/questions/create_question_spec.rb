@@ -10,21 +10,29 @@ feature 'Create question', '
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user tries to ask question' do
-    sign_in(user)
+  scenario 'Authenticated user tries to ask question', js: true do
+    Capybara.using_session('guest') { visit questions_path }
 
-    visit questions_path
-    click_on 'Задать вопрос'
-    fill_in 'Заголовок', with: 'my title'
-    fill_in 'Ваш вопрос', with: 'my body'
-    click_on 'Создать'
+    Capybara.using_session('user') do
+      sign_in(user)
 
-    expect(page).to have_content 'Вопрос успешно создан'
-    expect(current_path).to eq question_path(Question.last)
+      visit questions_path
+      click_on 'Задать вопрос'
+      fill_in 'Заголовок', with: 'my title'
+      fill_in 'Ваш вопрос', with: 'my body'
+      click_on 'Создать'
 
-    within '.question-show' do
-      expect(page).to have_content 'my body'
-      expect(page).to have_content 'my title'
+      expect(page).to have_content 'Вопрос успешно создан'
+      expect(current_path).to eq question_path(Question.last)
+
+      within '.question-show' do
+        expect(page).to have_content 'my body'
+        expect(page).to have_content 'my title'
+      end
+    end
+
+    Capybara.using_session('guest') do
+      within('.questions-list') { expect(page).to have_link 'my title' }
     end
   end
 

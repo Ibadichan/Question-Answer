@@ -33,7 +33,7 @@ feature 'User can vote for answer', '
         click_on 'За ответ'
         expect(page).to have_no_link 'За ответ'
         expect(page).to have_no_link 'Против ответа'
-        page.reset! # если юзер перезагрузит page
+        page.reset!
         expect(page).to have_no_link 'За ответ'
         expect(page).to have_no_link 'Против ответа'
       end
