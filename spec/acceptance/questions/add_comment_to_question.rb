@@ -12,21 +12,31 @@ feature 'User can add comment to question', '
   given(:question) { create(:question) }
 
   describe 'Authenticated user tries to add comment', js: true do
-    background do
-      sign_in(user)
-      visit question_path(question)
-    end
-
     scenario 'with valid attributes' do
-      within '.question-wrapper' do
-        click_on 'Комментарии'
-        fill_in 'Ваш комментарий', with: 'My comment'
-        click_on 'Комментировать'
-        expect(page).to have_content 'My comment'
+      Capybara.using_session('guest') do
+        visit question_path(question)
+        within('.question-wrapper') { click_on 'Комментарии' }
       end
+
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+
+        within('.question-wrapper') do
+          click_on 'Комментарии'
+          fill_in 'Ваш комментарий', with: 'My comment'
+          click_on 'Комментировать'
+          expect(page).to have_content 'My comment'
+        end
+      end
+
+      Capybara.using_session('guest') { expect(page).to have_content 'My comment' }
     end
 
     scenario 'with invalid attributes' do
+      sign_in(user)
+      visit question_path(question)
+
       within '.question-wrapper' do
         click_on 'Комментарии'
         fill_in 'Ваш комментарий', with: ''
