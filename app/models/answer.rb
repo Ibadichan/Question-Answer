@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Answer < ApplicationRecord
-  include Attachable
+  include Commentable
   include Votable
+  include Attachable
 
   belongs_to :question
   belongs_to :user

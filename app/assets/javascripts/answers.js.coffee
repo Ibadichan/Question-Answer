@@ -5,39 +5,31 @@ $ ->
     $('form#edit_answer_'+ answerId).show()
     $(this).hide()
 
-  voteAgainstOrForAnswer = (event, klassVotable, action) ->
-      event.preventDefault()
-      id = $(klassVotable).data('id')
-      questionId = $(klassVotable).data('questionId')
+  voting = (event, element, klassVotable, action, requestMethod) ->
+    event.preventDefault()
+    id = element.data('id')
 
-      $.post "/questions/#{questionId}/answers/#{id}/#{action}", (data) ->
-        votable = data['votable']
-        rating = data['rating']
-        html = JST['templates/answers/re_vote']({ votable:  votable, question_id: questionId })
-        answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
+    $.ajax
+      url: "/answers/#{id}/#{action}"
+      type: "#{requestMethod}"
+      success: (data) ->
+        if action != 're_vote'
+          html = JST['templates/answers/re_vote']({ votable: data['votable'] })
+        else
+          html = JST['templates/answers/voting_per_answer']({ votable: data['votable'] })
 
-        $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)
+        answerWrapper = ".answer-wrapper[data-answer-id=#{ data['votable']['id'] }]"
+
+        $(answerWrapper + " > .answer-rating").text("Рейтинг ответа " + data['rating'])
         $(answerWrapper + " > .voting-of-answer").html(html)
 
   $(document).on 'click', '.vote-for-answer', (e) ->
-    voteAgainstOrForAnswer(e, '.vote-for-answer', 'vote_for' )
+    voting(e, $(this), '.vote-for-answer', 'vote_for', 'POST' )
 
   $(document).on 'click', '.vote-against-answer', (e) ->
-    voteAgainstOrForAnswer(e, '.vote-against-answer', 'vote_against')
+    voting(e, $(this), '.vote-against-answer', 'vote_against', 'POST' )
 
   $(document).on 'click', '.re-vote-for-answer', (e) ->
-    e.preventDefault()
-    id = $(this).data('id')
-    questionId = $(this).data('questionId')
+    voting(e, $(this), '.re-vote-for-answer', 're_vote', 'DELETE' )
 
-    $.ajax
-      url: "/questions/#{questionId}/answers/#{id}/re_vote"
-      type: "DELETE"
-      success: (data) ->
-        votable = data['votable']
-        rating = data['rating']
-        html = JST['templates/answers/voting_per_answer']({ votable:  votable, question_id: questionId })
-        answerWrapper = ".answer-wrapper[data-answer-id=#{votable.id}]"
 
-        $(answerWrapper + "> .answer-rating").text("Рейтинг ответа " + rating)
-        $(answerWrapper + "> .voting-of-answer").html(html)

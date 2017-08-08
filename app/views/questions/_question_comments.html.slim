@@ -1,0 +1,6 @@
+= link_to t('comments.index'), '', class: 'comments-link'
+br
+.question-comments
+  = render @question.comments
+  br
+  = render 'comments/form', commentable: @question, comment: @comment

@@ -1,14 +1,4 @@
 GIT
-  remote: https://github.com/jfirebaugh/skim
-  revision: f29f8cb2f9752fc766d7d94f666d7b914afa10f2
-  specs:
-    skim (0.10.0)
-      coffee-script
-      coffee-script-source (>= 1.2.0)
-      slim (>= 3.0)
-      sprockets (>= 2, < 4)
-
-GIT
   remote: https://github.com/thoughtbot/shoulda-matchers.git
   revision: edaf9cb926ee9c59c59729e7a4f8c206b44da8a1
   branch: rails-5
@@ -113,7 +103,6 @@ GEM
       warden (~> 1.2.3)
     devise-i18n (1.2.0)
     diff-lcs (1.3)
-    ejs (1.1.1)
     erubi (1.6.1)
     execjs (2.7.0)
     factory_girl (4.8.0)
@@ -227,6 +216,7 @@ GEM
     ref (2.0.0)
     remotipart (1.3.1)
     request_store (1.3.2)
+    require_all (1.4.0)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -259,6 +249,11 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    skim (0.10.0)
+      coffee-script
+      coffee-script-source (>= 1.2.0)
+      slim (>= 3.0)
+      sprockets (>= 2, < 4)
     slim (3.0.8)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
@@ -273,7 +268,7 @@ GEM
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
-    sprockets (3.6.3)
+    sprockets (3.7.1)
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
     sprockets-rails (2.3.3)
@@ -339,7 +334,6 @@ DEPENDENCIES
   database_cleaner
   devise
   devise-i18n
-  ejs
   factory_girl_rails
   gon
   jbuilder (~> 2.5)
@@ -352,15 +346,15 @@ DEPENDENCIES
   rails-controller-testing
   redis (~> 3.0)
   remotipart
+  require_all
   rspec-rails
   sass-rails (~> 5.0)
   shoulda-matchers!
-  skim!
+  skim
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)
-  sprockets (= 3.6.3)
-  sprockets-rails (= 2.3.3)
+  sprockets (>= 3.7.0)
   therubyracer
   thor (= 0.19.4)
   turbolinks (~> 5)

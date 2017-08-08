@@ -8,6 +8,8 @@ ru:
       question:
         title: 'Заголовок'
         body: 'Ваш вопрос'
+      comment:
+        body: 'Ваш комментарий'
     errors:
       models:
         user:
@@ -29,3 +31,7 @@ ru:
           attributes:
             body:
               blank: 'Тело ответа не может быть пустым'
+        comment:
+          attributes:
+            body:
+              blank: 'Тело комментария не может быть пустым'
