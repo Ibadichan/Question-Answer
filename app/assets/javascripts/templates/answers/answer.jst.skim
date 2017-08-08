@@ -7,7 +7,8 @@
     br
     - if @user
       - if @user.id == @question.user_id && !@answer.best
-        a href="/questions/#{@question.id}/answers/#{@answer.id}/best" data-remote="true" data-method="patch" Лучший ответ
+        a href="/answers/#{@answer.id}/best" data-remote="true" data-method="patch" Лучший ответ
+        br
     - if @attachments.length > 0
       div.attachments-of-answer
         span Прикрепления:
@@ -16,6 +17,7 @@
             - url = attachment.file.url
             li
               a href="#{url}" #{url.substring(url.lastIndexOf('/')+1)}
+
     - if @user
-      a.margin-right.vote-for-answer data-type="json" data-id="#{@answer.id}" data-question-id="#{@question.id}" href="" За ответ
-      a.vote-against-answer data-type="json" data-id="#{@answer.id}" data-question-id="#{@question.id}" href="" Против ответа
+      a.margin-right.vote-for-answer data-type="json" data-id="#{@answer.id}"  href="" За ответ
+      a.vote-against-answer data-type="json" data-id="#{@answer.id}" href="" Против ответа

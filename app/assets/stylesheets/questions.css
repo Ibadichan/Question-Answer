@@ -1,3 +1,10 @@
-.edit_question {
+.edit_question,
+.question-comments {
     display: none;
+}
+.comment-wrapper {
+    margin-top: 15px;
+    border: 2px solid lightgray;
+    padding: 5px;
+    border-radius: 15px;
 }

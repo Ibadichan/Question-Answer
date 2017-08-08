@@ -1,4 +1,4 @@
-= form_for [question, answer], remote: true do |f|
+= form_for path, remote: true do |f|
   .answer-errors
   = f.label :body
   = f.text_area :body, rows: 3, class: 'form-control', style: 'width:30%;'
@@ -9,4 +9,4 @@
     .links
       = link_to_add_association f, :attachments
   br
-  = f.submit t('answers.action', action: answer.new_record? ? 'ответить' : 'редактировать'), class: 'btn btn-default'
+  = f.submit t('answers.create'), class: 'btn btn-default'

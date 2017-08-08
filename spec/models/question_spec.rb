@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require_relative 'concerns/attachable'
-require_relative 'concerns/votable'
+require_all 'spec/models/concerns'
 
 RSpec.describe Question, type: :model do
   it { should belong_to(:user) }
@@ -10,6 +9,7 @@ RSpec.describe Question, type: :model do
 
   it_behaves_like 'attachable'
   it_behaves_like 'votable'
+  it_behaves_like 'commentable'
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }

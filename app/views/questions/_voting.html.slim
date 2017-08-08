@@ -1,10 +1,8 @@
 .voting-of-question
-  - if current_user.blank? || current_user.author_of?(question)
-    span Вы не можете голосовать
-  - elsif current_user.cannot_vote_for?(question)
+  - if current_user&.cannot_vote_for?(question)
     = link_to t('common.re-vote'), '', class: 're-vote-for-question',
               data: {type: :json, id: question.id }
-  - else
+  - elsif current_user.present? && !current_user.author_of?(question)
     = link_to t('questions.voting_for'), '', class: 'margin-right vote-for-question',
               data: {type: :json, id: question.id}
     = link_to t('questions.voting_against'), '', class: 'vote-against-question',

@@ -17,7 +17,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @question = @answer.question
     @answer.update(answer_params)
   end
 

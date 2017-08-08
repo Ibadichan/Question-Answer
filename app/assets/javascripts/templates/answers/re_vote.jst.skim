@@ -1,1 +1,1 @@
-a.re-vote-for-answer data-type="json" data-id="#{@votable.id}" data-question-id="#{@question_id}" href="" Переголосовать
+a.re-vote-for-answer data-type="json" data-id="#{@votable.id}" href="" Переголосовать

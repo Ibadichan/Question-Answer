@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_170_725_164_105) do
+ActiveRecord::Schema.define(version: 20_170_807_184_830) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(version: 20_170_725_164_105) do
     t.integer 'attachable_id'
     t.string 'attachable_type'
     t.index %w[attachable_id attachable_type], name: 'index_attachments_on_attachable_id_and_attachable_type'
+  end
+
+  create_table 'comments', force: :cascade do |t|
+    t.string 'body'
+    t.string 'commentable_type'
+    t.bigint 'commentable_id'
+    t.integer 'user_id'
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
   end
 
   create_table 'questions', force: :cascade do |t|

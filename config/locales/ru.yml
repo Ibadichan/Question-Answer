@@ -13,7 +13,7 @@ ru:
       entrance: 'Вход'
       ask_question: 'Задать вопрос'
   answers:
-    action: '%{action}'
+    create: 'ответить'
     delete_answer: 'Удалить ответ'
     edit_answer: 'Редактировать'
     best_answer: 'Лучший ответ'
@@ -23,6 +23,10 @@ ru:
   questions:
     voting_for: 'За вопрос'
     voting_against: 'Против вопроса'
+    add_comment: 'Комментировать вопрос'
     action: '%{action}'
     delete_question: 'Удалить вопрос'
     edit_question: 'Редактировать'
+  comments:
+    create_comment: 'Комментировать'
+    index: 'Комментарии'

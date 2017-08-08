@@ -57,16 +57,12 @@ describe AnswersController do
       it 'deletes the @answer' do
         answer_of_user
         expect do
-          delete :destroy, params: { id: answer_of_user,
-                                     question_id: question,
-                                     format: :js }
+          delete :destroy, params: { id: answer_of_user, format: :js }
         end.to change(Answer, :count).by(-1)
       end
 
       it 'render template  delete' do
-        delete :destroy, params: { id: answer_of_user,
-                                   question_id: question,
-                                   format: :js }
+        delete :destroy, params: { id: answer_of_user, format: :js }
         expect(response).to render_template 'destroy'
       end
     end
@@ -75,9 +71,7 @@ describe AnswersController do
       it 'does not delete the @answer' do
         answer
         expect do
-          delete :destroy, params: { id: answer,
-                                     question_id: answer.question,
-                                     format: :js }
+          delete :destroy, params: { id: answer, format: :js }
         end.to_not change(Answer, :count)
       end
     end
@@ -85,17 +79,8 @@ describe AnswersController do
 
   describe 'PATCH #update' do
     context 'Author tries to update answer' do
-      it 'assigns question of answer to @question' do
-        patch :update, params: { id: answer_of_user,
-                                 question_id: question,
-                                 answer: attributes_for(:answer),
-                                 format: :js }
-        expect(assigns(:question)).to eq question
-      end
-
       it 'assigns requested answer to @answer' do
         patch :update, params: { id: answer_of_user,
-                                 question_id: question,
                                  answer: attributes_for(:answer),
                                  format: :js }
         expect(assigns(:answer)).to eq answer_of_user
@@ -103,7 +88,6 @@ describe AnswersController do
 
       it 'changes the attributes of answer' do
         patch :update, params: { id: answer_of_user,
-                                 question_id: question,
                                  answer: { body: 'new body' },
                                  format: :js }
         answer_of_user.reload
@@ -112,7 +96,6 @@ describe AnswersController do
 
       it 'render update view' do
         patch :update, params: { id: answer_of_user,
-                                 question_id: question,
                                  answer: attributes_for(:answer),
                                  format: :js }
         expect(response).to render_template 'update'
@@ -122,7 +105,6 @@ describe AnswersController do
     context 'Non author tries to update answer' do
       it 'does not change attributes of answer' do
         patch :update, params: { id: answer,
-                                 question_id: answer.question,
                                  answer: { body: 'new body' },
                                  format: :js }
         answer.reload
@@ -174,24 +156,18 @@ describe AnswersController do
   describe 'POST #vote_for' do
     context 'Non-author tries to vote' do
       it 'assigns the requested votable to @votable' do
-        post :vote_for, params: { id: answer,
-                                  question_id: answer.question,
-                                  format: :json }
+        post :vote_for, params: { id: answer, format: :json }
         expect(assigns(:votable)).to eq answer
       end
 
       it 'creates a new vote' do
         expect do
-          post :vote_for, params: { id: answer,
-                                    question_id: answer.question,
-                                    format: :json }
+          post :vote_for, params: { id: answer, format: :json }
         end.to change(answer.votes, :count).by(1)
       end
 
       it 'checks that value of vote to equal 1' do
-        post :vote_for, params: { id: answer,
-                                  question_id: answer.question,
-                                  format: :json }
+        post :vote_for, params: { id: answer, format: :json }
         expect(assigns(:vote).value).to eq 1
       end
     end
@@ -199,22 +175,16 @@ describe AnswersController do
     context 'Author tries to vote' do
       it 'does not create a new vote' do
         expect do
-          post :vote_for, params: { id: answer_of_user,
-                                    question_id: question,
-                                    format: :json }
+          post :vote_for, params: { id: answer_of_user, format: :json }
         end.to_not change(answer_of_user.votes, :count)
       end
     end
 
     context 'Non-author tries to vote 2 times' do
       it 'does not create a new vote' do
-        post :vote_for, params: { id: answer,
-                                  question_id: answer.question,
-                                  format: :json }
+        post :vote_for, params: { id: answer, format: :json }
         expect do
-          post :vote_for, params: { id: answer,
-                                    question_id: answer.question,
-                                    format: :json }
+          post :vote_for, params: { id: answer, format: :json }
         end.to_not change(answer.votes, :count)
       end
     end
@@ -223,24 +193,18 @@ describe AnswersController do
   describe 'POST #vote_against' do
     context 'non-author tries to vote' do
       it 'assigns the requested votable to @votable' do
-        post :vote_against, params: { id: answer,
-                                      question_id: answer.question,
-                                      format: :json }
+        post :vote_against, params: { id: answer, format: :json }
         expect(assigns(:votable)).to eq answer
       end
 
       it 'creates a new vote' do
         expect do
-          post :vote_against, params: { id: answer,
-                                        question_id: answer.question,
-                                        format: :json }
+          post :vote_against, params: { id: answer, format: :json }
         end.to change(answer.votes, :count).by(1)
       end
 
       it 'checks that value of vote to equal -1' do
-        post :vote_against, params: { id: answer,
-                                      question_id: answer.question,
-                                      format: :json }
+        post :vote_against, params: { id: answer, format: :json }
         expect(assigns(:vote).value).to eq(-1)
       end
     end
@@ -248,22 +212,16 @@ describe AnswersController do
     context 'author tries to vote' do
       it 'does not create a new vote' do
         expect do
-          post :vote_against, params: { id: answer_of_user,
-                                        question_id: question,
-                                        format: :json }
+          post :vote_against, params: { id: answer_of_user, format: :json }
         end.to_not change(answer_of_user.votes, :count)
       end
     end
 
     context 'Non-author tries to vote 2 times' do
       it 'does not create a new vote' do
-        post :vote_for, params: { id: answer,
-                                  question_id: answer.question,
-                                  format: :json }
+        post :vote_for, params: { id: answer, format: :json }
         expect do
-          post :vote_for, params: { id: answer,
-                                    question_id: answer.question,
-                                    format: :json }
+          post :vote_for, params: { id: answer, format: :json }
         end.to_not change(answer.votes, :count)
       end
     end
@@ -276,18 +234,14 @@ describe AnswersController do
 
     context 'author of vote tries to re-vote' do
       it 'assigns the requested votable to @votable' do
-        delete :re_vote, params: { id: answer,
-                                   question_id: answer.question,
-                                   format: :json }
+        delete :re_vote, params: { id: answer, format: :json }
         expect(assigns(:votable)).to eq answer
       end
 
       it 'destroys the vote of author' do
         vote_of_author
         expect do
-          delete :re_vote, params: { id: answer,
-                                     question_id: answer.question,
-                                     format: :json }
+          delete :re_vote, params: { id: answer, format: :json }
         end.to change(answer.votes, :count).by(-1)
       end
     end
@@ -296,9 +250,7 @@ describe AnswersController do
       it 'does not destroy the vote' do
         vote
         expect do
-          delete :re_vote, params: { id: answer,
-                                     question_id: answer.question,
-                                     format: :json }
+          delete :re_vote, params: { id: answer, format: :json }
         end.to_not change(answer.votes, :count)
       end
     end

@@ -21,12 +21,12 @@ gem 'rails', '~> 5.1.1'
 gem 'rails-controller-testing'
 gem 'redis', '~> 3.0'
 gem 'remotipart'
+gem 'require_all'
 gem 'sass-rails', '~> 5.0'
-gem 'skim', git: 'https://github.com/jfirebaugh/skim'
+gem 'skim'
 gem 'slim-rails'
-gem 'sprockets', '3.6.3'
-gem 'sprockets-rails', '2.3.3', require: 'sprockets/railtie'
-gem 'therubyracer', platforms: :ruby
+gem 'sprockets', '>= 3.7.0'
+gem 'therubyracer'
 gem 'thor', '0.19.4'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
@@ -53,5 +53,6 @@ group :test do
   gem 'database_cleaner'
   gem 'launchy'
   gem 'shoulda-matchers',
-      git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
+      git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+      branch: 'rails-5'
 end

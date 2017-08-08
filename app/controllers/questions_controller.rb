@@ -17,7 +17,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answer = Answer.new
+    @answer = @question.answers.build
+    @comment = @question.comments.build
     gon.current_user = current_user if current_user
   end
 
