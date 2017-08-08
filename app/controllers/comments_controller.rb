@@ -2,6 +2,7 @@
 
 class CommentsController < ApplicationController
   before_action :find_commentable
+  after_action :publish_comment
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -15,6 +16,13 @@ class CommentsController < ApplicationController
   end
 
   private
+
+  def publish_comment
+    return if @comment.errors.any?
+    ActionCable.server.broadcast(
+      "#{@commentable.id}_question_channel", comment: @comment, user: @comment.user
+    )
+  end
 
   def find_commentable
     klass = [Answer, Question].detect { |c| params["#{c.name.underscore}_id"] }

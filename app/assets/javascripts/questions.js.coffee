@@ -44,13 +44,18 @@ $ ->
         @perform 'follow_for_question'
       received: (data) ->
         if ( gon.current_user == undefined ) or ( gon.current_user.id != data['user']['id'] )
-          html = JST['templates/answers/answer']({
-            answer: data['answer'], question: data['question'],
-            rating: data['answer_rating'], user: gon.current_user,
-            attachments: data['attachments'], author: data['user']
-          })
+          if data['answer'] != undefined
+            html = JST['templates/answers/answer']({
+              answer: data['answer'], question: data['question'],
+              rating: data['answer_rating'], user: gon.current_user,
+              attachments: data['attachments'], author: data['user']
+            })
 
-          $('.answers').append(html)
+            $('.answers').append(html)
+
+          else if data['comment'] != undefined
+            html = JST['templates/comments/comment']({ comment: data['comment']})
+            $('.question-comments').prepend(html)
 
   $(document).on 'click', '.comments-link', (e) ->
     e.preventDefault()
@@ -64,6 +69,7 @@ $ ->
     $('.question-comments').toggle()
 
   $('.new_comment').bind 'ajax:success', (e, data, status, xhr) ->
+    $('.question-wrapper .comment-errors').html('')
     comment = $.parseJSON(xhr.responseText)
     html = JST['templates/comments/comment']({ comment: comment })
     $('.question-comments').prepend(html)
