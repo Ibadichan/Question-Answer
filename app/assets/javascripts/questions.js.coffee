@@ -44,40 +44,13 @@ $ ->
         @perform 'follow_for_question'
       received: (data) ->
         if ( gon.current_user == undefined ) or ( gon.current_user.id != data['user']['id'] )
-          if data['answer'] != undefined
+          if data['answer']
             html = JST['templates/answers/answer']({
-              answer: data['answer'], question: data['question'],
-              rating: data['answer_rating'], user: gon.current_user,
-              attachments: data['attachments'], author: data['user']
+              answer: data['answer'], question: data['question'], user: gon.current_user,
+              rating: data['answer_rating'], attachments: data['attachments'], author: data['user'],
             })
-
             $('.answers').append(html)
 
-          else if data['comment'] != undefined
+          else if data['comment']
             html = JST['templates/comments/comment']({ comment: data['comment']})
-            $('.question-comments').prepend(html)
-
-  $(document).on 'click', '.comments-link', (e) ->
-    e.preventDefault()
-
-    if $(this).hasClass('cancel')
-      $(this).html('Комментарии')
-    else
-      $(this).html('Закрыть')
-
-    $(this).toggleClass('cancel')
-    $('.question-comments').toggle()
-
-  $('.new_comment').bind 'ajax:success', (e, data, status, xhr) ->
-    $('.question-wrapper .comment-errors').html('')
-    comment = $.parseJSON(xhr.responseText)
-    html = JST['templates/comments/comment']({ comment: comment })
-    $('.question-comments').prepend(html)
-    $('.new_comment #comment_body').val('')
-  .bind 'ajax:error', (e, xhr, status, error) ->
-    errors = $.parseJSON(xhr.responseText)
-    $.each errors, (index, value) ->
-      $('.question-wrapper .comment-errors').html('<p class="alert alert-danger">'+ value + '</p>')
-
-
-
+            $('.question-comments').append(html)

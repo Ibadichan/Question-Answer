@@ -6,8 +6,8 @@
   = render 'voting', question: @question
   br
   = render 'question_comments', question: @question
-
-
+  br
+  = render 'comments/form', commentable: @question, comment: @comment
 .answers
   = render @question.answers.by_best
 br
