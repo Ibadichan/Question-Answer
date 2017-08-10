@@ -1,6 +1,6 @@
 - if @answer
   div.answer-wrapper data-answer-id="#{@answer.id}"
-    h4.answer-rating Рейтинг ответа #{@rating}
+    h4.answer-rating data-id="#{@answer.id}" Рейтинг ответа #{@rating}
     p #{@answer.body}
     br
     span Создатель: #{@author.email}
@@ -8,7 +8,7 @@
     - if @user
       - if @user.id == @question.user_id && !@answer.best
         a href="/answers/#{@answer.id}/best" data-remote="true" data-method="patch" Лучший ответ
-        br
+      br
     - if @attachments.length > 0
       div.attachments-of-answer
         span Прикрепления:
@@ -19,5 +19,16 @@
               a href="#{url}" #{url.substring(url.lastIndexOf('/')+1)}
 
     - if @user
-      a.margin-right.vote-for-answer data-type="json" data-id="#{@answer.id}"  href="" За ответ
-      a.vote-against-answer data-type="json" data-id="#{@answer.id}" href="" Против ответа
+      div.voting-of-answer data-id="#{@answer.id}"
+        a.margin-right.vote-for-answer  href="/answers/#{@answer.id}/vote_for" За ответ
+        a.vote-against-answer href="/answers/#{@answer.id}/vote_against" Против ответа
+    br
+    a.comments-link href="" Комментарии
+    div.answer-comments data-id="#{@answer.id}"
+    br
+    form.new_comment id="new_comment" action="/answers/#{@answer.id}/comments" method="post" style="display: none;"
+      div.comment-errors
+      label for="comment_body" Ваш комментарий
+      textarea.form-control rows="3"  style="width:30%;" name="comment[body]" id="comment_body"
+      br
+      input.btn.btn-default type="submit" name="commit" value="Комментировать"  data-disable-with="Комментировать"

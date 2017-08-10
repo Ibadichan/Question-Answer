@@ -1,1 +1,1 @@
-a.re-vote-for-answer data-type="json" data-id="#{@votable.id}" href="" Переголосовать
+a.re-vote-for-answer  href="/answers/#{@votable.id}/re_vote" Переголосовать

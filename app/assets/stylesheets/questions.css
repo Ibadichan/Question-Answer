@@ -1,6 +1,5 @@
 .edit_question,
 .question-comments,
-.answer-comments,
 form.new_comment {
     display: none;
 }

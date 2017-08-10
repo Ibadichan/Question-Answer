@@ -5,35 +5,34 @@ $ ->
     $('form#edit_answer_'+ answerId).show()
     $(this).hide()
 
-  voting = (event, element, klassVotable, action, requestMethod) ->
+  voting = (event, element, requestMethod) ->
     event.preventDefault()
-    id = element.data('id')
 
     $.ajax
-      url: "/answers/#{id}/#{action}"
+      url: element.attr('href')
       type: "#{requestMethod}"
+      dataType: "JSON"
       success: (data) ->
-        if action != 're_vote'
+        if element.attr('class') != 're-vote-for-answer'
           html = JST['templates/answers/re_vote']({ votable: data['votable'] })
         else
           html = JST['templates/answers/voting_per_answer']({ votable: data['votable'] })
 
-        answerWrapper = ".answer-wrapper[data-answer-id=#{ data['votable']['id'] }]"
-
-        $(answerWrapper + " > .answer-rating").text("Рейтинг ответа " + data['rating'])
-        $(answerWrapper + " > .voting-of-answer").html(html)
+        id = data['votable']['id']
+        $(".answer-rating[data-id='#{id}']").text("Рейтинг ответа " + data['rating'])
+        $(".voting-of-answer[data-id='#{id}']").html(html)
 
   $(document).on 'click', '.vote-for-answer', (e) ->
-    voting(e, $(this), '.vote-for-answer', 'vote_for', 'POST' )
+    voting(e, $(this), 'POST')
 
   $(document).on 'click', '.vote-against-answer', (e) ->
-    voting(e, $(this), '.vote-against-answer', 'vote_against', 'POST' )
+    voting(e, $(this), 'POST')
 
   $(document).on 'click', '.re-vote-for-answer', (e) ->
-    voting(e, $(this), '.re-vote-for-answer', 're_vote', 'DELETE' )
+    voting(e, $(this), 'DELETE' )
 
-  $(document).on 'click', '.comments-link[data-commentable="answer"]', ->
-    App.cable.subscriptions.create { channel: 'AnswersChannel', answer_id: $(this).data('id') },
+  $(document).on 'click', '.answers .comments-link', ->
+    App.cable.subscriptions.create { channel: 'AnswersChannel', answer_id: $(this).next().data('id') },
       connected: ->
         @perform 'follow_for_answer'
       received: (data) ->
