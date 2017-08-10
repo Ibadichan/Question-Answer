@@ -32,4 +32,14 @@ $ ->
   $(document).on 'click', '.re-vote-for-answer', (e) ->
     voting(e, $(this), '.re-vote-for-answer', 're_vote', 'DELETE' )
 
+  $(document).on 'click', '.comments-link[data-commentable="answer"]', ->
+    App.cable.subscriptions.create { channel: 'AnswersChannel', answer_id: $(this).data('id') },
+      connected: ->
+        @perform 'follow_for_answer'
+      received: (data) ->
+        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['user']['id'] )
+          if data['comment']
+            commentableId = data['comment']['commentable_id']
 
+            html = JST['templates/comments/comment']({ comment: data['comment']})
+            $(".answer-comments[data-id='#{commentableId}']").append(html)
