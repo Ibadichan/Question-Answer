@@ -1,9 +1,6 @@
-.voting-of-answer
+.voting-of-answer {data-id = answer.id }
   - if current_user&.cannot_vote_for?(answer)
-    = link_to t('common.re-vote'), '', class: 're-vote-for-answer',
-              data: { type: :json, id: answer.id }
+    = link_to t('common.re-vote'), re_vote_answer_path(answer) , class: 're-vote-for-answer'
   - elsif current_user.present? &&  !current_user.author_of?(answer)
-    = link_to t('answers.voting_for'), '', class: 'margin-right vote-for-answer',
-              data: { type: :json, id: answer.id }
-    = link_to t('answers.voting_against'), '', class: 'vote-against-answer',
-              data: { type: :json, id: answer.id }
+    = link_to t('answers.voting_for'), vote_for_answer_path(answer), class: 'margin-right vote-for-answer'
+    = link_to t('answers.voting_against'), vote_against_answer_path(answer), class: 'vote-against-answer'

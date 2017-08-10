@@ -1,2 +1,2 @@
-a.margin-right.vote-for-question href="" data-type="json" data-id="#{@votable.id}" За вопрос
-a.vote-against-question data-type="json" data-id="#{@votable.id}" href="" Против вопроса
+a.margin-right.vote-for-question href="/questions/#{@votable.id}/vote_for" За вопрос
+a.vote-against-question  href="/questions/#{@votable.id}/vote_against" Против вопроса

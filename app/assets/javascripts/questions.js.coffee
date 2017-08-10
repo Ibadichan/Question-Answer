@@ -4,15 +4,15 @@ $ ->
     $(this).hide()
     $('.edit_question').show()
 
-  voting = (event, klassVotable, action, requestMethod) ->
+  voting = (event, element, requestMethod) ->
     event.preventDefault()
-    id = $(klassVotable).data('id')
 
     $.ajax
-      url: "/questions/#{id}/#{action}"
+      url: element.attr('href')
       type: "#{requestMethod}"
+      dataType: "JSON"
       success: (data) ->
-        if action != 're_vote'
+        if element.attr('class') != 're-vote-for-question'
           html = JST['templates/questions/re_vote']({ votable: data['votable'] })
         else
           html = JST['templates/questions/voting_per_question']({ votable: data['votable'] })
@@ -21,13 +21,13 @@ $ ->
         $('.voting-of-question').html(html)
 
   $(document).on 'click', '.vote-for-question', (e) ->
-    voting(e, '.vote-for-question', 'vote_for', 'POST' )
+    voting(e, $(this), 'POST' )
 
   $(document).on 'click', '.vote-against-question', (e) ->
-    voting(e, '.vote-against-question', 'vote_against', 'POST' )
+    voting(e, $(this), 'POST' )
 
   $(document).on 'click', '.re-vote-for-question', (e) ->
-    voting(e, '.re-vote-for-question', 're_vote', 'DELETE' )
+    voting(e, $(this),  'DELETE' )
 
   App.cable.subscriptions.create('QuestionsChannel', {
     connected: ->

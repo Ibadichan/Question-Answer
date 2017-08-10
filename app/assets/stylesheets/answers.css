@@ -3,7 +3,8 @@
     border-top: 3px solid lightgray;
 }
 
-.edit_answer {
+.edit_answer,
+.answer-comments {
     display: none;
 }
 

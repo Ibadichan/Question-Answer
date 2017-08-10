@@ -10,9 +10,9 @@ feature 'User can add comment to answer', '
 
   given(:user)     { create(:user) }
   given(:question) { create(:question) }
-  given!(:answer) { create(:answer, question: question) }
+  given!(:answer)  { create(:answer, question: question) }
 
-  describe 'Authenticated user tries to add comment' do
+  describe 'Authenticated user tries to add comment', js: true do
     scenario 'with valid attributes' do
       Capybara.using_session('guest') do
         visit question_path(question)
@@ -27,6 +27,7 @@ feature 'User can add comment to answer', '
           click_on 'Комментарии'
           fill_in 'Ваш комментарий', with: 'My comment'
           click_on 'Комментировать'
+          wait_for_ajax
           expect(page).to have_content 'My comment'
         end
       end

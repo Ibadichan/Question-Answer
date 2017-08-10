@@ -1,6 +1,6 @@
 - if answer.persisted?
   .answer-wrapper { data-answer-id = answer.id }
-    h4.answer-rating = "Рейтинг ответа #{answer.rating}"
+    h4.answer-rating { data-id = answer.id } = "Рейтинг ответа #{answer.rating}"
     p = answer.body
     br
     span = "Создатель: #{answer.user.email}"
