@@ -27,7 +27,9 @@ $ ->
     )
 
   if $('.answers').length == 1
-    App.cable.subscriptions.create('CommentsChannel', {
+    App.cable.subscriptions.create {
+      channel: 'CommentsChannel', question_id: $('.question-wrapper').data('questionId')
+      },
       connected: ->
         @perform 'follow'
       received: (data) ->
@@ -36,4 +38,3 @@ $ ->
           type = data['comment']['commentable_type'].toLowerCase()
           id = data['comment']['commentable_id']
           $(".#{type}-comments[data-id='#{id}']").append(html)
-    })

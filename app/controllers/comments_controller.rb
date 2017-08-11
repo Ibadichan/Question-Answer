@@ -19,8 +19,9 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @comment.errors.any?
+    question_id = @commentable.try(:question_id) || @commentable.id
     ActionCable.server.broadcast(
-      'comments', comment: @comment, author: @comment.user
+      "#{question_id}_comments_channel", comment: @comment, author: @comment.user
     )
   end
 
