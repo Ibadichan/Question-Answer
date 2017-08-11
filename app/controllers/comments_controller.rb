@@ -19,9 +19,8 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @comment.errors.any?
-    type_of_commentable = @commentable.class.name.underscore
     ActionCable.server.broadcast(
-      "#{@commentable.id}_#{type_of_commentable}_channel", comment: @comment, user: @comment.user
+      'comments', comment: @comment, author: @comment.user
     )
   end
 

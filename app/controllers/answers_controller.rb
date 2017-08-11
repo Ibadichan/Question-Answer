@@ -34,7 +34,7 @@ class AnswersController < ApplicationController
       "#{@question.id}_question_channel",
       answer: @answer, question: @question,
       answer_rating: @answer.rating,
-      user: @answer.user, attachments: @answer.attachments
+      author: @answer.user, attachments: @answer.attachments
     )
   end
 

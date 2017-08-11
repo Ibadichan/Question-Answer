@@ -43,14 +43,9 @@ $ ->
       connected: ->
         @perform 'follow_for_question'
       received: (data) ->
-        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['user']['id'] )
-          if data['answer']
-            html = JST['templates/answers/answer']({
-              answer: data['answer'], question: data['question'], user: gon.current_user,
-              rating: data['answer_rating'], attachments: data['attachments'], author: data['user'],
-            })
-            $('.answers').append(html)
-
-          else if data['comment']
-            html = JST['templates/comments/comment']({ comment: data['comment']})
-            $('.question-comments').append(html)
+        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['author']['id'] )
+          html = JST['templates/answers/answer']({
+            answer: data['answer'], question: data['question'], user: gon.current_user,
+            rating: data['answer_rating'], attachments: data['attachments'], author: data['author'],
+          })
+          $('.answers').append(html)

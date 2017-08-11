@@ -25,3 +25,15 @@ $ ->
       form.find('.comment-errors').html('<p class="alert alert-danger">'+ errorComment + '</p>')
       form.find('input[type="submit"]').removeAttr('disabled')
     )
+
+  if $('.answers').length == 1
+    App.cable.subscriptions.create('CommentsChannel', {
+      connected: ->
+        @perform 'follow'
+      received: (data) ->
+        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['author']['id'])
+          html = JST['templates/comments/comment']({ comment: data['comment']})
+          type = data['comment']['commentable_type'].toLowerCase()
+          id = data['comment']['commentable_id']
+          $(".#{type}-comments[data-id='#{id}']").append(html)
+    })
