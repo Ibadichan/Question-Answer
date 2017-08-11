@@ -36,7 +36,7 @@ $ ->
       $('.questions-list').append(data)
   })
 
-  if $('.answers').length == 1
+  if $('.question-wrapper').length == 1
     App.cable.subscriptions.create {
       channel: 'QuestionsChannel', question_id: $('.question-wrapper').data('questionId')
       },
