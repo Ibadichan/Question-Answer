@@ -9,11 +9,6 @@ describe AttachmentsController do
     let(:attachment) { create(:attachment, attachable: question) }
 
     context 'Author of attachable tries to delete file' do
-      it 'assigns attachable of attachment to @attachable' do
-        delete :destroy, params: { id: attachment, format: :js }
-        expect(assigns(:attachable)).to eq question
-      end
-
       it 'assigns attachment to @attachment' do
         delete :destroy, params: { id: attachment, format: :js }
         expect(assigns(:attachment)).to eq attachment
