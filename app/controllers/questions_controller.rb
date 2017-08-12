@@ -4,9 +4,11 @@ class QuestionsController < ApplicationController
   include PublicIndexAndShow
   include Voted
 
-  before_action :set_question, only: %i[destroy show update]
+  before_action :set_question,     only: %i[destroy show update]
   before_action :check_authorship, only: %i[destroy update]
-  after_action :publish_question, only: :create
+  after_action  :publish_question, only: %i[create]
+
+  respond_to :js, only: %i[update]
 
   def index
     respond_with @questions = Question.all
@@ -40,8 +42,7 @@ class QuestionsController < ApplicationController
     ActionCable.server.broadcast(
       'questions',
       ApplicationController.render(
-        partial: 'questions/question',
-        locals: { question: @question }
+        partial: 'questions/question', locals: { question: @question }
       )
     )
   end

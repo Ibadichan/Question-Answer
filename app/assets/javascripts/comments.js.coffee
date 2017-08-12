@@ -22,12 +22,12 @@ $ ->
       form.find('input[type="submit"]').removeAttr('disabled')
       $('.new_comment #comment_body').val('')
       $('p.notice').html('Comment успешно создан.')
-    ).fail( (error) ->
-      errorComment = $.parseJSON(error.responseText)['body'][0]
-      $('p.alert').html('Comment не может быть создан.');
-      form.find('.comment-errors').html('<p class="alert alert-danger">'+ errorComment + '</p>')
+    'json').fail( (data) ->
+      $('p.alert').html('Comment не может быть создан.')
+      $.each $.parseJSON(data.responseText)['errors'], (index, value) ->
+        form.find('.comment-errors').append('<p class="alert alert-danger">'+ value + '</p>')
       form.find('input[type="submit"]').removeAttr('disabled')
-    )
+    'json')
 
   if  $('.question-wrapper').length == 1
     App.cable.subscriptions.create {

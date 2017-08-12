@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
   create_table 'answers', force: :cascade do |t|
     t.text 'body'
     t.bigint 'question_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.bigint 'user_id'
     t.boolean 'best', default: false
     t.index ['question_id'], name: 'index_answers_on_question_id'
@@ -31,20 +33,26 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'updated_at', null: false
     t.integer 'attachable_id'
     t.string 'attachable_type'
-    t.index %w[attachable_id attachable_type], name: 'index_attachments_on_attachable_id_and_attachable_type'
+    t.index %w[attachable_id attachable_type],
+            name: 'index_attachments_on_attachable_id_and_attachable_type'
   end
 
   create_table 'comments', force: :cascade do |t|
     t.string 'body'
     t.string 'commentable_type'
     t.bigint 'commentable_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.integer 'user_id'
-    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
+    t.index %w[commentable_type commentable_id],
+            name: 'index_comments_on_commentable_type_and_commentable_id'
   end
 
   create_table 'questions', force: :cascade do |t|
     t.string 'title'
     t.text 'body'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.bigint 'user_id'
     t.index ['user_id'], name: 'index_questions_on_user_id'
   end
@@ -64,7 +72,8 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'updated_at', null: false
     t.string 'name'
     t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
+    t.index ['reset_password_token'],
+            name: 'index_users_on_reset_password_token', unique: true
   end
 
   create_table 'votes', force: :cascade do |t|
@@ -72,8 +81,11 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.bigint 'user_id'
     t.string 'votable_type'
     t.bigint 'votable_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
     t.index ['user_id'], name: 'index_votes_on_user_id'
-    t.index %w[votable_type votable_id], name: 'index_votes_on_votable_type_and_votable_id'
+    t.index %w[votable_type votable_id],
+            name: 'index_votes_on_votable_type_and_votable_id'
   end
 
   add_foreign_key 'answers', 'questions'

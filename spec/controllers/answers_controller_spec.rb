@@ -128,10 +128,6 @@ describe AnswersController do
         expect(assigns(:answer)).to eq answer_of_question
       end
 
-      it 'assigns question of answer to @question' do
-        expect(assigns(:question)).to eq question_of_user
-      end
-
       it "changes value of field 'best' to true" do
         answer_of_question.reload
         expect(answer_of_question).to be_best

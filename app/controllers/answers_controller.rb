@@ -3,27 +3,29 @@
 class AnswersController < ApplicationController
   include Voted
 
-  before_action :set_answer, only: %i[destroy update best]
+  before_action :set_answer,       only: %i[destroy update best]
   before_action :check_authorship, only: %i[destroy update]
-  after_action :publish_answer, only: %i[create]
+  before_action :set_question,     only: %i[create]
+
+  after_action  :publish_answer,   only: %i[create]
+
+  respond_to :js
 
   def create
-    @question = Question.find(params[:question_id])
-    @answer = @question.answers.create(answer_params.merge(user: current_user))
+    respond_with @answer = @question.answers.create(answer_params.merge(user: current_user))
   end
 
   def destroy
-    @answer.destroy
+    respond_with @answer.destroy
   end
 
   def update
-    @answer.update(answer_params)
+    respond_with @answer.update(answer_params)
   end
 
   def best
-    @question = @answer.question
-    return head :forbidden unless current_user.author_of?(@question)
-    @answer.select_as_best
+    return head :forbidden unless current_user.author_of?(@answer.question)
+    respond_with @answer.select_as_best
   end
 
   private
@@ -44,6 +46,10 @@ class AnswersController < ApplicationController
 
   def set_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def set_question
+    @question = Question.find(params[:question_id])
   end
 
   def answer_params

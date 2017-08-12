@@ -22,8 +22,8 @@ feature 'Create question', '
       fill_in 'Ваш вопрос', with: 'my body'
       click_on 'Создать'
 
-      expect(page).to have_content 'Question успешно создан.'
       expect(current_path).to eq question_path(Question.last)
+      expect(page).to have_content 'Question успешно создан.'
 
       within '.question-show' do
         expect(page).to have_content 'my body'
