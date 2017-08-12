@@ -1,6 +1,8 @@
-$('.answer-errors').html('');
+$('.answer-errors, p.alert, p.notice ').html('');
 
 <%- if @answer.persisted? %>
+  $('p.notice').html('Answer успешно создан.');
+
   <% if remotipart_submitted? %>
     $('.answers').append("<%= j "#{render @answer }" %>");
     $('.new_answer').html("<%= j "#{render 'form', path: [@answer.question, Answer.new] }" %>");
@@ -9,6 +11,8 @@ $('.answer-errors').html('');
     $('.new_answer').html('<%= j render 'form', path: [@answer.question, Answer.new] %>');
   <% end %>
 <%- else %>
+  $('p.alert').html('Answer не может быть создан.');
+
   <% @answer.errors.each do |attr, message| %>
     $('.answer-errors').html('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>

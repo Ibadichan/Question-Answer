@@ -1,9 +1,14 @@
+require 'application_responder'
+
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-  before_action :authenticate_user!
+  self.responder = ApplicationResponder
+  respond_to :html, :json, :js
 
+  protect_from_forgery with: :exception
+
+  before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected

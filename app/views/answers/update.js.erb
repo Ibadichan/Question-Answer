@@ -1,12 +1,16 @@
 var answer = $('div[data-answer-id=<%= @answer.id%>]');
+$('p.alert, p.notice').html('');
 
 <% if @answer.errors.present? %>
   var answerErrors = answer.find('.answer-errors');
+  $('p.alert').html('Answer не может быть обновлен.');
 
   <% @answer.errors.each do |attr, message| %>
     $(answerErrors).append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
+  $('p.notice').html('Answer был успешно обновлен.');
+
   <% if remotipart_submitted? %>
     answer.replaceWith("<%= j "#{render @answer }" %>");
   <% else %>

@@ -20,4 +20,4 @@
     br
     = render 'answers/answer_comments', answer: answer
     br
-    = render 'comments/form', commentable: answer, comment: Comment.new
+    = render 'comments/form', commentable: answer, comment: answer.comments.build

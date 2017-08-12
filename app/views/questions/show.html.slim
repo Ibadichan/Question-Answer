@@ -7,9 +7,9 @@
   br
   = render 'question_comments', question: @question
   br
-  = render 'comments/form', commentable: @question, comment: @comment
+  = render 'comments/form', commentable: @question, comment: @question.comments.build
 .answers
   = render @question.answers.by_best
 br
 .new_answer
-  = render 'answers/form', path:[ @question, @answer ]
+  = render 'answers/form', path:[ @question, @question.answers.build ]

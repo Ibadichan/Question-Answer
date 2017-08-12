@@ -1,10 +1,12 @@
-$('.question-errors').html('');
+$('.question-errors, p.alert, p.notice').html('');
 
 <% if @question.errors.present? %>
+  $('p.alert').html('Question не может быть обновлен.');
   <%	@question.errors.each do |attr, message| %>
     $('.question-errors').append('<p class="alert alert-danger"><%= j message %></p>');
   <% end %>
 <% else %>
+  $('p.notice').html('Question был успешно обновлен.');
   $('.question-show').replaceWith('<%= j render 'question_content', question: @question %>');
   $('.attachments-of-question').replaceWith('<%= j render 'attachments', question: @question %>');
   $('.edit_question').hide();
