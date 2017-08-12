@@ -14,14 +14,17 @@ $ ->
   $(document).on 'submit', 'form.new_comment', (e) ->
     e.preventDefault()
     form = $(this)
+    $('p.alert, p.notice').html('')
 
     $.post(form.attr('action'), form.serialize(), (data) ->
       form.find('.comment-errors').html('')
       form.prev().prev().append( JST['templates/comments/comment']({ comment: data }))
       form.find('input[type="submit"]').removeAttr('disabled')
       $('.new_comment #comment_body').val('')
+      $('p.notice').html('Comment успешно создан.')
     ).fail( (error) ->
       errorComment = $.parseJSON(error.responseText)['body'][0]
+      $('p.alert').html('Comment не может быть создан.');
       form.find('.comment-errors').html('<p class="alert alert-danger">'+ errorComment + '</p>')
       form.find('input[type="submit"]').removeAttr('disabled')
     )

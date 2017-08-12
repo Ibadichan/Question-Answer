@@ -19,7 +19,7 @@ feature 'User deletes question', '
     click_on 'Удалить вопрос'
 
     expect(current_path).to eq questions_path
-    expect(page).to have_content 'Вопрос удален'
+    expect(page).to have_content 'Question был успешно удален.'
     expect(page).to have_no_link question.title
   end
 

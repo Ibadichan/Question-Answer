@@ -6,38 +6,31 @@ class QuestionsController < ApplicationController
 
   before_action :set_question, only: %i[destroy show update]
   before_action :check_authorship, only: %i[destroy update]
-  after_action :publish_question, only: %i[create]
+  after_action :publish_question, only: :create
 
   def index
-    @questions = Question.all
+    respond_with @questions = Question.all
   end
 
   def new
-    @question = Question.new
+    respond_with @question = Question.new
   end
 
   def show
-    @answer = @question.answers.build
-    @comment = @question.comments.build
     gon.current_user = current_user if current_user
+    respond_with @question
   end
 
   def create
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      redirect_to @question, notice: 'Вопрос успешно создан'
-    else
-      render :new
-    end
+    respond_with @question = current_user.questions.create(question_params)
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path, notice: 'Вопрос удален'
+    respond_with @question.destroy
   end
 
   def update
-    @question.update(question_params)
+    respond_with @question.update(question_params)
   end
 
   private

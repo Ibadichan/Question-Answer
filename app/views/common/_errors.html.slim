@@ -1,4 +1,4 @@
 - if resource.errors.any?
   #error_explanation
-    - resource.errors.full_messages.each do |msg|
-      p.alert.alert-danger  * #{msg}
+    - resource.errors.messages.each do |attr, msg|
+      p.alert.alert-danger  * #{msg[0]}
