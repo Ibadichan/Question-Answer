@@ -7,14 +7,20 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'bootstrap-social-rails'
+gem 'capybara-email'
 gem 'carrierwave'
 gem 'cocoon'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
+gem 'font-awesome-rails'
 gem 'gon'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.1'
@@ -44,6 +50,7 @@ end
 
 group :development do
   gem 'capistrano-rails'
+  gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'

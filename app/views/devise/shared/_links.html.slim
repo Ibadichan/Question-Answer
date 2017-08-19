@@ -5,7 +5,7 @@
   = link_to "Зарегистрироваться", new_registration_path(resource_name)
   br
 - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
-  = link_to "Забыли ваш пороль?", new_password_path(resource_name)
+  = link_to "Забыли ваш пароль?", new_password_path(resource_name)
   br
 - if devise_mapping.confirmable? && controller_name != 'confirmations'
   = link_to "Не получили подтверждения?", new_confirmation_path(resource_name)
@@ -14,6 +14,8 @@
   = link_to "Не получили инструкции по разблокировке?", new_unlock_path(resource_name)
   br
 - if devise_mapping.omniauthable?
+  br
   - resource_class.omniauth_providers.each do |provider|
-    = link_to "Войти с  #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider)
+    = link_to "#{omniauth_authorize_path(resource_name, provider)}", class: "btn btn-block btn-social btn-#{provider}" do
+      = fa_icon "#{provider}", text: "Sign in with #{provider}"
     br

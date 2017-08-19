@@ -33,8 +33,7 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'updated_at', null: false
     t.integer 'attachable_id'
     t.string 'attachable_type'
-    t.index %w[attachable_id attachable_type],
-            name: 'index_attachments_on_attachable_id_and_attachable_type'
+    t.index %w[attachable_id attachable_type], name: 'index_attachments_on_attachable_id_and_attachable_type'
   end
 
   create_table 'comments', force: :cascade do |t|
@@ -44,8 +43,7 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'user_id'
-    t.index %w[commentable_type commentable_id],
-            name: 'index_comments_on_commentable_type_and_commentable_id'
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
   end
 
   create_table 'questions', force: :cascade do |t|
@@ -68,12 +66,15 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'last_sign_in_at'
     t.inet 'current_sign_in_ip'
     t.inet 'last_sign_in_ip'
+    t.string 'confirmation_token'
+    t.datetime 'confirmed_at'
+    t.datetime 'confirmation_sent_at'
+    t.string 'unconfirmed_email'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.string 'name'
     t.index ['email'], name: 'index_users_on_email', unique: true
-    t.index ['reset_password_token'],
-            name: 'index_users_on_reset_password_token', unique: true
+    t.index ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true
   end
 
   create_table 'votes', force: :cascade do |t|
@@ -84,8 +85,7 @@ ActiveRecord::Schema.define(version: 20_170_807_184_830) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.index ['user_id'], name: 'index_votes_on_user_id'
-    t.index %w[votable_type votable_id],
-            name: 'index_votes_on_votable_type_and_votable_id'
+    t.index %w[votable_type votable_id], name: 'index_votes_on_votable_type_and_votable_id'
   end
 
   add_foreign_key 'answers', 'questions'
