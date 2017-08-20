@@ -8,7 +8,7 @@ feature 'User can sign in/up with facebook', '
   I want to sign in/up with facebook
 ' do
 
-  given(:user) { create(:user) }
+  given(:user) { create(:user, email: 'admin@example.com') }
 
   scenario 'User already has authorization' do
     user.authorizations.create(provider: mock_facebook_auth_hash.provider,
@@ -18,20 +18,29 @@ feature 'User can sign in/up with facebook', '
     click_on 'Sign in with facebook'
     mock_facebook_auth_hash
 
-    expect(current_path).to eq questions_path
+    expect(current_path).to eq root_path
     expect(page).to have_content 'Вход в систему выполнен с учетной записью из Facebook.'
-    expect(page).to have_link 'Выйти'
   end
 
   describe 'User has not authorization' do
-    context 'user already exists' do
-      scenario 'provider gives email'
-      scenario 'provider does not give email'
+    scenario 'user already exists' do
+      user
+
+      visit new_user_session_path
+      click_on 'Sign in with facebook'
+      mock_facebook_auth_hash
+
+      expect(current_path).to eq root_path
+      expect(page).to have_content 'Вход в систему выполнен с учетной записью из Facebook.'
     end
 
-    context 'user does not exists' do
-      scenario 'provider gives email'
-      scenario 'provider does not give email'
+    scenario 'user does not exists' do
+      visit new_user_session_path
+      click_on 'Sign in with facebook'
+      mock_facebook_auth_hash
+
+      expect(current_path).to eq root_path
+      expect(page).to have_content 'Вход в систему выполнен с учетной записью из Facebook.'
     end
   end
 end
