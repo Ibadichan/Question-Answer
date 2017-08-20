@@ -13,6 +13,23 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook twitter]
 
+  def self.find_for_oauth(auth)
+    authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
+    return authorization.user if authorization
+
+    email = auth.info.email
+    user = User.where(email: email).first
+
+    unless user
+      user = User.new(email: email, name: auth.info.name, password: Devise.friendly_token[0, 20])
+      user.skip_confirmation!
+      user.save!
+    end
+
+    user.authorizations.create!(provider: auth.provider, uid: auth.uid.to_s) if user
+    user
+  end
+
   def author_of?(object)
     id == object.user_id
   end

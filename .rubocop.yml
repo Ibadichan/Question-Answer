@@ -2,7 +2,7 @@ Documentation:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 105
+  Max: 110
 
 Metrics/MethodLength:
   Max: 15
