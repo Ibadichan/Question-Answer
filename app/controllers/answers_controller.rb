@@ -3,6 +3,7 @@
 class AnswersController < ApplicationController
   include Voted
 
+  before_action :ensure_sign_up_complete
   before_action :set_answer,       only: %i[destroy update best]
   before_action :check_authorship, only: %i[destroy update]
   before_action :set_question,     only: %i[create]

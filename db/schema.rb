@@ -33,8 +33,7 @@ ActiveRecord::Schema.define(version: 20_170_819_144_525) do
     t.datetime 'updated_at', null: false
     t.integer 'attachable_id'
     t.string 'attachable_type'
-    t.index %w[attachable_id attachable_type],
-            name: 'index_attachments_on_attachable_id_and_attachable_type'
+    t.index %w[attachable_id attachable_type], name: 'index_attachments_on_attachable_id_and_attachable_type'
   end
 
   create_table 'authorizations', force: :cascade do |t|
@@ -54,8 +53,7 @@ ActiveRecord::Schema.define(version: 20_170_819_144_525) do
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
     t.integer 'user_id'
-    t.index %w[commentable_type commentable_id],
-            name: 'index_comments_on_commentable_type_and_commentable_id'
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
   end
 
   create_table 'questions', force: :cascade do |t|
