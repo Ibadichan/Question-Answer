@@ -7,6 +7,7 @@ feature 'User can vote for answer', '
   As a non-author of answer
   I want to vote
 ' do
+
   given(:non_author) { create(:user) }
   given(:author)     { create(:user) }
   given(:question)   { create(:question) }

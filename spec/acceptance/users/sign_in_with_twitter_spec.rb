@@ -15,7 +15,7 @@ feature 'User can sign in/up with twitter', '
 
     visit new_user_session_path
     click_on 'Sign in with twitter'
-    mock_facebook_auth_hash
+    mock_twitter_auth_hash
 
     expect(current_path).to eq root_path
     expect(page).to have_content 'Вход в систему выполнен с учетной записью из Twitter.'
@@ -24,7 +24,7 @@ feature 'User can sign in/up with twitter', '
   scenario 'User tries to register with twitter' do
     visit new_user_session_path
     click_on 'Sign in with twitter'
-    mock_facebook_auth_hash
+    mock_twitter_auth_hash
 
     expect(page).to have_content 'Пожалуйста, укажите в поле ваш email,
                                           на него придет письмо для подтверждения вашего аккаунта'
@@ -34,6 +34,9 @@ feature 'User can sign in/up with twitter', '
 
     open_email('new@mail.com')
     current_email.click_link 'Confirm my account'
+
     expect(page).to have_content 'Ваш адрес эл. почты успешно подтвержден.'
+    click_on 'Sign in with twitter'
+    expect(page).to have_content 'Вход в систему выполнен с учетной записью из Twitter.'
   end
 end

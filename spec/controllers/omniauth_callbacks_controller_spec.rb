@@ -7,7 +7,7 @@ describe OmniauthCallbacksController, type: :controller do
     request.env['devise.mapping'] = Devise.mappings[:user]
   end
 
-  describe 'GET|POST #facebook' do
+  describe 'GET #facebook' do
     before do
       request.env['omniauth.auth'] = mock_facebook_auth_hash
       get :facebook, params: { omniauth_auth: request.env['omniauth.auth'] }
@@ -22,7 +22,7 @@ describe OmniauthCallbacksController, type: :controller do
     end
   end
 
-  describe 'GET|POST #twitter' do
+  describe 'GET #twitter' do
     context 'Email is not verified' do
       before do
         request.env['omniauth.auth'] = mock_twitter_auth_hash
