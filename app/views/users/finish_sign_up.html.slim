@@ -1,0 +1,7 @@
+.add-email-to-user
+  h4 Пожалуйста, укажите в поле ваш email, на него придет письмо для подтверждения вашего аккаунта
+  = form_for(current_user, as: 'user', url: finish_sign_up_path(current_user), html: { role: 'form'}) do |f|
+    = f.label :email
+    = f.text_field :email, class: 'form-control', placeholder: 'Example: email@me.com', value: ''
+    br
+    = f.submit t('common.post'), class: 'btn btn-primary'

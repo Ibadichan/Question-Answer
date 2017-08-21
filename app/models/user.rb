@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  TEMP_EMAIL_REGEX = /\Achange@me/
+
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -21,13 +23,19 @@ class User < ApplicationRecord
     user = User.where(email: email).first
 
     unless user
-      user = User.new(email: email, name: auth.info.name, password: Devise.friendly_token[0, 20])
+      user = User.new(email: email ? email : "change@me-#{auth.uid}-#{auth.provider}.com",
+                      name: auth.info.name, password: Devise.friendly_token[0, 20])
+
       user.skip_confirmation!
       user.save!
     end
 
     user.authorizations.create!(provider: auth.provider, uid: auth.uid.to_s) if user
     user
+  end
+
+  def email_verified?
+    email !~ TEMP_EMAIL_REGEX
   end
 
   def author_of?(object)

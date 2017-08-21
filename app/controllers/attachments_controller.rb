@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class AttachmentsController < ApplicationController
+  before_action :ensure_sign_up_complete
   before_action :set_attachment
   before_action :check_authorship
 

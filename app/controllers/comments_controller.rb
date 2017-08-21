@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+  before_action :ensure_sign_up_complete
   before_action :find_commentable
   after_action  :publish_comment
 
