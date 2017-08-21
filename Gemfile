@@ -8,6 +8,7 @@ end
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootstrap-social-rails'
+gem 'cancancan'
 gem 'capybara-email'
 gem 'carrierwave'
 gem 'cocoon'
