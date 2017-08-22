@@ -4,6 +4,7 @@
 
 require 'capybara/email/rspec'
 require 'spec_helper'
+require 'cancan/matchers'
 
 ENV['RAILS_ENV'] ||= 'test'
 

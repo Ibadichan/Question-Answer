@@ -3,10 +3,10 @@
 FactoryGirl.define do
   factory :comment do
     sequence(:body) { |n| "my_comment_body#{n}" }
-    association :commentable
+    association :commentable, factory: %i[answer question].sample
     factory :invalid_comment do
       body nil
-      association :commentable
+      association :commentable, factory: %i[answer question].sample
     end
   end
 end
