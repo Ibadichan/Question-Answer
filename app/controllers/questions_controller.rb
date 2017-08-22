@@ -2,14 +2,10 @@
 
 class QuestionsController < ApplicationController
   include PublicIndexAndShow
-  include Voted
-
   before_action :ensure_sign_up_complete, except: %i[show index]
-  before_action :set_question,     only: %i[destroy show update]
-  before_action :check_authorship, only: %i[destroy update]
-  after_action  :publish_question, only: %i[create]
-
-  respond_to :js, only: %i[update]
+  include Voted
+  load_and_authorize_resource
+  after_action :publish_question, only: %i[create]
 
   def index
     respond_with @questions = Question.all
@@ -46,14 +42,6 @@ class QuestionsController < ApplicationController
         partial: 'questions/question', locals: { question: @question }
       )
     )
-  end
-
-  def check_authorship
-    head :forbidden unless current_user.author_of?(@question)
-  end
-
-  def set_question
-    @question = Question.find(params[:id])
   end
 
   def question_params

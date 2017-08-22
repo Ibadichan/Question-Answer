@@ -4,7 +4,7 @@ require 'application_responder'
 
 class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
-  respond_to :html
+  respond_to :html, :js, :json
 
   protect_from_forgery with: :exception
 
@@ -15,6 +15,12 @@ class ApplicationController < ActionController::Base
     return if action_name == 'finish_sign_up'
     redirect_to finish_sign_up_path(current_user) if current_user && !current_user.email_verified?
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
+  check_authorization unless: :devise_controller?
 
   protected
 
