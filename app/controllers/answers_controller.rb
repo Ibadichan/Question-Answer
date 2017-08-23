@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :ensure_sign_up_complete
   include Voted
   load_and_authorize_resource except: :best
   after_action :publish_answer, only: :create

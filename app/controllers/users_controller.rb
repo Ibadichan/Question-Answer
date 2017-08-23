@@ -2,7 +2,6 @@
 
 class UsersController < ApplicationController
   skip_authorization_check
-  before_action :ensure_sign_up_complete
 
   def finish_sign_up
     @user = User.find(params[:id])
