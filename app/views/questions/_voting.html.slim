@@ -1,6 +1,6 @@
 .voting-of-question
-  - if current_user&.cannot_vote_for?(question)
+  - if can?(:re_vote, question)
     = link_to t('common.re-vote'), re_vote_question_path(question), class: 're-vote-for-question'
-  - elsif current_user.present? && !current_user.author_of?(question)
+  - elsif can?(:vote_for, question) && can?(:vote_against, question)
     = link_to t('questions.voting_for'), vote_for_question_path(question), class: 'margin-right vote-for-question'
     = link_to t('questions.voting_against'), vote_against_question_path(question), class: 'vote-against-question'

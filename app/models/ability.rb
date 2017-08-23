@@ -22,15 +22,20 @@ class Ability
   def user_abilities
     guest_abilities
     can :create,  [Question, Answer, Comment]
-    can :update,  [Question, Answer, Comment], user: @user
-    can :destroy, [Question, Answer, Comment], user: @user
-    can :destroy, [Attachment] { |attachment| @user.author_of?(attachment.attachable) }
+    can :update,  [Question, Answer, Comment], user: user
+    can :destroy, [Question, Answer, Comment], user: user
 
-    can :re_vote,        [Question, Answer] { |votable| @user.cannot_vote_for?(votable) }
+    can :destroy, Attachment do |attachment|
+      user.author_of?(attachment.attachable)
+    end
+
+    can :re_vote,        [Question, Answer] { |votable| user.cannot_vote_for?(votable) }
     can :vote_for,       [Question, Answer] { |votable| user_can_vote_for?(votable) }
     can :vote_against,   [Question, Answer] { |votable| user_can_vote_for?(votable) }
 
-    can :select_as_best, [Answer] { |answer| @user.author_of?(answer.question) }
+    can :select_as_best, Answer do |answer|
+      user.author_of?(answer.question) && !answer.best?
+    end
   end
 
   def admin_abilities
@@ -40,6 +45,6 @@ class Ability
   private
 
   def user_can_vote_for?(votable)
-    !@user.cannot_vote_for?(votable) && !@user.author_of?(votable)
+    !user.cannot_vote_for?(votable) && !user.author_of?(votable)
   end
 end

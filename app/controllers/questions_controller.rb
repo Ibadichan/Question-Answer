@@ -2,7 +2,6 @@
 
 class QuestionsController < ApplicationController
   include PublicIndexAndShow
-  before_action :ensure_sign_up_complete, except: %i[show index]
   include Voted
   load_and_authorize_resource
   after_action :publish_question, only: %i[create]
