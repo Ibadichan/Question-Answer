@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, alert: exception.message
+    respond_to do |format|
+      format.json { render json: { error: exception.message }, status: :forbidden }
+      format.js   { render json: exception.message, status: :forbidden }
+      format.html { redirect_to root_url, alert: exception.message }
+    end
   end
 
   def ensure_sign_up_complete
