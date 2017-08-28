@@ -15,10 +15,14 @@ gem 'cocoon'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'
 gem 'devise-i18n'
+gem 'doorkeeper'
+gem 'doorkeeper-i18n'
 gem 'font-awesome-rails'
 gem 'gon'
 gem 'jbuilder', '~> 2.5'
 gem 'jquery-rails'
+gem 'oj'
+gem 'oj_mimic_json'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
@@ -60,6 +64,7 @@ end
 
 group :test do
   gem 'database_cleaner'
+  gem 'json_spec'
   gem 'launchy'
   gem 'shoulda-matchers',
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
