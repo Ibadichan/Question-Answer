@@ -26,12 +26,13 @@ Rails.application.routes.draw do
       resources :profiles do
         get :me, on: :collection
       end
+      resources :questions
     end
   end
-
-  root to: 'questions#index'
 
   mount ActionCable.server => '/cable'
 
   match '/users/:id/finish_sign_up', to: 'users#finish_sign_up', via: %i[get patch], as: :finish_sign_up
+
+  root to: 'questions#index'
 end
