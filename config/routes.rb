@@ -5,11 +5,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   concern :votable do
-    member do
-      post :vote_for
-      post :vote_against
-      delete :re_vote
-    end
+    post :vote_for, :vote_against, on: :member
+    delete :re_vote, on: :member
   end
 
   concern :commentable do
@@ -26,11 +23,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :profiles do
-        collection do
-          get :me
-          get :all
-        end
+      resources :profiles do
+        get :me, on: :collection
       end
     end
   end
