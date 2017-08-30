@@ -28,13 +28,13 @@ RSpec.describe 'Profile API' do
 
       %w[email name id created_at updated_at admin].each do |attr|
         it "contains #{attr}" do
-          expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
+          expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path("user/#{attr}")
         end
       end
 
       %w[password encrypted_password].each do |attr|
         it "does not contain #{attr}" do
-          expect(response.body).to_not have_json_path(attr)
+          expect(response.body).to_not have_json_path("user/#{attr}")
         end
       end
     end
@@ -54,7 +54,7 @@ RSpec.describe 'Profile API' do
     end
 
     context 'Authorized' do
-      let!(:users) { create_list(:user, 3) }
+      let!(:users) { create_list(:user, 2) }
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
@@ -64,14 +64,26 @@ RSpec.describe 'Profile API' do
         expect(response).to be_success
       end
 
-      it { expect(response.body).to have_json_size(3) }
-
-      it 'contains users' do
-        expect(response.body).to be_json_eql(users.to_json)
+      it 'includes users' do
+        expect(response.body).to have_json_size(2).at_path('users')
       end
 
       it 'excepts current user' do
-        expect(response.body).to_not have_json_path(me.to_json)
+        expect(response.body).to_not have_json_path('users/2')
+      end
+
+      %w[email name id created_at updated_at admin].each do |attr|
+        it "contains #{attr} of user" do
+          expect(response.body).to be_json_eql(
+            users.first.send(attr.to_sym).to_json
+          ).at_path("users/0/#{attr}")
+        end
+      end
+
+      %w[password encrypted_password].each do |attr|
+        it "does not contain #{attr} of user" do
+          expect(response.body).to_not have_json_path("users/0/#{attr}")
+        end
       end
     end
   end
