@@ -46,7 +46,7 @@ describe 'Questions API' do
         ).at_path('questions/0/short_title')
       end
 
-      context 'with answers' do
+      context 'answers' do
         it 'includes answers' do
           expect(response.body).to have_json_size(1).at_path('questions/0/answers')
         end
@@ -56,6 +56,79 @@ describe 'Questions API' do
             expect(response.body).to be_json_eql(
               answer.send(attr.to_sym).to_json
             ).at_path("questions/0/answers/0/#{attr}")
+          end
+        end
+      end
+    end
+  end
+
+  describe 'GET #show' do
+    let(:question) { create(:question) }
+    let(:access_token) { create(:access_token) }
+    let!(:comment) { create(:comment, commentable: question) }
+    let!(:attachment) { create(:attachment, attachable: question) }
+
+    context 'Unauthorized' do
+      it 'returns 401 status if access token was not submitted' do
+        get "/api/v1/questions/#{question.id}", params: { format: :json }
+        expect(response.status).to eq 401
+      end
+
+      it 'returns 401 status if access token is invalid' do
+        get "/api/v1/questions/#{question.id}", params: { access_token: '12345', format: :json }
+        expect(response.status).to eq 401
+      end
+    end
+
+    context 'Authorized' do
+      before do
+        get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token, format: :json }
+      end
+
+      it 'returns status 200' do
+        expect(response).to be_success
+      end
+
+      it 'returns the question' do
+        expect(response.body).to have_json_size(1)
+      end
+
+      %w[id title body created_at updated_at user_id].each do |attr|
+        it "contains #{attr} of question" do
+          expect(response.body).to be_json_eql(
+            question.send(attr.to_sym).to_json
+          ).at_path("question/#{attr}")
+        end
+      end
+
+      context 'comments' do
+        it 'includes comments' do
+          expect(response.body).to have_json_size(1).at_path('question/comments')
+        end
+
+        %w[id body commentable_type commentable_id created_at updated_at user_id].each do |attr|
+          it "contains #{attr} of comment" do
+            expect(response.body).to be_json_eql(
+              comment.send(attr.to_sym).to_json
+            ).at_path("question/comments/0/#{attr}")
+          end
+        end
+      end
+
+      context 'attachments' do
+        it 'includes attachments' do
+          expect(response.body).to have_json_size(1).at_path('question/attachments')
+        end
+
+        it 'contains url of attachment' do
+          expect(response.body).to be_json_eql(
+            attachment.file.url.to_json
+          ).at_path('question/attachments/0/url')
+        end
+
+        %w[id file created_at updated_at attachable_id attachable_type].each do |attr|
+          it "does not contain #{attr} of attachment" do
+            expect(response.body).to_not have_json_path("question/attachments/0/#{attr}")
           end
         end
       end

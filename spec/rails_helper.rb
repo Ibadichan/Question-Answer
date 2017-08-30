@@ -2,9 +2,9 @@
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 
-require 'capybara/email/rspec'
 require 'spec_helper'
 require 'cancan/matchers'
+require 'capybara/email/rspec'
 
 ENV['RAILS_ENV'] ||= 'test'
 
@@ -13,6 +13,8 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir["#{Rails.root}/app/uploaders/*.rb"].each { |file| require file }
+
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
@@ -28,6 +30,10 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
   # config.filter_gems_from_backtrace("gem name")
+
+  config.after(:all) do
+    FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/uploads"]) if Rails.env.test?
+  end
 end
 
 Shoulda::Matchers.configure do |config|
@@ -38,3 +44,19 @@ Shoulda::Matchers.configure do |config|
 end
 
 OmniAuth.config.test_mode = true
+
+if defined?(CarrierWave)
+  CarrierWave::Uploader::Base.descendants.each do |klass|
+    next if klass.anonymous?
+
+    klass.class_eval do
+      def cache_dir
+        "#{Rails.root}/spec/support/uploads/cache"
+      end
+
+      def store_dir
+        "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      end
+    end
+  end
+end
