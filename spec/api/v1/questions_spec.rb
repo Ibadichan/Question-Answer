@@ -19,6 +19,8 @@ describe 'Questions API' do
     context 'Authorized' do
       let!(:questions) { create_list(:question, 2) }
       let(:access_token) { create(:access_token) }
+      let(:question) { questions.first }
+      let!(:answer) { create(:answer, question: question) }
 
       before { get '/api/v1/questions', params: { access_token: access_token.token, format: :json } }
 
@@ -27,13 +29,34 @@ describe 'Questions API' do
       end
 
       it 'returns list of questions' do
-        expect(response.body).to have_json_size(2)
+        expect(response.body).to have_json_size(2).at_path('questions')
       end
 
       %w[id title body created_at updated_at user_id].each do |attr|
         it "contains #{attr} of question" do
-          object = questions.first.send(attr.to_sym).to_json
-          expect(response.body).to be_json_eql(object).at_path("0/#{attr}")
+          expect(response.body).to be_json_eql(
+            question.send(attr.to_sym).to_json
+          ).at_path("questions/0/#{attr}")
+        end
+      end
+
+      it 'contains short title of question' do
+        expect(response.body).to be_json_eql(
+          question.title.truncate(10).to_json
+        ).at_path('questions/0/short_title')
+      end
+
+      context 'with answers' do
+        it 'includes answers' do
+          expect(response.body).to have_json_size(1).at_path('questions/0/answers')
+        end
+
+        %w[id body question_id created_at updated_at user_id best].each do |attr|
+          it "contains #{attr} of answer" do
+            expect(response.body).to be_json_eql(
+              answer.send(attr.to_sym).to_json
+            ).at_path("questions/0/answers/0/#{attr}")
+          end
         end
       end
     end
