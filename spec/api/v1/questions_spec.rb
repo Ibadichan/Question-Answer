@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe 'Questions API' do
+  let(:access_token) { create(:access_token) }
+
   describe 'GET #index' do
     context 'Unauthorized' do
       it 'returns 401 status if there is not access token' do
@@ -18,7 +20,6 @@ describe 'Questions API' do
 
     context 'Authorized' do
       let!(:questions) { create_list(:question, 2) }
-      let(:access_token) { create(:access_token) }
 
       before { get '/api/v1/questions', params: { access_token: access_token.token, format: :json } }
 
@@ -42,7 +43,6 @@ describe 'Questions API' do
 
   describe 'GET #show' do
     let(:question) { create(:question) }
-    let(:access_token) { create(:access_token) }
     let!(:comment) { create(:comment, commentable: question) }
     let!(:attachment) { create(:attachment, attachable: question) }
     let!(:answer) { create(:answer, question: question) }
@@ -150,8 +150,6 @@ describe 'Questions API' do
     end
 
     context 'Authorized' do
-      let(:access_token) { create(:access_token) }
-
       it 'returns status 200' do
         post '/api/v1/questions', params: { access_token: access_token.token,
                                             question: attributes_for(:question),
