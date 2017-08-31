@@ -5,10 +5,6 @@ class Api::V1::BaseController < ActionController::Base
   respond_to :json
   check_authorization
 
-  rescue_from CanCan::AccessDenied do |exception|
-    render json: { error: exception.message }, status: :forbidden
-  end
-
   protected
 
   def current_resource_owner
