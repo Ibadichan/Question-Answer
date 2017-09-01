@@ -30,9 +30,7 @@ RSpec.describe Answer, type: :model do
 
     before { new_answer.select_as_best }
 
-    it 'changes field best of answer' do
-      expect(new_answer).to be_best
-    end
+    it('changes field best of answer') { expect(new_answer).to be_best }
 
     it 'set false to all others answers' do
       old_best_answer.reload

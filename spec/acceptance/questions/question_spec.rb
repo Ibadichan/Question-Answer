@@ -8,9 +8,9 @@ feature 'User can see the question', '
   I want to see question
 ' do
 
-  given(:author) { create(:user) }
+  given(:author)    { create(:user) }
   given!(:question) { create(:question, user: author) }
-  given!(:answers) { create_list(:answer, 2, question: question) }
+  given!(:answers)  { create_list(:answer, 2, question: question) }
 
   scenario 'Author tries to see question' do
     sign_in(author)

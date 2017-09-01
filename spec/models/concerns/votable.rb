@@ -10,9 +10,7 @@ shared_examples_for 'votable' do
     let!(:dislikes) { create_list(:vote, 3, value: -1, votable: question) }
     let!(:likes)    { create_list(:vote, 2, value: 1,  votable: question) }
 
-    it 'should creates rating' do
-      expect(question.rating).to eq(-1)
-    end
+    it('should creates rating') { expect(question.rating).to eq(-1) }
   end
 
   describe '#destroy_vote_of' do

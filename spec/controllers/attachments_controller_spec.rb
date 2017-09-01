@@ -5,26 +5,24 @@ require 'rails_helper'
 describe AttachmentsController do
   describe 'DELETE #destroy' do
     sign_in_user
-    let(:question) { create(:question, user: @user) }
+    let(:question)   { create(:question, user: @user) }
     let(:attachment) { create(:attachment, attachable: question) }
 
     context 'Author of attachable tries to delete file' do
-      it 'assigns attachment to @attachment' do
-        delete :destroy, params: { id: attachment, format: :js }
-        expect(assigns(:attachment)).to eq attachment
+      before do |example|
+        delete :destroy, params: { id: attachment, format: :js } unless example.metadata[:skip_before]
       end
 
-      it 'destroys attachment' do
+      it('assigns attachment to @attachment') { expect(assigns(:attachment)).to eq attachment }
+
+      it 'destroys attachment', :skip_before do
         attachment
         expect do
           delete :destroy, params: { id: attachment, format: :js }
         end.to change(Attachment, :count).by(-1)
       end
 
-      it 'renders destroy view' do
-        delete :destroy, params: { id: attachment, format: :js }
-        expect(response).to render_template 'destroy'
-      end
+      it('renders destroy view') { expect(response).to render_template 'destroy' }
     end
 
     context 'Non-author tries to delete file' do
