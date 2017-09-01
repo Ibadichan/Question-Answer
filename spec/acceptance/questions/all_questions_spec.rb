@@ -8,7 +8,7 @@ feature 'user can see all questions', '
   I want to see all questions
 ' do
 
-  given(:user) { create(:user) }
+  given(:user)       { create(:user) }
   given!(:questions) { create_list(:question, 2) }
 
   scenario 'Authenticated user tries to see all questions' do

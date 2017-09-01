@@ -6,6 +6,9 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question)         { create(:question) }
   let(:question_of_user) { create(:question, user: @user) }
 
+  let(:votable)          { question }
+  let(:votable_of_user)  { question_of_user }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
@@ -15,34 +18,29 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:questions)).to match_array(questions)
     end
 
-    it 'renders index view' do
-      expect(response).to render_template 'index'
-    end
+    it('renders index view') { expect(response).to render_template 'index' }
   end
 
   describe 'GET #show' do
     before { get :show, params: { id: question } }
 
-    it 'assigns the requested Question to @question' do
+    it('assigns the requested Question to @question') do
       expect(assigns(:question)).to eq question
     end
 
-    it 'renders show view' do
-      expect(response).to render_template 'show'
-    end
+    it('renders show view') { expect(response).to render_template 'show' }
   end
 
   describe 'GET #new' do
     sign_in_user
+
     before { get :new }
 
-    it 'assigns a new Question to @question' do
+    it('assigns a new Question to @question') do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'renders new view' do
-      expect(response).to render_template 'new'
-    end
+    it('renders new view') { expect(response).to render_template 'new' }
   end
 
   describe 'POST #create' do
@@ -102,36 +100,32 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+
     context 'Author tries to update question' do
-      it 'assigns question to @question' do
-        patch :update, params: { id: question_of_user,
-                                 question: attributes_for(:question),
-                                 format: :js }
-        expect(assigns(:question)).to eq question_of_user
+      before do |example|
+        unless example.metadata[:skip_before]
+          patch :update, params: { id: question_of_user,
+                                   question: attributes_for(:question), format: :js }
+        end
       end
 
-      it 'changes the attributes of question' do
+      it('assigns question to @question') { expect(assigns(:question)).to eq question_of_user }
+
+      it 'changes the attributes of question', :skip_before do
         patch :update, params: { id: question_of_user,
-                                 question: { title: 'new title', body: 'new body' },
-                                 format: :js }
+                                 question: { title: 'new title', body: 'new body' }, format: :js }
         question_of_user.reload
         expect(question_of_user.title).to eq 'new title'
         expect(question_of_user.body).to eq 'new body'
       end
 
-      it 'render update view' do
-        patch :update, params: { id: question_of_user,
-                                 question: attributes_for(:question),
-                                 format: :js }
-        expect(response).to render_template :update
-      end
+      it('render update view') { expect(response).to render_template :update }
     end
 
     context 'Non author tries to update question' do
-      it 'does not changes the attributes' do
+      it 'does not changes the attributes', :skip_before do
         patch :update, params: { id: question,
-                                 question: { title: 'new title', body: 'new body' },
-                                 format: :js }
+                                 question: { title: 'new title', body: 'new body' }, format: :js }
         question.reload
         expect(question.body).to_not eq 'new body'
         expect(question.title).to_not eq 'new title'
@@ -139,106 +133,5 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'POST #vote_for' do
-    sign_in_user
-    context 'Non-author tries to vote' do
-      it 'assigns the requested votable to @votable' do
-        post :vote_for, params: { id: question, format: :json }
-        expect(assigns(:votable)).to eq question
-      end
-
-      it 'creates a new vote' do
-        expect do
-          post :vote_for, params: { id: question, format: :json }
-        end.to change(question.votes, :count).by(1)
-      end
-
-      it 'checks that value of vote to equal 1' do
-        post :vote_for, params: { id: question, format: :json }
-        expect(assigns(:vote).value).to eq 1
-      end
-    end
-
-    context 'Author tries to vote' do
-      it 'does not create a new vote' do
-        expect do
-          post :vote_for, params: { id: question_of_user, format: :json }
-        end.to_not change(question_of_user.votes, :count)
-      end
-    end
-
-    context 'Non-author tries to vote 2 times' do
-      it 'does not create a new vote' do
-        post :vote_for, params: { id: question, format: :json }
-        expect do
-          post :vote_for, params: { id: question, format: :json }
-        end.to_not change(question.votes, :count)
-      end
-    end
-  end
-
-  describe 'POST #vote_against' do
-    sign_in_user
-    context 'non-author tries to vote' do
-      it 'assigns the requested votable to @votable' do
-        post :vote_against, params: { id: question, format: :json }
-        expect(assigns(:votable)).to eq question
-      end
-
-      it 'creates a new vote' do
-        expect do
-          post :vote_against, params: { id: question, format: :json }
-        end.to change(question.votes, :count).by(1)
-      end
-
-      it 'checks that value of vote to equal -1' do
-        post :vote_against, params: { id: question, format: :json }
-        expect(assigns(:vote).value).to eq(-1)
-      end
-    end
-    context 'author tries to vote' do
-      it 'does not create a new vote' do
-        expect do
-          post :vote_against, params: { id: question_of_user, format: :json }
-        end.to_not change(question_of_user.votes, :count)
-      end
-    end
-    context 'Non-author tries to vote 2 times' do
-      it 'does not create a new vote' do
-        post :vote_for, params: { id: question, format: :json }
-        expect do
-          post :vote_for, params: { id: question, format: :json }
-        end.to_not change(question.votes, :count)
-      end
-    end
-  end
-
-  describe 'DELETE #re_vote' do
-    sign_in_user
-    let(:vote_of_author) { create(:vote, votable: question, user: @user) }
-    let(:vote)           { create(:vote, votable: question) }
-
-    context 'author of vote tries to re-vote' do
-      it 'assigns the requested votable to @votable' do
-        delete :re_vote, params: { id: question, format: :json }
-        expect(assigns(:votable)).to eq question
-      end
-
-      it 'destroys the vote of author' do
-        vote_of_author
-        expect do
-          delete :re_vote, params: { id: question, format: :json }
-        end.to change(question.votes, :count).by(-1)
-      end
-    end
-
-    context 'Non-author of vote tries to re-vote' do
-      it 'does not destroy the vote' do
-        vote
-        expect do
-          delete :re_vote, params: { id: question, format: :json }
-        end.to_not change(question.votes, :count)
-      end
-    end
-  end
+  it_behaves_like 'Voted'
 end

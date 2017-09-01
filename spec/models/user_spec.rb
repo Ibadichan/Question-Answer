@@ -18,15 +18,11 @@ RSpec.describe User, type: :model do
     let(:question)   { create(:question, user: author) }
 
     context 'user is author' do
-      it 'returns true' do
-        expect(author).to be_author_of(question)
-      end
+      it('returns true') { expect(author).to be_author_of(question) }
     end
 
     context 'user not is author' do
-      it 'returns false' do
-        expect(user).to_not be_author_of(question)
-      end
+      it('returns false') { expect(user).to_not be_author_of(question) }
     end
   end
 
@@ -36,9 +32,7 @@ RSpec.describe User, type: :model do
     let(:vote)       { create(:vote, user: user, votable: question) }
 
     context 'user tries to vote first time' do
-      it 'returns false' do
-        expect(user.cannot_vote_for?(question)).to eq false
-      end
+      it('returns false') { expect(user.cannot_vote_for?(question)).to eq false }
     end
 
     context 'user tries to vote second time' do
@@ -64,7 +58,8 @@ RSpec.describe User, type: :model do
     context 'User has not authorization' do
       context 'User already exists' do
         let(:auth) do
-          OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: user.email })
+          OmniAuth::AuthHash.new(provider: 'facebook',
+                                 uid: '123456', info: { email: user.email })
         end
 
         it 'does not create a new User' do
@@ -109,13 +104,14 @@ RSpec.describe User, type: :model do
             expect(authorization.uid).to eq auth.uid
           end
 
-          it 'returns user' do
-            expect(User.find_for_oauth(auth)).to be_a(User)
-          end
+          it('returns user') { expect(User.find_for_oauth(auth)).to be_a(User) }
         end
 
         context 'Auth email does not exist' do
-          let(:auth) { OmniAuth::AuthHash.new(provider: 'twitter', uid: '123456', info: { name: 'Ivan' }) }
+          let(:auth) do
+            OmniAuth::AuthHash.new(provider: 'twitter',
+                                   uid: '123456', info: { name: 'Ivan' })
+          end
 
           it 'creates a new user' do
             expect { User.find_for_oauth(auth) }.to change(User, :count).by(1)
@@ -137,9 +133,7 @@ RSpec.describe User, type: :model do
             expect(authorization.uid).to eq auth.uid
           end
 
-          it 'returns user' do
-            expect(User.find_for_oauth(auth)).to be_a(User)
-          end
+          it('returns user') { expect(User.find_for_oauth(auth)).to be_a(User) }
         end
       end
     end
@@ -150,15 +144,11 @@ RSpec.describe User, type: :model do
     let(:invalid_user) { create(:user, email: 'change@me') }
 
     context 'Email is not fake' do
-      it 'returns true' do
-        expect(user.email_verified?).to eq true
-      end
+      it('returns true') { expect(user.email_verified?).to eq true }
     end
 
     context 'Email is fake' do
-      it 'returns false' do
-        expect(invalid_user.email_verified?).to eq false
-      end
+      it('returns false') { expect(invalid_user.email_verified?).to eq false }
     end
   end
 end
