@@ -5,6 +5,9 @@
 require 'spec_helper'
 require 'cancan/matchers'
 require 'capybara/email/rspec'
+require 'sidekiq/testing'
+
+Sidekiq::Testing.fake!
 
 ENV['RAILS_ENV'] ||= 'test'
 
