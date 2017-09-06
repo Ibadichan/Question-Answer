@@ -13,4 +13,12 @@ RSpec.describe Question, type: :model do
 
   it { should validate_presence_of :title }
   it { should validate_presence_of :body }
+
+  describe '.of_today' do
+    let!(:new_questions) { create_list(:question, 2) }
+    let!(:old_question)  { create(:question, created_at: Time.now - 2.day) }
+
+    it('selects the questions of today') { expect(Question.of_today).to eq new_questions }
+    it('does not select old questions') { expect(Question.of_today).to_not include old_question }
+  end
 end

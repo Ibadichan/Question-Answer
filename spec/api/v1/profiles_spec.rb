@@ -51,7 +51,9 @@ describe 'Profile API' do
       end
 
       %w[password encrypted_password].each do |attr|
-        it("does not contain #{attr} of user") { expect(response.body).to_not have_json_path("users/0/#{attr}") }
+        it "does not contain #{attr} of user" do
+          expect(response.body).to_not have_json_path("users/0/#{attr}")
+        end
       end
     end
 
