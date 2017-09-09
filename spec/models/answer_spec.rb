@@ -37,4 +37,17 @@ RSpec.describe Answer, type: :model do
       expect(old_best_answer).to_not be_best
     end
   end
+
+  describe '#notify_subscribers' do
+    let(:answer) { build(:answer) }
+    after { answer.save! }
+
+    it 'calls notify_subscribers after creating' do
+      expect(answer).to receive(:notify_subscribers).and_call_original
+    end
+
+    it 'calls NotifyUserJob' do
+      expect(NotifyUserJob).to receive(:perform_later).with(answer).and_call_original
+    end
+  end
 end
