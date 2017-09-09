@@ -22,6 +22,7 @@ ru:
     voting_for: 'За ответ'
     voting_against: 'Против ответа'
   questions:
+    subscribe: 'Подписаться'
     voting_for: 'За вопрос'
     voting_against: 'Против вопроса'
     add_comment: 'Комментировать вопрос'
