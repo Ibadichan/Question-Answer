@@ -24,4 +24,8 @@ class Question < ApplicationRecord
     subscriptions.each { |subscription| subscribers << subscription.user }
     subscribers
   end
+
+  def get_subscription_by(user)
+    subscriptions.where(user_id: user.id).first if user
+  end
 end

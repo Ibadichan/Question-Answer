@@ -29,4 +29,30 @@ RSpec.describe SubscriptionsController, type: :controller do
       expect(response).to render_template 'create'
     end
   end
+
+  describe 'DELETE #destroy' do
+    let!(:subscription) { create(:subscription, user: @user, question: question) }
+
+    it 'assigns given question to @question' do
+      delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'destroys the subscription' do
+      expect do
+        delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      end.to change(question.subscriptions, :count).by(-1)
+    end
+
+    it 'destroys the subscription' do
+      expect do
+        delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      end.to change(@user.subscriptions, :count).by(-1)
+    end
+
+    it 'renders destroy template' do
+      delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      expect(response).to render_template 'destroy'
+    end
+  end
 end

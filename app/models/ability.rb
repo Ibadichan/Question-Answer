@@ -40,6 +40,10 @@ class Ability
     can :subscribe, Question do |question|
       Subscription.where(user_id: user.id, question_id: question.id).size.zero?
     end
+
+    can :unsubscribe, Question do |question|
+      Subscription.where(user_id: user.id, question_id: question.id).exists?
+    end
   end
 
   def admin_abilities

@@ -1,1 +1,1 @@
-$('.subscribe-for-question').remove();
+$('.subscribe-for-question').replaceWith('<%= j render 'questions/unsubscribe', question: @question %>');
