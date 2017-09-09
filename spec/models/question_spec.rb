@@ -6,6 +6,7 @@ require_all 'spec/models/concerns'
 RSpec.describe Question, type: :model do
   it { should belong_to(:user) }
   it { should have_many(:answers).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   it_behaves_like 'attachable'
   it_behaves_like 'votable'
@@ -20,5 +21,33 @@ RSpec.describe Question, type: :model do
 
     it('selects the questions of today') { expect(Question.of_today).to eq new_questions }
     it('does not select old questions') { expect(Question.of_today).to_not include old_question }
+  end
+
+  describe '#subscribe_author' do
+    let(:author)   { create(:user) }
+    let(:question) { build(:question, user: author) }
+
+    it 'creates a new subscription for author' do
+      expect { question.save! }.to change(author.subscriptions, :count).by(1)
+    end
+
+    it 'calls subscribe_author after creating' do
+      expect(question).to receive(:subscribe_author).and_call_original
+      question.save!
+    end
+  end
+
+  describe '#subscribers' do
+    let(:question)        { create(:question) }
+    let(:non_subscribers) { create_list(:user, 2) }
+    let(:subscriptions)   { create_list(:subscription, 2, question: question) }
+
+    it 'should return subscribers' do
+      subscribers = [question.user]
+      subscriptions.each { |subscription| subscribers << subscription.user }
+      expect(question.subscribers).to eq subscribers
+    end
+
+    it('should not return non_subscribers') { expect(question.subscribers).to_not include non_subscribers }
   end
 end
