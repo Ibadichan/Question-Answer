@@ -1,0 +1,5 @@
+- if can?(:subscribe, question)
+  .subscribe-for-question.margin-bottom = link_to t('questions.subscribe'),
+                                        question_subscriptions_path(question),
+                                        class: 'btn btn-default pull-right',
+                                        method: :post, remote: true

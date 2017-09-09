@@ -36,6 +36,10 @@ class Ability
     can :select_as_best, Answer do |answer|
       user.author_of?(answer.question) && !answer.best?
     end
+
+    can :subscribe, Question do |question|
+      Subscription.where(user_id: user.id, question_id: question.id).size.zero?
+    end
   end
 
   def admin_abilities

@@ -27,6 +27,7 @@ RSpec.describe Ability, type: :model do
     let(:already_best_answer)      { create(:answer, best: true, question: create(:question, user: user)) }
     let(:own_attachment)           { create(:attachment, attachable: create(:question, user: user)) }
     let(:other_attachment)         { create(:attachment, attachable: create(:answer, user: other_user)) }
+    let(:question)                 { create(:question) }
 
     it { should be_able_to :read, :all }
     it { should_not be_able_to :manage, :all }
@@ -66,5 +67,13 @@ RSpec.describe Ability, type: :model do
 
     it { should be_able_to :destroy, own_attachment, user: user }
     it { should_not be_able_to :destroy, other_attachment, user: user }
+
+    it { should be_able_to :subscribe, create(:question, user: other_user), user: user }
+    it { should_not be_able_to :subscribe, create(:question, user: user), user: user }
+
+    it do
+      question.subscriptions.create(user: user)
+      should_not be_able_to :subscribe, question, user: user
+    end
   end
 end

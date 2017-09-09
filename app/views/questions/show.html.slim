@@ -1,4 +1,5 @@
 .question-wrapper { data-question-id = @question.id }
+  = render 'subscribe', question: @question
   h4.question-rating = "Рейтинг вопроса #{@question.rating}"
   = render 'question_content', question: @question
   = render 'edit', question: @question
