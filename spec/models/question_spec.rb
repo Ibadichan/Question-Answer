@@ -50,4 +50,14 @@ RSpec.describe Question, type: :model do
 
     it('should not return non_subscribers') { expect(question.subscribers).to_not include non_subscribers }
   end
+
+  describe '#get_subscription_by' do
+    let(:user)     { create(:user) }
+    let(:question) { create(:question) }
+
+    it 'returns subscription' do
+      subscription = user.subscriptions.create(question_id: question.id)
+      expect(question.get_subscription_by(user)).to eq subscription
+    end
+  end
 end

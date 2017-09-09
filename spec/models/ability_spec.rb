@@ -75,5 +75,13 @@ RSpec.describe Ability, type: :model do
       question.subscriptions.create(user: user)
       should_not be_able_to :subscribe, question, user: user
     end
+
+    it do
+      question.subscriptions.create(user: user)
+      should be_able_to :unsubscribe, question, user: user
+    end
+
+    it { should_not be_able_to :unsubscribe, create(:question, user: other_user), user: user }
+    it { should be_able_to :unsubscribe, create(:question, user: user), user: user }
   end
 end
