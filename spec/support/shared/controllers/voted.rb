@@ -4,14 +4,14 @@ shared_examples_for 'Voted' do
   sign_in_user
 
   describe 'POST #vote_for' do
-    before { |e| post :vote_for, params: { id: votable, format: :json } unless e.metadata[:skip_before] }
+    before { |e| post :vote_for, params: { id: votable.id, format: :json } unless e.metadata[:skip_before] }
 
     context 'Non-author tries to vote' do
       it('assigns the requested votable to @votable') { expect(assigns(:votable)).to eq votable }
 
       it 'creates a new vote', :skip_before do
         expect do
-          post :vote_for, params: { id: votable, format: :json }
+          post :vote_for, params: { id: votable.id, format: :json }
         end.to change(votable.votes, :count).by(1)
       end
 
@@ -21,7 +21,7 @@ shared_examples_for 'Voted' do
     context 'Author tries to vote' do
       it 'does not create a new vote', :skip_before do
         expect do
-          post :vote_for, params: { id: votable_of_user, format: :json }
+          post :vote_for, params: { id: votable_of_user.id, format: :json }
         end.to_not change(votable_of_user.votes, :count)
       end
     end
@@ -29,7 +29,7 @@ shared_examples_for 'Voted' do
     context 'Non-author tries to vote 2 times' do
       it 'does not create a new vote' do
         expect do
-          post :vote_for, params: { id: votable, format: :json }
+          post :vote_for, params: { id: votable.id, format: :json }
         end.to_not change(votable.votes, :count)
       end
     end
@@ -43,7 +43,7 @@ shared_examples_for 'Voted' do
 
       it 'creates a new vote', :skip_before do
         expect do
-          post :vote_against, params: { id: votable, format: :json }
+          post :vote_against, params: { id: votable.id, format: :json }
         end.to change(votable.votes, :count).by(1)
       end
 
@@ -53,7 +53,7 @@ shared_examples_for 'Voted' do
     context 'author tries to vote' do
       it 'does not create a new vote', :skip_before do
         expect do
-          post :vote_against, params: { id: votable_of_user, format: :json }
+          post :vote_against, params: { id: votable_of_user.id, format: :json }
         end.to_not change(votable_of_user.votes, :count)
       end
     end
@@ -61,7 +61,7 @@ shared_examples_for 'Voted' do
     context 'Non-author tries to vote 2 times' do
       it 'does not create a new vote' do
         expect do
-          post :vote_for, params: { id: votable, format: :json }
+          post :vote_for, params: { id: votable.id, format: :json }
         end.to_not change(votable.votes, :count)
       end
     end
@@ -73,14 +73,14 @@ shared_examples_for 'Voted' do
 
     context 'author of vote tries to re-vote' do
       it 'assigns the requested votable to @votable' do
-        delete :re_vote, params: { id: votable, format: :json }
+        delete :re_vote, params: { id: votable.id, format: :json }
         expect(assigns(:votable)).to eq votable
       end
 
       it 'destroys the vote of author' do
         vote_of_author
         expect do
-          delete :re_vote, params: { id: votable, format: :json }
+          delete :re_vote, params: { id: votable.id, format: :json }
         end.to change(votable.votes, :count).by(-1)
       end
     end
@@ -89,7 +89,7 @@ shared_examples_for 'Voted' do
       it 'does not destroy the vote' do
         vote
         expect do
-          delete :re_vote, params: { id: votable, format: :json }
+          delete :re_vote, params: { id: votable.id, format: :json }
         end.to_not change(votable.votes, :count)
       end
     end

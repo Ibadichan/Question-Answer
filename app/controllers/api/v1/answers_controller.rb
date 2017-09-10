@@ -9,7 +9,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def create
     @question = Question.find(params[:question_id])
-    respond_with @answer = @question.answers.create(answer_params.merge(user: current_resource_owner))
+    respond_with @answer = @question.answers.create(answer_params.merge(user_id: current_resource_owner.id))
   end
 
   private

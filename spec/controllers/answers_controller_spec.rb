@@ -14,7 +14,7 @@ describe AnswersController do
   describe 'POST #create' do
     before do |example|
       unless example.metadata[:skip_before]
-        post :create, params: { question_id: question,
+        post :create, params: { question_id: question.id,
                                 answer: attributes_for(:invalid_answer), format: :js }
       end
     end
@@ -22,7 +22,7 @@ describe AnswersController do
     context 'with valid attributes' do
       it 'saves the answer in the database', :skip_before do
         expect do
-          post :create, params: { question_id: question,
+          post :create, params: { question_id: question.id,
                                   answer: attributes_for(:answer), format: :js }
         end.to change(question.answers, :count).by(1)
       end
@@ -33,7 +33,7 @@ describe AnswersController do
     context 'with invalid attributes' do
       it 'does not save answer in the database', :skip_before do
         expect do
-          post :create, params: { question_id: question,
+          post :create, params: { question_id: question.id,
                                   answer: attributes_for(:invalid_answer), format: :js }
         end.to_not change(Answer, :count)
       end
@@ -47,12 +47,12 @@ describe AnswersController do
       it 'deletes the @answer' do
         answer_of_user
         expect do
-          delete :destroy, params: { id: answer_of_user, format: :js }
+          delete :destroy, params: { id: answer_of_user.id, format: :js }
         end.to change(Answer, :count).by(-1)
       end
 
       it 'render template  delete' do
-        delete :destroy, params: { id: answer_of_user, format: :js }
+        delete :destroy, params: { id: answer_of_user.id, format: :js }
         expect(response).to render_template 'destroy'
       end
     end
@@ -61,7 +61,7 @@ describe AnswersController do
       it 'does not delete the @answer' do
         answer
         expect do
-          delete :destroy, params: { id: answer, format: :js }
+          delete :destroy, params: { id: answer.id, format: :js }
         end.to_not change(Answer, :count)
       end
     end
@@ -71,7 +71,7 @@ describe AnswersController do
     context 'Author tries to update answer' do
       before do |example|
         unless example.metadata[:skip_before]
-          patch :update, params: { id: answer_of_user,
+          patch :update, params: { id: answer_of_user.id,
                                    answer: attributes_for(:answer), format: :js }
         end
       end
@@ -79,7 +79,7 @@ describe AnswersController do
       it('assigns requested answer to @answer') { expect(assigns(:answer)).to eq answer_of_user }
 
       it 'changes the attributes of answer', :skip_before do
-        patch :update, params: { id: answer_of_user,
+        patch :update, params: { id: answer_of_user.id,
                                  answer: { body: 'new body' }, format: :js }
         answer_of_user.reload
         expect(answer_of_user.body).to eq 'new body'
@@ -90,7 +90,7 @@ describe AnswersController do
 
     context 'Non author tries to update answer' do
       it 'does not change attributes of answer' do
-        patch :update, params: { id: answer,
+        patch :update, params: { id: answer.id,
                                  answer: { body: 'new body' }, format: :js }
         answer.reload
         expect(answer.body).to_not eq 'new body'
@@ -104,8 +104,8 @@ describe AnswersController do
 
     context 'Author tries to select best answer' do
       before do
-        patch :best, params: { id: answer_of_question,
-                               question_id: question_of_user, format: :js }
+        patch :best, params: { id: answer_of_question.id,
+                               question_id: question_of_user.id, format: :js }
       end
 
       it 'assigns requested answer to @answer' do
@@ -123,8 +123,8 @@ describe AnswersController do
     context 'Non-author tries to select best answer' do
       it "does not change value of field 'best' to true" do
         expect do
-          patch :best, params: { id: answer,
-                                 question_id: answer.question, format: :js }
+          patch :best, params: { id: answer.id,
+                                 question_id: answer.question.id, format: :js }
         end.to_not change(answer.reload, :best)
       end
     end

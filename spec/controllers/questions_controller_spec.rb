@@ -22,7 +22,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before { get :show, params: { id: question } }
+    before { get :show, params: { id: question.id } }
 
     it('assigns the requested Question to @question') do
       expect(assigns(:question)).to eq question
@@ -78,12 +78,12 @@ RSpec.describe QuestionsController, type: :controller do
       it 'destroys the @question' do
         question_of_user
         expect do
-          delete :destroy, params: { id: question_of_user }
+          delete :destroy, params: { id: question_of_user.id }
         end.to change(Question, :count).by(-1)
       end
 
       it 'redirects to questions' do
-        delete :destroy, params: { id: question_of_user }
+        delete :destroy, params: { id: question_of_user.id }
         expect(response).to redirect_to questions_path
       end
     end
@@ -92,7 +92,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not delete the @question' do
         question
         expect do
-          delete :destroy, params: { id: question }
+          delete :destroy, params: { id: question.id }
         end.to_not change(Question, :count)
       end
     end
@@ -104,7 +104,7 @@ RSpec.describe QuestionsController, type: :controller do
     context 'Author tries to update question' do
       before do |example|
         unless example.metadata[:skip_before]
-          patch :update, params: { id: question_of_user,
+          patch :update, params: { id: question_of_user.id,
                                    question: attributes_for(:question), format: :js }
         end
       end
@@ -112,7 +112,7 @@ RSpec.describe QuestionsController, type: :controller do
       it('assigns question to @question') { expect(assigns(:question)).to eq question_of_user }
 
       it 'changes the attributes of question', :skip_before do
-        patch :update, params: { id: question_of_user,
+        patch :update, params: { id: question_of_user.id,
                                  question: { title: 'new title', body: 'new body' }, format: :js }
         question_of_user.reload
         expect(question_of_user.title).to eq 'new title'
@@ -124,7 +124,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'Non author tries to update question' do
       it 'does not changes the attributes', :skip_before do
-        patch :update, params: { id: question,
+        patch :update, params: { id: question.id,
                                  question: { title: 'new title', body: 'new body' }, format: :js }
         question.reload
         expect(question.body).to_not eq 'new body'

@@ -15,7 +15,7 @@ feature 'User can unsubscribe from question', '
     before { sign_in user }
 
     scenario 'subscribed user', js: true do
-      user.subscriptions.create(question: question)
+      user.subscriptions.create(question_id: question.id)
 
       visit question_path(question)
 
