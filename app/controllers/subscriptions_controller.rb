@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
 
   def create
     authorize! :subscribe, @question
-    respond_with @subscription = @question.subscriptions.create(user: current_user)
+    respond_with @subscription = @question.subscriptions.create(user_id: current_user.id)
   end
 
   def destroy
