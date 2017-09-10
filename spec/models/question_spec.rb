@@ -37,20 +37,6 @@ RSpec.describe Question, type: :model do
     end
   end
 
-  describe '#subscribers' do
-    let(:question)        { create(:question) }
-    let(:non_subscribers) { create_list(:user, 2) }
-    let(:subscriptions)   { create_list(:subscription, 2, question: question) }
-
-    it 'should return subscribers' do
-      subscribers = [question.user]
-      subscriptions.each { |subscription| subscribers << subscription.user }
-      expect(question.subscribers).to eq subscribers
-    end
-
-    it('should not return non_subscribers') { expect(question.subscribers).to_not include non_subscribers }
-  end
-
   describe '#get_subscription_by' do
     let(:user)     { create(:user) }
     let(:question) { create(:question) }

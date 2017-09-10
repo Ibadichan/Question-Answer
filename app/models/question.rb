@@ -8,6 +8,7 @@ class Question < ApplicationRecord
   belongs_to :user
   has_many :answers, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: 'user'
 
   validates :title, :body, presence: true
 
@@ -16,13 +17,7 @@ class Question < ApplicationRecord
   after_create :subscribe_author
 
   def subscribe_author
-    subscriptions.create!(user: user)
-  end
-
-  def subscribers
-    subscribers = []
-    subscriptions.each { |subscription| subscribers << subscription.user }
-    subscribers
+    subscriptions.create!(user_id: user.id)
   end
 
   def get_subscription_by(user)
