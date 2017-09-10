@@ -8,24 +8,24 @@ RSpec.describe SubscriptionsController, type: :controller do
 
   describe 'POST #create' do
     it 'assigns given question to @question' do
-      post :create, params: { question_id: question, format: :js }
+      post :create, params: { question_id: question.id, format: :js }
       expect(assigns(:question)).to eq question
     end
 
     it 'creates a new subscription for question' do
       expect do
-        post :create, params: { question_id: question, format: :js }
+        post :create, params: { question_id: question.id, format: :js }
       end.to change(question.subscriptions, :count).by(1)
     end
 
     it 'connects subscription with current user' do
       expect do
-        post :create, params: { question_id: question, format: :js }
+        post :create, params: { question_id: question.id, format: :js }
       end.to change(@user.subscriptions, :count).by(1)
     end
 
     it 'renders create template' do
-      post :create, params: { question_id: question, format: :js }
+      post :create, params: { question_id: question.id, format: :js }
       expect(response).to render_template 'create'
     end
   end
@@ -34,24 +34,24 @@ RSpec.describe SubscriptionsController, type: :controller do
     let!(:subscription) { create(:subscription, user: @user, question: question) }
 
     it 'assigns given question to @question' do
-      delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      delete :destroy, params: { question_id: question.id, id: subscription.id, format: :js }
       expect(assigns(:question)).to eq question
     end
 
     it 'destroys the subscription' do
       expect do
-        delete :destroy, params: { question_id: question, id: subscription, format: :js }
+        delete :destroy, params: { question_id: question.id, id: subscription.id, format: :js }
       end.to change(question.subscriptions, :count).by(-1)
     end
 
     it 'destroys the subscription' do
       expect do
-        delete :destroy, params: { question_id: question, id: subscription, format: :js }
+        delete :destroy, params: { question_id: question.id, id: subscription.id, format: :js }
       end.to change(@user.subscriptions, :count).by(-1)
     end
 
     it 'renders destroy template' do
-      delete :destroy, params: { question_id: question, id: subscription, format: :js }
+      delete :destroy, params: { question_id: question.id, id: subscription.id, format: :js }
       expect(response).to render_template 'destroy'
     end
   end

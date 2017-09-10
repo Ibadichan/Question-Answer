@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   after_action  :publish_comment
 
   def create
-    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    @comment = @commentable.comments.create(comment_params.merge(user_id: current_user.id))
     respond_with @comment, json: @comment
   end
 
