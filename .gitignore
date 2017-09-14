@@ -22,3 +22,10 @@
 /public/uploads
 
 /spec/mailers/previews
+
+config/development.sphinx.conf
+db/sphinx
+config/thinking_sphinx.yml
+config/test.sphinx.conf
+
+dump.rdb

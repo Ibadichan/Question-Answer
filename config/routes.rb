@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   concern :commentable do
-    resources :comments, only: [:create]
+    resources :comments, only: :create
   end
 
   resources :questions, concerns: %i[votable commentable] do
@@ -20,7 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :attachments, only: [:destroy]
+  resources :attachments, only: :destroy
+  resource :search, only: :show
 
   namespace :api do
     namespace :v1 do

@@ -18,6 +18,7 @@ html
           - else
             = link_to t('.entrance'), new_user_session_path, class: 'btn btn-default navbar-btn pull-right button-show-hide'
           = link_to t('.ask_question'), new_question_path, class: 'btn btn-default navbar-btn pull-right margin-right'
+          = link_to t('searches.advanced_search'), search_path, class: 'btn btn-default navbar-btn pull-right margin-right'
     .container
       .jumbotron
         p.notice= notice
