@@ -33,3 +33,6 @@ ru:
   comments:
     create_comment: 'Комментировать'
     index: 'Комментарии'
+  searches:
+    advanced_search: 'Расширенный поиск'
+    search: 'Поиск'
