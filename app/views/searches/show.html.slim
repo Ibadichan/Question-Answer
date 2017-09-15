@@ -1,6 +1,6 @@
 = form_tag search_path, method: :get, style: 'display: flex;' do
   = text_field_tag :query, '', placeholder: 'Ваш запрос', class: 'form-control margin-right', style: 'width:50%;'
-  = select_tag :category, options_for_select(Search::CATEGORIES), class: 'margin-right'
+  = select_tag :category, options_for_select(Search::CATEGORIES.map { |key, value| [value, key] }), class: 'margin-right'
   = submit_tag t('searches.search'), class: 'btn btn-primary'
 
 - if @found_objects
@@ -11,7 +11,4 @@
     h3 Найденные результаты:
     br
     - @found_objects.each do |object|
-      = render 'searches/found_question', object: object
-      = render 'searches/found_answer',   object: object
-      = render 'searches/found_comment',  object: object
-      = render 'searches/found_user',     object: object
+      = render "searches/found_#{object.class.name.underscore}", object: object

@@ -1,12 +1,11 @@
-- if object.class.name == 'Comment'
-  .found-object
-    p Найден комментарий:
-    p = object.body
-    - if object.commentable.class.name == 'Question'
-      p Вопрос, к которому был оставлен комментарий:
-      p = link_to object.commentable.title, object.commentable
-    - else
-      p Ответ, к которому оставлен комментарий:
-      p = object.commentable.body
-      p Вопрос, к ответу которого вы оставили комментарий
-      p = link_to object.commentable.question.title, object.commentable.question
+.found-object
+  p Найден комментарий:
+  p = object.body
+  - if object.commentable.class.name == 'Question'
+    p Вопрос, к которому был оставлен комментарий:
+    p = link_to object.commentable.title, object.commentable
+  - else
+    p Ответ, к которому оставлен комментарий:
+    p = object.commentable.body
+    p Вопрос, к ответу которого вы оставили комментарий
+    p = link_to object.commentable.question.title, object.commentable.question
