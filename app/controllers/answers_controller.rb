@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
   def publish_answer
     return if @answer.errors.any?
     ActionCable.server.broadcast(
-      "#{@question.id}_question_channel",
+      "#{@question.id}_answers_channel",
       answer: @answer, question: @question,
       answer_rating: @answer.rating,
       author: @answer.user, attachments: @answer.attachments

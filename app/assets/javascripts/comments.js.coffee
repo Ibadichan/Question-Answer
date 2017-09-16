@@ -33,8 +33,6 @@ $ ->
     App.cable.subscriptions.create {
       channel: 'CommentsChannel', question_id: $('.question-wrapper').data('questionId')
       },
-      connected: ->
-        @perform 'follow'
       received: (data) ->
         if ( gon.current_user == undefined ) or ( gon.current_user.id != data['author']['id'])
           html = JST['templates/comments/comment']({ comment: data['comment']})

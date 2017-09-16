@@ -30,3 +30,15 @@ $ ->
 
   $(document).on 'click', '.re-vote-for-answer', (e) ->
     voting(e, $(this), 'DELETE' )
+
+  if $('.question-wrapper').length == 1
+    App.cable.subscriptions.create {
+      channel: 'AnswersChannel', question_id: $('.question-wrapper').data('questionId')
+    },
+      received: (data) ->
+        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['author']['id'] )
+          html = JST['templates/answers/answer']({
+            answer: data['answer'], question: data['question'], user: gon.current_user,
+            rating: data['answer_rating'], attachments: data['attachments'], author: data['author'],
+          })
+          $('.answers').append(html)
