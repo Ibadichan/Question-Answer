@@ -30,22 +30,6 @@ $ ->
     voting(e, $(this),  'DELETE' )
 
   App.cable.subscriptions.create('QuestionsChannel', {
-    connected: ->
-      @perform 'follow'
     received: (data) ->
       $('.questions-list').append(data)
   })
-
-  if $('.question-wrapper').length == 1
-    App.cable.subscriptions.create {
-      channel: 'QuestionsChannel', question_id: $('.question-wrapper').data('questionId')
-      },
-      connected: ->
-        @perform 'follow_for_question'
-      received: (data) ->
-        if ( gon.current_user == undefined ) or ( gon.current_user.id != data['author']['id'] )
-          html = JST['templates/answers/answer']({
-            answer: data['answer'], question: data['question'], user: gon.current_user,
-            rating: data['answer_rating'], attachments: data['attachments'], author: data['author'],
-          })
-          $('.answers').append(html)
