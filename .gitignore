@@ -29,3 +29,5 @@ config/thinking_sphinx.yml
 config/test.sphinx.conf
 
 dump.rdb
+
+config/secrets.yml
