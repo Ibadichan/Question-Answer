@@ -42,7 +42,7 @@ gem 'skim'
 gem 'slim-rails'
 gem 'sprockets', '>= 3.7.0'
 gem 'therubyracer'
-gem 'thinking-sphinx'
+gem 'thinking-sphinx', '3.3.0'
 gem 'thor', '0.19.4'
 gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
@@ -59,7 +59,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano-rails'
   gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
