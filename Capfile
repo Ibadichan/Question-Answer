@@ -7,7 +7,7 @@ require 'capistrano/setup'
 
 require 'capistrano/deploy'
 require 'capistrano/rails'
-require 'capistrano/passenger'
+require 'capistrano3/unicorn'
 require 'capistrano/rvm'
 require 'capistrano/sidekiq'
 require 'whenever/capistrano'

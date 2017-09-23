@@ -49,6 +49,7 @@ gem 'turbolinks', '~> 5'
 gem 'twitter-bootstrap-rails'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'
+gem 'unicorn'
 gem 'whenever'
 
 group :development, :test do
@@ -61,10 +62,10 @@ end
 
 group :development do
   gem 'capistrano', '~> 3.7', '>= 3.7.1', require: false
-  gem 'capistrano-passenger', '~> 0.2.0', require: false
   gem 'capistrano-rails', '~> 1.2', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
   gem 'letter_opener'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
