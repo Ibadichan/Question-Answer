@@ -1,23 +1,24 @@
 - if answer.persisted?
-  .answer-wrapper { data-answer-id = answer.id }
-    h4.answer-rating { data-id = answer.id } = "Рейтинг ответа #{answer.rating}"
-    p = answer.body
-    br
-    span = "Создатель: #{answer.user.email}"
-    br
-    - if can?(:select_as_best, answer)
-      = link_to t('answers.best_answer'), best_answer_path(answer), method: :patch, remote: true
-    - elsif answer.best?
-      span Это лучший ответ!
-    br
-    - if can?(:destroy, answer) && can?(:update, answer)
-      = link_to t('answers.delete_answer'), answer, method: :delete, remote: true
+  - cache answer do
+    .answer-wrapper { data-answer-id = answer.id }
+      h4.answer-rating { data-id = answer.id } = "Рейтинг ответа #{answer.rating}"
+      p = answer.body
       br
-      = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
-      = render 'answers/form', path: answer
-    = render 'answers/attachments', answer: answer
-    = render 'answers/voting', answer: answer
-    br
-    = render 'answers/answer_comments', answer: answer
-    br
-    = render 'comments/form', commentable: answer, comment: answer.comments.build
+      span = "Создатель: #{answer.user.email}"
+      br
+      - if can?(:select_as_best, answer)
+        = link_to t('answers.best_answer'), best_answer_path(answer), method: :patch, remote: true
+      - elsif answer.best?
+        span Это лучший ответ!
+      br
+      - if can?(:destroy, answer) && can?(:update, answer)
+        = link_to t('answers.delete_answer'), answer, method: :delete, remote: true
+        br
+        = link_to t('answers.edit_answer'), '', class: 'edit-answer-link'
+        = render 'answers/form.html', path: answer
+      = render 'answers/attachments.html', answer: answer
+      = render 'answers/voting.html', answer: answer
+      br
+      = render 'answers/answer_comments.html', answer: answer
+      br
+      = render 'comments/form.html', commentable: answer, comment: answer.comments.build

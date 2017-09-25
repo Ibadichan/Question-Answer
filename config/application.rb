@@ -33,5 +33,6 @@ module Qna
     end
 
     config.i18n.default_locale = :ru
+    config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
   end
 end

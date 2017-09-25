@@ -1,3 +1,3 @@
 = link_to t('comments.index'), '', class: 'comments-link'
 .question-comments { data-id = question.id }
-  = render question.comments
+  = render question.comments, partial: 'comments/comment'
