@@ -1,1 +1,1 @@
-$('.answers').html('<%= j render @answer.question.answers.by_best %>');
+$('.answers').html('<%= j render @answer.question.answers.by_best, partial: 'answers/answer.html' %>');

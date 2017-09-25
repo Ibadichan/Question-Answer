@@ -1,17 +1,18 @@
-.question-wrapper { data-question-id = @question.id }
-  = render 'subscribe', question: @question
-  = render 'unsubscribe', question: @question
-  h4.question-rating = "Рейтинг вопроса #{@question.rating}"
-  = render 'question_content', question: @question
-  = render 'edit', question: @question
-  = render 'attachments', question: @question
-  = render 'voting', question: @question
+- cache @question do
+  .question-wrapper { data-question-id = @question.id }
+    = render 'subscribe', question: @question
+    = render 'unsubscribe', question: @question
+    h4.question-rating = "Рейтинг вопроса #{@question.rating}"
+    = render 'question_content', question: @question
+    = render 'edit', question: @question
+    = render 'attachments', question: @question
+    = render 'voting', question: @question
+    br
+    = render 'question_comments', question: @question
+    br
+    = render 'comments/form', commentable: @question, comment: @question.comments.build
+  .answers
+    = render @question.answers.by_best, partial: 'answers/answer'
   br
-  = render 'question_comments', question: @question
-  br
-  = render 'comments/form', commentable: @question, comment: @question.comments.build
-.answers
-  = render @question.answers.by_best
-br
-.new_answer
-  = render 'answers/form', path:[ @question, @question.answers.build ]
+  .new_answer
+    = render 'answers/form', path:[ @question, @question.answers.build ]

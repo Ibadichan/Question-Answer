@@ -12,8 +12,8 @@ $('p.alert, p.notice').html('');
   $('p.notice').html('Answer был успешно обновлен.');
 
   <% if remotipart_submitted? %>
-    answer.replaceWith("<%= j "#{render @answer }" %>");
+    answer.replaceWith("<%= j "#{ render 'answers/answer.html', answer: @answer }" %>");
   <% else %>
-    answer.replaceWith('<%= j render @answer %>');
+    answer.replaceWith('<%= j render 'answers/answer.html', answer: @answer %>');
   <% end %>
 <% end %>

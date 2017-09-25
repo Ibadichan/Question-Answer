@@ -5,7 +5,7 @@
   br
   #attachments
     = f.fields_for :attachments do |attachment|
-      = render 'answers/attachment_fields', f: attachment
+      = render 'answers/attachment_fields.html', f: attachment
     .links
       = link_to_add_association f, :attachments
   br

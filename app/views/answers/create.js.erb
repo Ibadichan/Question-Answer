@@ -4,10 +4,10 @@ $('.answer-errors, p.alert, p.notice ').html('');
   $('p.notice').html('Answer успешно создан.');
 
   <% if remotipart_submitted? %>
-    $('.answers').append("<%= j "#{render @answer }" %>");
+    $('.answers').append("<%= j "#{render 'answers/answer.html', answer: @answer }" %>");
     $('.new_answer').html("<%= j "#{render 'form', path: [@answer.question, Answer.new] }" %>");
   <% else %>
-    $('.answers').append('<%= j render @answer %>');
+    $('.answers').append('<%= j render 'answers/answer.html', answer: @answer %>');
     $('.new_answer').html('<%= j render 'form', path: [@answer.question, Answer.new] %>');
   <% end %>
 <%- else %>
